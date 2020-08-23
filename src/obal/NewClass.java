@@ -12,6 +12,6 @@ package obal;
 public class NewClass {
     
     public static void main(String[] args) {
-        System.out.println("new class");
+        System.out.println("new class /n heyyyyyy");
     }
 }
