@@ -59,10 +59,10 @@ public class MainFrame extends javax.swing.JFrame {
         exit.setBackground(new java.awt.Color(250, 251, 252));
         exit.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\lenovo\\Desktop\\Untitled.png")); // NOI18N
-        exit.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 50));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled.png"))); // NOI18N
+        exit.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, -1));
 
-        btnExit.setIcon(new javax.swing.ImageIcon("C:\\Users\\lenovo\\Desktop\\llljl.PNG")); // NOI18N
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG"))); // NOI18N
         btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnExitMouseEntered(evt);
