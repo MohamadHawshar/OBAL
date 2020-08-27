@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package obal;
+package Entities;
 
 /**
  *
  * @author User
  */
-public class NewClass {
+public class Analysis {
     
-    public static void main(String[] args) {
-        System.out.println("new class /n heyyyyyy yooooooo");
-        System.out.println("hi gayyys");
-    }
 }
