@@ -19,11 +19,11 @@ public class Client {
     private int Id;
     private String firstName;
     private String lastName;
-    private int phone;
+    private String phone;
     private String location;
-    private List<Order> listOrders = new ArrayList();
+  //  private List<Order> listOrders = new ArrayList();
     
-    public Client(int Id, String firstName, String lastName, int phone, String location) {
+    public Client(int Id, String firstName, String lastName, String phone, String location) {
         this.Id = Id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -61,11 +61,11 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -77,16 +77,40 @@ public class Client {
         this.location = location;
     }
     
-    public Order getOrderById(int Id){
-        //todo
-        return null;
-    }
     
-    public List getAllOrders(){
-        //todo
-        return null;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Client other = (Client) obj;
+        if (this.Id != other.Id) {
+            return false;
+        }
+        return true;
     }
+    public String toString() {
+        return Id + " " +firstName + " " + lastName +" " + phone+" " +location;
+    }
+     
+  
     
+    
+//    public Order getOrderById(int Id){
+//        //todo
+//        return null;
+//    }
+//    
+//    public List getAllOrders(){
+//        //todo
+//        return null;
+//    }
+//    
     
     
 }

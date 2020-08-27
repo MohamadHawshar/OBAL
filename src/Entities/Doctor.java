@@ -10,17 +10,17 @@ package Entities;
  * @author User
  */
 public class Doctor {
-    private int Id;
+    private String Id;
     private String firstName;
     private String lastName;
-    private int phone;
+    private String phone;
     private String location;
     private String title;
     
     public Doctor(){
         
     }
-    public Doctor(int Id, String firstName, String lastName, int phone, String location, String title) {
+    public Doctor(String Id, String firstName, String lastName, String phone, String location, String title) {
         this.Id = Id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,7 +37,7 @@ public class Doctor {
         this.title = d.title;
     }
 
-    public int getId() {
+    public String getId() {
         return Id;
     }
 
@@ -58,11 +58,11 @@ public class Doctor {
         this.lastName = lastName;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -81,6 +81,26 @@ public class Doctor {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Doctor other = (Doctor) obj;
+        if (this.Id != other.Id) {
+            return false;
+        }
+        return true;
+    }
+    public String toString() {
+        return Id + " " +title+" "+firstName + " " + lastName +" " + phone+" " +location;
     }
   
 }

@@ -5,6 +5,7 @@
  */
 package Entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Date;
  */
 public class Bill {
     private int Id;
-    private Date date;
+    private LocalDate date;
     
     public Bill(){
         
@@ -23,7 +24,7 @@ public class Bill {
         this.Id = b.Id;
         this.date = b.date;
     }
-    public Bill(int Id, Date date) {
+    public Bill(int Id, LocalDate date) {
         this.Id = Id;
         this.date = date;
     }
@@ -32,12 +33,31 @@ public class Bill {
         return Id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
     
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Bill other = (Bill) obj;
+        if (this.Id != other.Id) {
+            return false;
+        }
+        return true;
+    }
+    public String toString() {
+        return Id + " " +date;
+    }
 }
