@@ -42,6 +42,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnExit = new javax.swing.JLabel();
         sidePane = new javax.swing.JPanel();
+        mainPane = new javax.swing.JPanel();
+        listPane = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -103,6 +105,35 @@ public class MainFrame extends javax.swing.JFrame {
 
         sidePane.setLayout(new java.awt.BorderLayout());
         mainPanel.add(sidePane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 320, 930));
+
+        mainPane.setBackground(new java.awt.Color(255, 255, 255));
+        mainPane.setPreferredSize(new java.awt.Dimension(1200, 930));
+
+        javax.swing.GroupLayout mainPaneLayout = new javax.swing.GroupLayout(mainPane);
+        mainPane.setLayout(mainPaneLayout);
+        mainPaneLayout.setHorizontalGroup(
+            mainPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1200, Short.MAX_VALUE)
+        );
+        mainPaneLayout.setVerticalGroup(
+            mainPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 930, Short.MAX_VALUE)
+        );
+
+        mainPanel.add(mainPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 1200, 930));
+
+        javax.swing.GroupLayout listPaneLayout = new javax.swing.GroupLayout(listPane);
+        listPane.setLayout(listPaneLayout);
+        listPaneLayout.setHorizontalGroup(
+            listPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        listPaneLayout.setVerticalGroup(
+            listPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 930, Short.MAX_VALUE)
+        );
+
+        mainPanel.add(listPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(1520, 150, 400, 930));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -186,6 +217,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel headerText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator line;
+    private javax.swing.JPanel listPane;
+    private javax.swing.JPanel mainPane;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel sidePane;
     // End of variables declaration//GEN-END:variables
