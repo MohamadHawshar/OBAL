@@ -111,31 +111,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainPane.setBackground(new java.awt.Color(255, 255, 255));
         mainPane.setPreferredSize(new java.awt.Dimension(1200, 930));
-
-        javax.swing.GroupLayout mainPaneLayout = new javax.swing.GroupLayout(mainPane);
-        mainPane.setLayout(mainPaneLayout);
-        mainPaneLayout.setHorizontalGroup(
-            mainPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
-        );
-        mainPaneLayout.setVerticalGroup(
-            mainPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 930, Short.MAX_VALUE)
-        );
-
+        mainPane.setLayout(new java.awt.CardLayout());
         mainPanel.add(mainPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 1200, 930));
 
-        javax.swing.GroupLayout listPaneLayout = new javax.swing.GroupLayout(listPane);
-        listPane.setLayout(listPaneLayout);
-        listPaneLayout.setHorizontalGroup(
-            listPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        listPaneLayout.setVerticalGroup(
-            listPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 930, Short.MAX_VALUE)
-        );
-
+        listPane.setBackground(new java.awt.Color(255, 255, 255));
+        listPane.setLayout(new java.awt.BorderLayout());
         mainPanel.add(listPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(1520, 150, 400, 930));
 
         sidePanel.setBackground(new java.awt.Color(227, 234, 238));
@@ -381,6 +361,17 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         mousePress(doctors);
         mousePressLabel(doctorsLabel);
+          //removing panels
+        mainPane.removeAll();
+        mainPane.repaint();
+        mainPane.revalidate();
+        
+        //adding new panel
+        mainPane.add(new DoctorsPage());
+        mainPane.repaint();
+        mainPane.revalidate();
+        
+        repaint();
         repaint();
     }//GEN-LAST:event_doctorsMousePressed
 
@@ -396,6 +387,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         mousePress(clients);
         mousePressLabel(clientsLabel);
+          //removing panels
+        mainPane.removeAll();
+        mainPane.repaint();
+        mainPane.revalidate();
+        
+        //adding new panel
+        mainPane.add(new ClientPage());
+        mainPane.repaint();
+        mainPane.revalidate();
+        
+        repaint();
         repaint();
     }//GEN-LAST:event_clientsMousePressed
 
@@ -411,6 +413,16 @@ public class MainFrame extends javax.swing.JFrame {
 
         mousePress(results);
         mousePressLabel(resultsLabel);
+        //removing panels
+        mainPane.removeAll();
+        mainPane.repaint();
+        mainPane.revalidate();
+        
+        //adding new panel
+        mainPane.add(new TestsPage());
+        mainPane.repaint();
+        mainPane.revalidate();
+        
         repaint();
     }//GEN-LAST:event_resultsMousePressed
 
@@ -426,6 +438,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         mousePress(bill);
         mousePressLabel(billLabel);
+          //removing panels
+        mainPane.removeAll();
+        mainPane.repaint();
+        mainPane.revalidate();
+        
+        //adding new panel
+        mainPane.add(new BillsPage());
+        mainPane.repaint();
+        mainPane.revalidate();
+        
+        repaint();
         repaint();
     }//GEN-LAST:event_billMousePressed
    
