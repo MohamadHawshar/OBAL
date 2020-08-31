@@ -5,6 +5,15 @@
  */
 package gui.ClientPagePanels;
 
+import Controllers.ClientController;
+import Entities.Client;
+import java.sql.SQLException;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+
 /**
  *
  * @author User
@@ -16,6 +25,13 @@ public class addClientPanel extends javax.swing.JPanel {
      */
     public addClientPanel() {
         initComponents();
+    }
+    public void reset() {
+        firstNameTf.setText(null);
+        LastNameTf.setText(null);
+        phoneTf.setText(null);
+        locationTf.setText(null);
+        firstNameTf.requestFocus();
     }
 
     /**
@@ -47,6 +63,11 @@ public class addClientPanel extends javax.swing.JPanel {
         jLabel4.setText("Location");
 
         saveBtn.setText("save");
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
 
         cancelBtn.setText("cancel");
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +133,91 @@ public class addClientPanel extends javax.swing.JPanel {
         this.setVisible(false);
     }//GEN-LAST:event_cancelBtnActionPerformed
 
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        // TODO add your handling code here:
+        String firstName = firstNameTf.getText();
+        String lastName = LastNameTf.getText();
+        String phone = phoneTf.getText();
+        String location = locationTf.getText();
+        
+        if (firstName == null || firstName.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "First Name field should not be empty",
+                    "Entry Error",
+                    JOptionPane.ERROR_MESSAGE);
+            firstNameTf.requestFocus();
+            return;
+        }
+        if (lastName == null || lastName.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Last Name field should not be empty",
+                    "Entry Error",
+                    JOptionPane.ERROR_MESSAGE);
+            LastNameTf.requestFocus();
+            return;
+        }
+        if (phone == null || phone.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "phone field should not be empty",
+                    "Entry Error",
+                    JOptionPane.ERROR_MESSAGE);
+            phoneTf.requestFocus();
+            return;
+        }
+        if (location == null || location.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "location field should not be empty",
+                    "Entry Error",
+                    JOptionPane.ERROR_MESSAGE);
+            locationTf.requestFocus();
+            return;
+        }
+        //Execute Worker   
+        new addClientPanel.SaveWorker(new Client( firstName, lastName,phone,location)).execute();
+    }//GEN-LAST:event_saveBtnActionPerformed
+private class SaveWorker extends SwingWorker<String, Void> {
+
+        private Client client;
+        
+
+        public SaveWorker(Client client) {
+            this.client = client;
+        }
+
+        @Override
+        protected String doInBackground() throws Exception {
+            try {
+                System.out.println(client);
+                ClientController.instance.create(client);
+            } catch (SQLException ex) {
+                System.out.println("1");
+                return ex.getMessage();
+            }
+            return null;
+        }
+
+        @Override
+        public void done() {
+            try {
+                if (get() == null) {
+                    JOptionPane.showMessageDialog(addClientPanel.this,
+                            client.toString() + " has been added successfully",
+                            "Successful adding",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    reset();
+                } else {
+                    JOptionPane.showMessageDialog(addClientPanel.this,
+                            client.toString() + " has errors",
+                            "entry error",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(editClient.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExecutionException ex) {
+                Logger.getLogger(editClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField LastNameTf;

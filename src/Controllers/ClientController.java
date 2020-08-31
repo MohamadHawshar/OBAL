@@ -21,7 +21,8 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class ClientController {
-    private String createString = "insert into Client values(?,?,?,?)";
+    private String createString = "INSERT INTO `obal`.`client` (`first_name`, `last_name`, `tel`, `localite`) VALUES (?, ?, ?, ?);";
+    private String updateString = "UPDATE `obal`.`client` SET `first_name` = ?, `last_name` = ?, `tel` = ?, `localite` = ? WHERE (`idClient` = ?);";
     private String findAllString = "select * from Client";
     private String findByKeyString = "select * from Client where idClient = ?";
     private String deleteByKeyString = "delete from Client where idClient = ?";
@@ -29,6 +30,7 @@ public class ClientController {
     
     
     private PreparedStatement createStmt;
+    private PreparedStatement updateStmt;
     private PreparedStatement findAllStmt;
     private PreparedStatement findByKeyStmt;
     private PreparedStatement deleteByKeyStmt;
@@ -37,6 +39,7 @@ public class ClientController {
     private ClientController() {
         try {
             createStmt = DataSource.getConnection().prepareStatement(createString);
+            updateStmt = DataSource.getConnection().prepareStatement(updateString);
             findAllStmt = DataSource.getConnection().prepareStatement(findAllString);
             findByKeyStmt = DataSource.getConnection().prepareStatement(findByKeyString);
             deleteByKeyStmt = DataSource.getConnection().prepareStatement(deleteByKeyString);
@@ -51,6 +54,14 @@ public class ClientController {
         createStmt.setString(3, client.getPhone());
         createStmt.setString(4, client.getLocation());
         createStmt.executeUpdate();
+    }
+    public void update(Client client) throws SQLException {
+        updateStmt.setString(1, client.getFirstName());
+        updateStmt.setString(2, client.getLastName());
+        updateStmt.setString(3, client.getPhone());
+        updateStmt.setString(4, client.getLocation());
+        updateStmt.setString(5, String.valueOf(client.getId()));
+        updateStmt.executeUpdate();
     }
     public List<Client> findAll() {
         List<Client> ls = new ArrayList();
@@ -108,7 +119,7 @@ public class ClientController {
             while (set.next()) {
                 Client c = new Client(Integer.parseInt(set.getString(1)), set.getString(2), set.getString(3),set.getString(4),set.getString(5));
                 ls.add(c);
-                System.out.println(c);
+               // System.out.println(c);
             }
             set.close();
         } catch (SQLException ex) {

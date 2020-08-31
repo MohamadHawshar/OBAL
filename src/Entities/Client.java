@@ -30,8 +30,18 @@ public class Client {
         this.phone = phone;
         this.location = location;
     }
+    public Client( String firstName, String lastName, String phone, String location) {
+        
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.location = location;
+    }
     public Client(){
         
+    }
+    public Client(int Id){
+        this.Id=Id;
     }
     public Client(Client c){
         this.Id = c.Id;
