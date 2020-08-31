@@ -5,6 +5,9 @@
  */
 package gui;
 
+import gui.ClientPagePanels.ClientPageMenuPanel;
+import gui.DoctorPagePanels.DoctorPageMenuPanel;
+
 /**
  *
  * @author User
@@ -16,6 +19,9 @@ public class DoctorsPage extends javax.swing.JPanel {
      */
     public DoctorsPage() {
         initComponents();
+        this.add(new DoctorPageMenuPanel());
+        this.setVisible(true);
+        this.repaint();
     }
 
     /**
@@ -26,29 +32,9 @@ public class DoctorsPage extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        jLabel1 = new javax.swing.JLabel();
-
-        jLabel1.setText("docotrs Page");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 337, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 286, Short.MAX_VALUE))
-        );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,15 +13,26 @@ public class Doctor {
     private String Id;
     private String firstName;
     private String lastName;
-    private String phone;
+    private int phone;
     private String location;
     private String title;
     
     public Doctor(){
         
     }
-    public Doctor(String Id, String firstName, String lastName, String phone, String location, String title) {
+    public Doctor(String Id){
         this.Id = Id;
+    }
+    public Doctor(String Id, String firstName, String lastName, int phone, String location, String title) {
+        this.Id = Id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.location = location;
+        this.title = title;
+    }
+    public Doctor( String firstName, String lastName,int phone, String location, String title) {
+        
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -58,11 +69,11 @@ public class Doctor {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
+    public int getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(int phone) {
         this.phone = phone;
     }
 

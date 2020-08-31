@@ -187,10 +187,10 @@ private class SaveWorker extends SwingWorker<String, Void> {
         @Override
         protected String doInBackground() throws Exception {
             try {
-                System.out.println(client);
+               // System.out.println(client);
                 ClientController.instance.create(client);
             } catch (SQLException ex) {
-                System.out.println("1");
+                System.out.println("error of controller output ");
                 return ex.getMessage();
             }
             return null;
