@@ -198,7 +198,7 @@ public class editDoctor extends javax.swing.JFrame {
             return;
         }
         //Execute Worker   
-        new SaveWorker(new Doctor( dr.getId(),firstName, lastName,Integer.parseInt(phone),location,title)).execute();
+        new SaveWorker(new Doctor( dr.getId(),firstName, lastName,phone,location,title)).execute();
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed

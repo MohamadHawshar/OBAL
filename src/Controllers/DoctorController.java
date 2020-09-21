@@ -6,9 +6,8 @@
 package Controllers;
 
 import Entities.Client;
-import Entities.DataSource;
+import utilities.DataSource;
 import Entities.Doctor;
-import Entities.RandomString;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,7 +51,8 @@ public class DoctorController {
     }
     public void create(Doctor doctor) throws SQLException {
 
-        createStmt.setString(1,RandomString.getAlphaNumericString(10));
+        String code=doctor.getFirstName().substring(0, 3)+doctor.getLastName().substring(0, 3);
+        createStmt.setString(1,code);
         createStmt.setString(2, doctor.getTitle());
         createStmt.setString(3, doctor.getFirstName());
         createStmt.setString(4, doctor.getLastName());
@@ -83,13 +83,15 @@ public class DoctorController {
             
             while (set.next()) {
                 id = set.getString(1);
-                firstName = set.getString(2);
+                firstName = set.getString(4);
                 lastName = set.getString(3);
-                phone = set.getString(4);
+                phone = set.getString(6);
                 location = set.getString(5);
-                title = set.getString(6);
+                title = set.getString(2);
                 
-                ls.add(new Doctor( id,firstName, lastName ,Integer.parseInt(phone),location,title));
+                ls.add(new Doctor( id,firstName, lastName 
+                        ,phone
+                        ,location,title));
             }
             set.close();
         } catch (SQLException ex) {
@@ -102,7 +104,7 @@ public class DoctorController {
             findByKeyStmt.setString(1, id);
             ResultSet set = findByKeyStmt.executeQuery();
             if (set.next()) {
-                return new Doctor(id, set.getString(3),set.getString(4),Integer.parseInt(set.getString(5)),set.getString(6), set.getString(2));
+                return new Doctor(id, set.getString(3),set.getString(4),set.getString(6),set.getString(5), set.getString(2));
             }
             set.close();
         } catch (SQLException ex) {
@@ -126,7 +128,7 @@ public class DoctorController {
             }
             ResultSet set = findByLikeStmt.executeQuery();
             while (set.next()) {
-                Doctor d = new Doctor(set.getString(1),set.getString(3),set.getString(4),Integer.parseInt(set.getString(6)),set.getString(5), set.getString(2));
+                Doctor d = new Doctor(set.getString(1),set.getString(3),set.getString(4),set.getString(6),set.getString(5), set.getString(2));
                 ls.add(d);
                // System.out.println(c);
             }

@@ -6,7 +6,7 @@
 package Controllers;
 
 import Entities.Client;
-import Entities.DataSource;
+import utilities.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -191,9 +191,8 @@ public class SearchDoctorPanel extends javax.swing.JPanel {
         if(i == -1)return;
         
         String s = (String)tab.table.getValueAt(i, 0);
-        Doctor d = new Doctor(s,(String)tab.table.getValueAt(i, 2),(String)tab.table.getValueAt(i, 3),Integer.parseInt((String)tab.table.getValueAt(i, 4)),(String)tab.table.getValueAt(i, 5),(String)tab.table.getValueAt(i, 1));
-       // System.out.println(cl);
-        
+        Doctor d;
+        d = new Doctor(s,(String)tab.table.getValueAt(i, 2),(String)tab.table.getValueAt(i, 3),(String)tab.table.getValueAt(i, 4),(String)tab.table.getValueAt(i, 5),(String)tab.table.getValueAt(i, 1));        
         editDoctor editDoctorFrame = new editDoctor(d);
         editDoctorFrame.setVisible(true);
     }//GEN-LAST:event_editBtnActionPerformed

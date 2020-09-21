@@ -1,4 +1,4 @@
-package Entities;
+package utilities;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,9 +12,7 @@ package Entities;
  */
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,8 +30,8 @@ public class DataSource {
 	String lsConnexion = "jdbc:mysql://localhost:330/obal";
 
 	String lsUt  = "root";
-	String lsMdp = "database";
-
+	String lsMdp = "root";
+        
         if (con == null) {
             try {
                 Class.forName(lsPilote);

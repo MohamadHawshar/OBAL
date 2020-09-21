@@ -158,7 +158,7 @@ public class addDoctorPanel extends javax.swing.JPanel {
         String title = titleTf.getText();
         String firstName = firstNameTf.getText();
         String lastName = LastNameTf.getText();
-        int phone =Integer.parseInt(phoneTf.getText());
+        String phone =phoneTf.getText();
         String location = locationTf.getText();
         
         if (firstName == null || firstName.isEmpty()) {
@@ -185,7 +185,7 @@ public class addDoctorPanel extends javax.swing.JPanel {
             titleTf.requestFocus();
             return;
         }
-        if (phone <= 0 ) {
+        if (phone ==null ) {
             JOptionPane.showMessageDialog(this,
                     "phone field should not be empty",
                     "Entry Error",

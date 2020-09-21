@@ -1,13 +1,29 @@
 package gui;
 
 
+import Controllers.OrderController;
+import Entities.Order;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.SwingWorker;
+import utilities.ImageText;
+import utilities.Renderer;
 
 /**
  *
@@ -15,13 +31,22 @@ import javax.swing.JPanel;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    
+   private final OrderFrame orderFrame=new OrderFrame();
+   
+   
+   private final DefaultComboBoxModel dateModel=new DefaultComboBoxModel();
+   private final DefaultListModel listModel=new DefaultListModel();
     /**
      * Creates new form MainFrame
      */
-   public MainFrame() {
+   public MainFrame() throws InterruptedException {
         initComponents();
-    }
+        mainPane.add(orderFrame);
+        new InitializeDateComboBox().execute();
+        dateComboBox.setModel(dateModel);
+        removeDeletedFromList();
+        addNewToList();
+   }
       
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,7 +65,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnExit = new javax.swing.JLabel();
         mainPane = new javax.swing.JPanel();
-        listPane = new javax.swing.JPanel();
         sidePanel = new javax.swing.JPanel();
         doctors = new javax.swing.JPanel();
         doctorsLabel = new javax.swing.JLabel();
@@ -50,6 +74,13 @@ public class MainFrame extends javax.swing.JFrame {
         resultsLabel = new javax.swing.JLabel();
         bill = new javax.swing.JPanel();
         billLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        dateComboBox = new javax.swing.JComboBox();
+        pic = new javax.swing.JLabel();
+        label = new javax.swing.JLabel();
+        numberOfClients = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ordersList = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -111,12 +142,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainPane.setBackground(new java.awt.Color(255, 255, 255));
         mainPane.setPreferredSize(new java.awt.Dimension(1200, 930));
-        mainPane.setLayout(new java.awt.CardLayout());
+        mainPane.setLayout(new java.awt.BorderLayout());
         mainPanel.add(mainPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 1200, 930));
-
-        listPane.setBackground(new java.awt.Color(255, 255, 255));
-        listPane.setLayout(new java.awt.BorderLayout());
-        mainPanel.add(listPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(1520, 150, 400, 930));
 
         sidePanel.setBackground(new java.awt.Color(227, 234, 238));
         sidePanel.setPreferredSize(new java.awt.Dimension(320, 930));
@@ -271,6 +298,74 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainPanel.add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, -1, -1));
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.blue, java.awt.Color.yellow));
+        jPanel1.setPreferredSize(new java.awt.Dimension(400, 930));
+
+        dateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        dateComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateComboBoxActionPerformed(evt);
+            }
+        });
+
+        pic.setText("ICON");
+
+        label.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        label.setText("Number Of Clients: ");
+
+        numberOfClients.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        numberOfClients.setText("X");
+
+        ordersList.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ordersList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "hfd", "haf", "a", "hf", "haf", "hdf", "hs", "hf", "hhsfs", "hfsd", "f", "hss", "fsfsfsfs", "sdf", "sf", "s", "sf", "sf", "sdf", "sf", "sf", "sdf", "sdf", "sg", "s", "g", "fh", "f", "jf", "jf", "j", "f", "jf", "jf", "jf", " ", "j", "trg", "r", "fs", "we", "fwe", "r", "ew", "f", "a", "fa", "fa", "f", "dsg", "cxv", "v", " ", " ", "fg", "s", "gs", "g", "sg", "sg", " ", "sdg", "as", "g", "ag", "a", "ga", "g", "as", "g", "sg", " " };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        ordersList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        ordersList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ordersListMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(ordersList);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dateComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(pic, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(numberOfClients)
+                        .addGap(0, 61, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(numberOfClients))
+                    .addComponent(pic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        mainPanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1520, 150, 400, 930));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -289,14 +384,24 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
- private void mousePress(JPanel panel) {//change color of option panell
+    private void btnExitMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMousePressed
+        try {
+            // TODO add your handling code here:
+            Thread.sleep(400);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.exit(0);
+    }//GEN-LAST:event_btnExitMousePressed
+
+    private void mousePress(JPanel panel) {//change color of option panell
         panel.setBackground(new Color(0, 113, 197));
         clients.setOpaque(false);
         results.setOpaque(false);
         doctors.setOpaque(false);
         bill.setOpaque(false);
         panel.setOpaque(true);
+        
     }
     
     private void mousePressLabel(JLabel label) {  // change color of option label(text)
@@ -327,16 +432,6 @@ public class MainFrame extends javax.swing.JFrame {
         repaint();
     }
     
-    private void btnExitMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMousePressed
-        try {
-            // TODO add your handling code here:
-            Thread.sleep(400);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.exit(0);
-    }//GEN-LAST:event_btnExitMousePressed
-
     private void btnExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseEntered
         // TODO add your handling code here:
          btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit_blue.png")));
@@ -360,19 +455,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void doctorsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doctorsMousePressed
         // TODO add your handling code here:
         mousePress(doctors);
-        mousePressLabel(doctorsLabel);
-          //removing panels
-        mainPane.removeAll();
-        mainPane.repaint();
-        mainPane.revalidate();
-        
-        //adding new panel
-        mainPane.add(new DoctorsPage());
-        mainPane.repaint();
-        mainPane.revalidate();
-        
-        repaint();
-        repaint();
+        mousePressLabel(doctorsLabel);      
     }//GEN-LAST:event_doctorsMousePressed
 
     private void clientsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientsMouseEntered
@@ -387,17 +470,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         mousePress(clients);
         mousePressLabel(clientsLabel);
-          //removing panels
-        mainPane.removeAll();
-        mainPane.repaint();
-        mainPane.revalidate();
-        
-        //adding new panel
-        mainPane.add(new ClientPage());
-        mainPane.repaint();
-        mainPane.revalidate();
-        
-        repaint();
+        orderFrame.setVisible(true);
         repaint();
     }//GEN-LAST:event_clientsMousePressed
 
@@ -413,16 +486,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         mousePress(results);
         mousePressLabel(resultsLabel);
-        //removing panels
-        mainPane.removeAll();
-        mainPane.repaint();
-        mainPane.revalidate();
-        
-        //adding new panel
-        mainPane.add(new TestsPage());
-        mainPane.repaint();
-        mainPane.revalidate();
-        
+        orderFrame.setVisible(true);
         repaint();
     }//GEN-LAST:event_resultsMousePressed
 
@@ -438,20 +502,132 @@ public class MainFrame extends javax.swing.JFrame {
 
         mousePress(bill);
         mousePressLabel(billLabel);
-          //removing panels
-        mainPane.removeAll();
-        mainPane.repaint();
-        mainPane.revalidate();
-        
-        //adding new panel
-        mainPane.add(new BillsPage());
-        mainPane.repaint();
-        mainPane.revalidate();
-        
-        repaint();
         repaint();
     }//GEN-LAST:event_billMousePressed
+
+    private void dateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateComboBoxActionPerformed
+        // TODO add your handling code here:
+          java.sql.Date d=(java.sql.Date)dateComboBox.getSelectedItem();
+          new InitializeList(d).execute();
+    }//GEN-LAST:event_dateComboBoxActionPerformed
+
+    private void ordersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersListMouseClicked
+        // TODO add your handling code here:
+        ImageText i= (ImageText) listModel.getElementAt(ordersList.getSelectedIndex());
+        orderFrame.listOrder=i.getOrder();
+        orderFrame.deleteBtn.setEnabled(true);
+        System.out.println(orderFrame.listOrder);
+    }//GEN-LAST:event_ordersListMouseClicked
    
+    private void removeDeletedFromList(){
+      JButton r=orderFrame.getDelete();
+      r.addActionListener(new ActionListener() {
+
+          @Override
+          public void actionPerformed(ActionEvent e) {
+               listModel.removeElementAt(ordersList.getSelectedIndex());
+          }
+      });
+    }
+    private void addNewToList(){
+        JButton save=orderFrame.getSave();
+      save.addActionListener(new ActionListener() {
+
+          public void actionPerformed(ActionEvent e) {
+              while(true){
+               try {
+           Thread.sleep(10000);
+                   System.out.println("BA3duuu");
+                   java.sql.Date d=(java.sql.Date)dateComboBox.getSelectedItem();
+              new InitializeList(d).execute();
+              
+           break;
+       } catch (InterruptedException ex) {
+           Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+       }}
+              
+      
+              
+              System.out.println("TL333");
+              java.sql.Date d=(java.sql.Date)dateComboBox.getSelectedItem();
+              new InitializeList(d).execute();
+              
+          }
+      });
+    }
+    
+    private class InitializeList extends SwingWorker<List<Order>,Void>{
+
+        private Date d;
+
+        public InitializeList(Date d) {
+            this.d = d;
+        }
+        
+        @Override
+        protected List<Order> doInBackground() throws Exception {
+            return OrderController.instance.findByDate((java.sql.Date) d);
+        }
+        public void done(){
+            try {
+                if(get()==null){
+                    return;
+                }
+                else{
+                    listModel.removeAllElements();
+                    List<Order> list;
+                    list=get();
+                    for(Order o:get()){
+                        System.out.println(o);   
+                        if(!o.isPaid())
+                    listModel.addElement(new ImageText( o,
+                            new ImageIcon(getClass().getResource("/images/false.png"))));
+                        else  
+                            listModel.addElement(new ImageText( o,
+                            new ImageIcon(getClass().getResource("/images/truee.png"))));
+                    
+                    }    
+                    ordersList.setCellRenderer(new Renderer());
+                    ordersList.setModel(listModel);
+                }
+                    } catch (InterruptedException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExecutionException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }
+    
+    private class InitializeDateComboBox extends SwingWorker<List<java.util.Date>,Void>{
+
+        @Override
+        protected List<java.util.Date> doInBackground() throws Exception {
+            return 
+                    OrderController.instance.date();
+        }
+        @Override
+        public void done(){
+            try {
+                if(get()==null){
+                    return;
+                }
+                else{
+                    List<java.util.Date> list;
+                    list=get();
+                    for(java.util.Date d:get()){
+                        dateModel.addElement(d);
+                    }
+                    dateComboBox.setModel(dateModel);
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExecutionException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     
     /**
      * @param args the command line arguments
@@ -482,7 +658,11 @@ public class MainFrame extends javax.swing.JFrame {
              /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                try {
+                    new MainFrame().setVisible(true);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
         });
@@ -494,16 +674,22 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel btnExit;
     private javax.swing.JPanel clients;
     private javax.swing.JLabel clientsLabel;
+    private javax.swing.JComboBox dateComboBox;
     private javax.swing.JPanel doctors;
     private javax.swing.JLabel doctorsLabel;
     private javax.swing.JPanel exit;
     private javax.swing.JPanel header;
     private javax.swing.JLabel headerText;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel label;
     private javax.swing.JSeparator line;
-    private javax.swing.JPanel listPane;
     private javax.swing.JPanel mainPane;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JLabel numberOfClients;
+    public javax.swing.JList ordersList;
+    private javax.swing.JLabel pic;
     private javax.swing.JPanel results;
     private javax.swing.JLabel resultsLabel;
     private javax.swing.JPanel sidePanel;

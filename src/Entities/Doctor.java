@@ -1,9 +1,11 @@
+package Entities;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entities;
+
 
 /**
  *
@@ -13,7 +15,7 @@ public class Doctor {
     private String Id;
     private String firstName;
     private String lastName;
-    private int phone;
+    private String phone;
     private String location;
     private String title;
     
@@ -23,7 +25,7 @@ public class Doctor {
     public Doctor(String Id){
         this.Id = Id;
     }
-    public Doctor(String Id, String firstName, String lastName, int phone, String location, String title) {
+    public Doctor(String Id, String firstName, String lastName, String phone, String location, String title) {
         this.Id = Id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,7 +33,7 @@ public class Doctor {
         this.location = location;
         this.title = title;
     }
-    public Doctor( String firstName, String lastName,int phone, String location, String title) {
+    public Doctor( String firstName, String lastName,String phone, String location, String title) {
         
         this.firstName = firstName;
         this.lastName = lastName;
@@ -69,11 +71,11 @@ public class Doctor {
         this.lastName = lastName;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -111,7 +113,7 @@ public class Doctor {
         return true;
     }
     public String toString() {
-        return Id + " " +title+" "+firstName + " " + lastName +" " + phone+" " +location;
+        return  title + " " + firstName + " " + lastName + "/" + phone;
     }
   
 }

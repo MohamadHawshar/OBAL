@@ -1,9 +1,11 @@
+package Entities;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entities;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,9 +23,13 @@ public class Order {
     private Client client;
     private Doctor doctor;
     private Bill bill;
-    //private List<Analysis> listOrders = new ArrayList();
+    private List<Analysis> listOrders = new ArrayList();
     public Order(){
         
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
     }
 
     public Order(int Id, LocalDate date, boolean paid, Client client, Doctor doctor, Bill bill) {
@@ -41,6 +47,14 @@ public class Order {
         this.client = o.client;
         this.doctor = o.doctor;
         this.bill = o.bill;
+    }
+
+    public List<Analysis> getListOrders() {
+        return listOrders;
+    }
+
+    public void setListOrders(List<Analysis> listOrders) {
+        this.listOrders = listOrders;
     }
     
     

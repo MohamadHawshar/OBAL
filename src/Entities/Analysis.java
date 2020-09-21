@@ -1,9 +1,11 @@
+package Entities;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entities;
+
 
 /**
  *
@@ -13,10 +15,21 @@ public class Analysis {
     private int Id;
     private String name;
     private String unit;
-    private float value;
+    private String value;
     private float defaultPrice;
-    private float finalPrice;
 
+    public Analysis(int Id, String name, String unit, String value, float defaultPrice) {
+        this.Id = Id;
+        this.name = name;
+        this.unit = unit;
+        this.value = value;
+        this.defaultPrice = defaultPrice;
+    }
+
+    
+
+    
+    
     public int getId() {
         return Id;
     }
@@ -37,14 +50,15 @@ public class Analysis {
         this.unit = unit;
     }
 
-    public float getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
+    
     public float getDefaultPrice() {
         return defaultPrice;
     }
@@ -53,18 +67,7 @@ public class Analysis {
         this.defaultPrice = defaultPrice;
     }
 
-    public float getFinalPrice() {
-        return finalPrice;
-    }
-
-    public void setFinalPrice(float finalPrice) {
-        this.finalPrice = finalPrice;
-    }
-    
-    public void calculatePrice(int percent){
-        finalPrice = defaultPrice*percent/100;
-    }
-    
+        
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -82,7 +85,7 @@ public class Analysis {
         return true;
     }
     public String toString() {
-        return Id + " " + name+ " " +unit+ " " +value+ " " +finalPrice;
+        return  name;
     }
     
 }
