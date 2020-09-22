@@ -27,6 +27,7 @@ public class editClient extends javax.swing.JFrame {
     
     public editClient() {
         initComponents();
+
     }
     public editClient(Client cl) {
         this.cl = cl;
@@ -65,6 +66,7 @@ public class editClient extends javax.swing.JFrame {
         cancelbtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setText("first name");
 

@@ -62,6 +62,7 @@ public class OrderFrame extends javax.swing.JPanel {
     public OrderFrame() {
 
         initComponents();
+        setVisible(true);
         initialize();
     }
 
@@ -124,9 +125,9 @@ public class OrderFrame extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         saveBtn.setText("Save Order");
-        saveBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveBtnActionPerformed(evt);
+        saveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                saveBtnMousePressed(evt);
             }
         });
 
@@ -345,43 +346,6 @@ public class OrderFrame extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-        // TODO add your handling code here:
-        //insert into ordonnance(date,idmedecin,idclient,isPayed) values (localtime(),"CuaQ1M0Vfb",2,1);
-        System.out.println("wsltt");
-        Client client ;
-        if(clientsTable.getSelectedRow()==-1){
-             JOptionPane.showMessageDialog(OrderFrame.this,
-                            "Please Select a Client",
-                            "Adding Failed ",
-                            JOptionPane.INFORMATION_MESSAGE);
-                  return;
-        }
-        if(doctorComboBox.getSelectedIndex()==0){
-            JOptionPane.showMessageDialog(OrderFrame.this,
-                            "Please Select a Doctor",
-                            "Adding Failed ",
-                            JOptionPane.INFORMATION_MESSAGE);
-                  return;
-        }
-        Doctor doctor = (Doctor) doctorComboBox.getSelectedItem();
-        client=clientModel.get
-        (clientsTable.getSelectedRow());
-        LocalDate date = LocalDate.now();
-        List<Analysis> list=analysisTableModel.getAll();
-        Order order = new Order();
-        order.setClient(client);
-        order.setDoctor(doctor);
-        order.setDate(date);
-        order.setPaid(false);
-        order.setListOrders(list);
-        order.setId(idOrder);
-        currentOrder = order;
-        new OrderFrame.SaveOrderPerformed(currentOrder).execute();
-        idOrder++;
-
-    }//GEN-LAST:event_saveBtnActionPerformed
-
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         
         new OrderFrame.DeleteOrderPerformed(listOrder).execute();
@@ -417,7 +381,45 @@ public class OrderFrame extends javax.swing.JPanel {
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_editBtnActionPerformed
+
+    private void saveBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMousePressed
+        // TODO add your handling code here:
+        
+        Client client ;
+        if(clientsTable.getSelectedRow()==-1){
+             JOptionPane.showMessageDialog(OrderFrame.this,
+                            "Please Select a Client",
+                            "Adding Failed ",
+                            JOptionPane.INFORMATION_MESSAGE);
+                  return;
+        }
+        if(doctorComboBox.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(OrderFrame.this,
+                            "Please Select a Doctor",
+                            "Adding Failed ",
+                            JOptionPane.INFORMATION_MESSAGE);
+                  return;
+        }
+        Doctor doctor = (Doctor) doctorComboBox.getSelectedItem();
+        client=clientModel.get
+        (clientsTable.getSelectedRow());
+        LocalDate date = LocalDate.now();
+        List<Analysis> list=analysisTableModel.getAll();
+        Order order = new Order();
+        order.setClient(client);
+        order.setDoctor(doctor);
+        order.setDate(date);
+        order.setPaid(false);
+        order.setListOrders(list);
+        order.setId(idOrder);
+        currentOrder = order;
+        new OrderFrame.SaveOrderPerformed(currentOrder).execute();
+        idOrder++;
+
+        
+    }//GEN-LAST:event_saveBtnMousePressed
 
     private class SearchClientPerformed extends SwingWorker<List<Client>, Void> {
 
@@ -506,7 +508,6 @@ public class OrderFrame extends javax.swing.JPanel {
         public void done() {
             try {
             
-                 System.out.println(" GETTT");
                 get();
                     JOptionPane.showMessageDialog(OrderFrame.this,
                             " has been added successfully",
@@ -548,7 +549,6 @@ public class OrderFrame extends javax.swing.JPanel {
                             "Successful delete",
                             JOptionPane.INFORMATION_MESSAGE);
                              reset();
-                    System.out.println("clear");
                 } else {
                     JOptionPane.showMessageDialog(OrderFrame.this,
                             order.toString() + " has errors",

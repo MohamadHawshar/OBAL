@@ -54,6 +54,8 @@ public class addClientPanel extends javax.swing.JPanel {
         saveBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         jLabel1.setText("First Name");
 
         jLabel2.setText("Last Name");

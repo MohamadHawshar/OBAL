@@ -23,6 +23,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
+import utilities.ClientsTableModel;
+import utilities.DoctorsTableModel;
 
 /**
  *
@@ -33,11 +35,15 @@ public class SearchDoctorPanel extends javax.swing.JPanel {
     /**
      * Creates new form SearchDoctorPanel
      */
-    private static int limiter1 = 0;
-    SearchDoctorPanel.Table tab = new SearchDoctorPanel.Table();
+    private final DoctorsTableModel doctorModel = new DoctorsTableModel();
     public SearchDoctorPanel() {
         initComponents();
         tablePanel.add(jPanel1, BorderLayout.PAGE_END);
+        doctorsTable.setModel(doctorModel);
+         doctorsTable.getColumnModel().getColumn(0).setMinWidth(256);
+        doctorsTable.getColumnModel().getColumn(0).setMaxWidth(256);
+        doctorsTable.getColumnModel().getColumn(1).setMinWidth(128);
+        doctorsTable.getColumnModel().getColumn(1).setMaxWidth(128);
     }
 
     /**
@@ -60,6 +66,10 @@ public class SearchDoctorPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         editBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        doctorsTable = new javax.swing.JTable();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setText("First Name");
 
@@ -79,7 +89,9 @@ public class SearchDoctorPanel extends javax.swing.JPanel {
             }
         });
 
-        tablePanel.setLayout(new java.awt.BorderLayout());
+        tablePanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         editBtn.setText("edit");
         editBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -104,7 +116,7 @@ public class SearchDoctorPanel extends javax.swing.JPanel {
                 .addComponent(editBtn)
                 .addGap(18, 18, 18)
                 .addComponent(deleteBtn)
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,10 +125,44 @@ public class SearchDoctorPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editBtn)
                     .addComponent(deleteBtn))
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tablePanel.add(jPanel1, java.awt.BorderLayout.CENTER);
+        doctorsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(doctorsTable);
+
+        javax.swing.GroupLayout tablePanelLayout = new javax.swing.GroupLayout(tablePanel);
+        tablePanel.setLayout(tablePanelLayout);
+        tablePanelLayout.setHorizontalGroup(
+            tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tablePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(tablePanelLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        tablePanelLayout.setVerticalGroup(
+            tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tablePanelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(130, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -139,8 +185,11 @@ public class SearchDoctorPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cancelButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(tablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,9 +208,9 @@ public class SearchDoctorPanel extends javax.swing.JPanel {
                     .addComponent(searchButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(tablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(19, 19, 19))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -182,34 +231,26 @@ public class SearchDoctorPanel extends javax.swing.JPanel {
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
          this.setVisible(false);
-        limiter1 = 0;
+
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         // TODO add your handling code here:
-        int i = tab.table.getSelectedRow();
-        if(i == -1)return;
+        Doctor d=doctorModel.get(doctorsTable.getSelectedRow());
+       // System.out.println(cl);
         
-        String s = (String)tab.table.getValueAt(i, 0);
-        Doctor d;
-        d = new Doctor(s,(String)tab.table.getValueAt(i, 2),(String)tab.table.getValueAt(i, 3),(String)tab.table.getValueAt(i, 4),(String)tab.table.getValueAt(i, 5),(String)tab.table.getValueAt(i, 1));        
         editDoctor editDoctorFrame = new editDoctor(d);
         editDoctorFrame.setVisible(true);
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
-           int i = tab.table.getSelectedRow();
-        if(i == -1)return;
-        
-        String Id = (String)tab.table.getValueAt(i, 0);
-        Doctor d = new Doctor(Id);
+
+Doctor d=doctorModel.get(doctorsTable.getSelectedRow());
+
         new DeleteDoctorWorker(d).execute();
-     
-        ((DefaultTableModel)tab.table.getModel()).removeRow(i);
-        tablePanel.removeAll();
-        tablePanel.add(tab);
-        tablePanel.add(jPanel1,BorderLayout.PAGE_END);
+        doctorModel.remove(d);
+        //tablePanel.removeAll();
         tablePanel.repaint();
         tablePanel.revalidate();
     }//GEN-LAST:event_deleteBtnActionPerformed
@@ -239,7 +280,10 @@ private class SearchDoctorPerformed extends SwingWorker<List<Doctor>, Void> {
                 if(get() == null){
                     return;
                 }else{
-                    tab= new Table(get());
+                doctorModel.set(get());
+                doctorsTable.setModel(doctorModel);
+                repaint();
+
                     
                 }
             } catch (InterruptedException ex) {
@@ -248,52 +292,10 @@ private class SearchDoctorPerformed extends SwingWorker<List<Doctor>, Void> {
                 Logger.getLogger(SearchDoctorPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            if (limiter1 == 0) {
-            
-            tablePanel.add(tab);
-            tablePanel.repaint();
-            tablePanel.revalidate();
-            limiter1++;
-            }else{
-                limiter1 = 0;
-                tablePanel.removeAll();
-                tablePanel.add(tab);
-                tablePanel.add(jPanel1,BorderLayout.PAGE_END);
-                tablePanel.repaint();
-                tablePanel.revalidate();
-            }
-            
+
            
         }
     }
-public class Table extends JPanel{
-    public JTable table;
-
-    public Table(List<Doctor> ls ){
-
-        String [] header={"id","title","first name","last name","phone","location"};
-        List<String[]> values = new ArrayList<String[]>();
-        
-        for (Doctor cl : ls) {
-            values.add(new String[] {String.valueOf(cl.getId()),cl.getTitle(),cl.getFirstName(),cl.getLastName(),String.valueOf(cl.getPhone()),cl.getLocation()});
-        }
-
-
-        DefaultTableModel model = new DefaultTableModel(values.toArray(new Object[][] {}),header);
-
-        table = new JTable(model);
-
-        table.setPreferredScrollableViewportSize(new Dimension(450,100));
-        table.setFillsViewportHeight(true);
-
-        JScrollPane js=new JScrollPane(table);
-        js.setVisible(true);
-        add(js);
-
-    }
-     public Table(){
-    }
-}
 private class DeleteDoctorWorker extends SwingWorker<String, Void> {
 
         private Doctor std;
@@ -325,10 +327,12 @@ private class DeleteDoctorWorker extends SwingWorker<String, Void> {
     private javax.swing.JTextField LastNameField;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton deleteBtn;
+    private javax.swing.JTable doctorsTable;
     private javax.swing.JButton editBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton searchButton;
     private javax.swing.JPanel tablePanel;

@@ -132,7 +132,7 @@
         <Property name="text" type="java.lang.String" value="Save Order"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveBtnActionPerformed"/>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="saveBtnMousePressed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="deleteBtn">

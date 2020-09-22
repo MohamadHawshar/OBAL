@@ -10,6 +10,8 @@ import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -44,8 +46,7 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         clientPage.setVisible(false);
         mainPane.add(orderFrame);
-        mainPane.add(doctorsPage);
-        mainPane.add(clientPage);
+        orderFrame.setVisible(false);
         new InitializeDateComboBox().execute();
         dateComboBox.setModel(dateModel);
         removeDeletedFromList();
@@ -363,11 +364,6 @@ public class MainFrame extends javax.swing.JFrame {
         numberOfClients.setText("X");
 
         ordersList.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        ordersList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "hfd", "haf", "a", "hf", "haf", "hdf", "hs", "hf", "hhsfs", "hfsd", "f", "hss", "fsfsfsfs", "sdf", "sf", "s", "sf", "sf", "sdf", "sf", "sf", "sdf", "sdf", "sg", "s", "g", "fh", "f", "jf", "jf", "j", "f", "jf", "jf", "jf", " ", "j", "trg", "r", "fs", "we", "fwe", "r", "ew", "f", "a", "fa", "fa", "f", "dsg", "cxv", "v", " ", " ", "fg", "s", "gs", "g", "sg", "sg", " ", "sdg", "as", "g", "ag", "a", "ga", "g", "as", "g", "sg", " " };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         ordersList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         ordersList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -573,7 +569,7 @@ public class MainFrame extends javax.swing.JFrame {
         ImageText i= (ImageText) listModel.getElementAt(ordersList.getSelectedIndex());
         orderFrame.listOrder=i.getOrder();
         orderFrame.deleteBtn.setEnabled(true);
-        System.out.println(orderFrame.listOrder);
+        orderFrame.editBtn.setEnabled(true);
     }//GEN-LAST:event_ordersListMouseClicked
 
     private void ordersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersMouseEntered
@@ -614,6 +610,7 @@ public class MainFrame extends javax.swing.JFrame {
           @Override
           public void actionPerformed(ActionEvent e) {
                listModel.removeElementAt(ordersList.getSelectedIndex());
+               r.setEnabled(false);
           }
       });
     }
@@ -627,6 +624,19 @@ public class MainFrame extends javax.swing.JFrame {
             }
       });
     }
+    
+    
+    private void editOrderFromList(){
+        JButton edit=orderFrame.editBtn;
+        edit.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+           
+            }
+        });
+    }
+    
     
     private class InitializeList extends SwingWorker<List<Order>,Void>{
 
@@ -650,7 +660,6 @@ public class MainFrame extends javax.swing.JFrame {
                     List<Order> list;
                     list=get();
                     for(Order o:get()){
-                        System.out.println(o);   
                         if(!o.isPaid())
                     listModel.addElement(new ImageText( o,
                             new ImageIcon(getClass().getResource("/images/false.png"))));
@@ -685,9 +694,13 @@ public class MainFrame extends javax.swing.JFrame {
                     return;
                 }
                 else{
+                    LocalDate x = LocalDate.now();
+                    Date date=Date.valueOf(x);
+                    dateModel.addElement(date);
                     List<java.util.Date> list;
                     list=get();
                     for(java.util.Date d:get()){
+                        if(!d.equals(date))
                         dateModel.addElement(d);
                     }
                     dateComboBox.setModel(dateModel);

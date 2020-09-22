@@ -20,7 +20,7 @@ public class DoctorsPage extends javax.swing.JPanel {
     public DoctorsPage() {
         initComponents();
         this.add(new DoctorPageMenuPanel());
-        this.setVisible(true);
+        this.setVisible(false);
         this.repaint();
     }
 

@@ -29,6 +29,7 @@ public class editDoctor extends javax.swing.JFrame {
     private Doctor dr;
     public editDoctor() {
         initComponents();
+        //setLocation(WIDTH/2-50, HEIGHT/2-50);
     }
     public editDoctor(Doctor dr) {
         this.dr = dr;
@@ -71,6 +72,7 @@ public class editDoctor extends javax.swing.JFrame {
         cancelBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setText("title");
 
@@ -120,7 +122,7 @@ public class editDoctor extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(132, 132, 132)
                         .addComponent(saveBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addComponent(cancelBtn)))
                 .addContainerGap(120, Short.MAX_VALUE))
         );

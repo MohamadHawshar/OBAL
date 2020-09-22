@@ -31,11 +31,12 @@ public class OrderController {
     private String deleteString = "delete from ordonnance where idordonnance = ?  ;";
     private String resultCreateString = "insert into `obal`.`results` values(?,?,?,?)";
     private String resultDeleteString = "delete from results where id ordonnance= ?";
-    private String datesString = "select DISTINCT date FROM ORDONNANCE";
-    private String findByDate = "SELECT ordonnance.idclient,ordonnance.idordonnance,ordonnance.date,ordonnance.ispayed,"
-            + "client.first_name,client.last_name,client.tel,client.localite"
-            + " from ordonnance join client on ordonnance.idClient=client.idClient"
-            + " where date=? ;";
+    private String datesString = "select DISTINCT date FROM ORDONNANCE ORDER BY date DESC";
+    private String findByDate = "SELECT ordonnance.idclient,ordonnance.idordonnance,ordonnance.date,ordonnance.ispayed," +
+"            client.first_name,client.last_name,client.tel,client.localite,medecin.nom,medecin.prenom,medecin.titre,medecin.phone" +
+"             from ordonnance join client on ordonnance.idClient=client.idClient " +
+"			 join medecin on ordonnance.idMedecin=medecin.idmedecin" +
+"             where date=?;";
 
     private PreparedStatement createStmt;
     private PreparedStatement deleteStatement;
@@ -70,7 +71,6 @@ public class OrderController {
         for (Analysis a : order.getListOrders()) {
             int z = order.getId();
             int s = a.getId();
-            System.out.println(z + "   " + s);
             resultCreateStatement.setDouble(1, 0);
             resultCreateStatement.setDouble(2, 0);
             resultCreateStatement.setInt(3, z);
@@ -104,18 +104,18 @@ public class OrderController {
     public List<Order> findByDate(Date d) throws SQLException {
         findByDateStatement.setDate(1, (java.sql.Date) d);
         List<Order> list = new ArrayList();
-        System.out.println(valueOf(d.toString())+" A");
         ResultSet set = findByDateStatement.executeQuery();
         int id;
         Client client;
-      
+        Doctor doctor;
         Boolean paid;
         Order o;
         while (set.next()) {
             id = set.getInt(2);
             client = new Client(set.getInt(1), set.getString(5), set.getString(6), set.getString(7), set.getString(8));
-            paid = set.getInt(4) == 1;
-            o=new Order(id,valueOf(d.toString()).toLocalDate(), paid, client, null, null);
+            doctor=new Doctor(null,set.getString(10), set.getString(9), set.getString(12), null, set.getString(11));
+            paid = set.getInt(4)==1;
+            o=new Order(id,valueOf(d.toString()).toLocalDate(), paid, client,doctor, null);
             list.add(o);
         }
 

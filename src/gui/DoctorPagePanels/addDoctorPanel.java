@@ -60,6 +60,8 @@ public class addDoctorPanel extends javax.swing.JPanel {
         saveBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         jLabel1.setText("Title");
 
         jLabel2.setText("First Name");
