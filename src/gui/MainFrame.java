@@ -32,7 +32,8 @@ import utilities.Renderer;
 public class MainFrame extends javax.swing.JFrame {
 
    private final OrderFrame orderFrame=new OrderFrame();
-   
+   private final DoctorsPage doctorsPage=new DoctorsPage();
+   private final ClientPage  clientPage=new ClientPage();
    
    private final DefaultComboBoxModel dateModel=new DefaultComboBoxModel();
    private final DefaultListModel listModel=new DefaultListModel();
@@ -41,7 +42,10 @@ public class MainFrame extends javax.swing.JFrame {
      */
    public MainFrame() throws InterruptedException {
         initComponents();
+        clientPage.setVisible(false);
         mainPane.add(orderFrame);
+        mainPane.add(doctorsPage);
+        mainPane.add(clientPage);
         new InitializeDateComboBox().execute();
         dateComboBox.setModel(dateModel);
         removeDeletedFromList();
@@ -74,6 +78,8 @@ public class MainFrame extends javax.swing.JFrame {
         resultsLabel = new javax.swing.JLabel();
         bill = new javax.swing.JPanel();
         billLabel = new javax.swing.JLabel();
+        orders = new javax.swing.JPanel();
+        ordersLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         dateComboBox = new javax.swing.JComboBox();
         pic = new javax.swing.JLabel();
@@ -184,7 +190,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        sidePanel.add(doctors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, -1, -1));
+        sidePanel.add(doctors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, -1, -1));
 
         clients.setBackground(new java.awt.Color(0, 113, 197));
         clients.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -257,7 +263,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        sidePanel.add(results, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, -1, -1));
+        sidePanel.add(results, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, -1, -1));
 
         bill.setBackground(new java.awt.Color(0, 113, 197));
         bill.setOpaque(false);
@@ -294,7 +300,47 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        sidePanel.add(bill, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, -1, -1));
+        sidePanel.add(bill, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, -1, -1));
+
+        orders.setBackground(new java.awt.Color(0, 113, 197));
+        orders.setOpaque(false);
+        orders.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ordersMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ordersMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ordersMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ordersMousePressed(evt);
+            }
+        });
+
+        ordersLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        ordersLabel.setForeground(new java.awt.Color(45, 137, 206));
+        ordersLabel.setText("Orders");
+
+        javax.swing.GroupLayout ordersLayout = new javax.swing.GroupLayout(orders);
+        orders.setLayout(ordersLayout);
+        ordersLayout.setHorizontalGroup(
+            ordersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ordersLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(ordersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
+        );
+        ordersLayout.setVerticalGroup(
+            ordersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ordersLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ordersLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        sidePanel.add(orders, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, -1, -1));
 
         mainPanel.add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, -1, -1));
 
@@ -400,6 +446,7 @@ public class MainFrame extends javax.swing.JFrame {
         results.setOpaque(false);
         doctors.setOpaque(false);
         bill.setOpaque(false);
+        orders.setOpaque(false);
         panel.setOpaque(true);
         
     }
@@ -409,6 +456,7 @@ public class MainFrame extends javax.swing.JFrame {
         resultsLabel.setForeground(new Color(45, 137, 206));
         billLabel.setForeground(new Color(45, 137, 206));
         doctorsLabel.setForeground(new Color(45, 137, 206));
+        ordersLabel.setForeground(new Color(45, 137, 206));
         label.setForeground(new Color(255, 255, 255));
     }
    
@@ -420,6 +468,7 @@ public class MainFrame extends javax.swing.JFrame {
         label.setForeground(new Color(255, 255, 255));
         panel.setOpaque(true);
         repaint();
+        revalidate();
         
     }
     
@@ -455,7 +504,13 @@ public class MainFrame extends javax.swing.JFrame {
     private void doctorsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doctorsMousePressed
         // TODO add your handling code here:
         mousePress(doctors);
-        mousePressLabel(doctorsLabel);      
+        mousePressLabel(doctorsLabel);
+        mainPane.add(doctorsPage);
+        orderFrame.setVisible(false);
+        clientPage.setVisible(false);
+        doctorsPage.setVisible(true);
+        repaint();
+        revalidate();
     }//GEN-LAST:event_doctorsMousePressed
 
     private void clientsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientsMouseEntered
@@ -470,7 +525,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         mousePress(clients);
         mousePressLabel(clientsLabel);
-        orderFrame.setVisible(true);
+        mainPane.add(clientPage);
+        orderFrame.setVisible(false);
+        doctorsPage.setVisible(false);
+        clientPage.setVisible(true);
         repaint();
     }//GEN-LAST:event_clientsMousePressed
 
@@ -486,7 +544,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         mousePress(results);
         mousePressLabel(resultsLabel);
-        orderFrame.setVisible(true);
         repaint();
     }//GEN-LAST:event_resultsMousePressed
 
@@ -518,6 +575,37 @@ public class MainFrame extends javax.swing.JFrame {
         orderFrame.deleteBtn.setEnabled(true);
         System.out.println(orderFrame.listOrder);
     }//GEN-LAST:event_ordersListMouseClicked
+
+    private void ordersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersMouseEntered
+        // TODO add your handling code here:
+        mouseOnOption(orders, ordersLabel);
+    }//GEN-LAST:event_ordersMouseEntered
+
+    private void ordersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersMouseExited
+        // TODO add your handling code here:
+        mouseOffOption(orders, ordersLabel);
+    }//GEN-LAST:event_ordersMouseExited
+
+    private void ordersMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersMousePressed
+        // TODO add your handling code here:
+        mousePress(orders);
+        mousePressLabel(ordersLabel);
+        mainPane.add(orderFrame);
+        clientPage.setVisible(false);
+        doctorsPage.setVisible(false);
+        orderFrame.setVisible(true);
+        repaint();
+    }//GEN-LAST:event_ordersMousePressed
+
+    private void ordersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersMouseClicked
+        // TODO add your handling code here:
+         mousePress(orders);
+        mousePressLabel(ordersLabel);
+        clientPage.setVisible(false);
+        doctorsPage.setVisible(false);
+        orderFrame.setVisible(true);
+        repaint();
+    }//GEN-LAST:event_ordersMouseClicked
    
     private void removeDeletedFromList(){
       JButton r=orderFrame.getDelete();
@@ -532,27 +620,11 @@ public class MainFrame extends javax.swing.JFrame {
     private void addNewToList(){
         JButton save=orderFrame.getSave();
       save.addActionListener(new ActionListener() {
-
-          public void actionPerformed(ActionEvent e) {
-              while(true){
-               try {
-           Thread.sleep(10000);
-                   System.out.println("BA3duuu");
+            @Override
+            public void actionPerformed(ActionEvent e) {
                    java.sql.Date d=(java.sql.Date)dateComboBox.getSelectedItem();
-              new InitializeList(d).execute();
-              
-           break;
-       } catch (InterruptedException ex) {
-           Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-       }}
-              
-      
-              
-              System.out.println("TL333");
-              java.sql.Date d=(java.sql.Date)dateComboBox.getSelectedItem();
-              new InitializeList(d).execute();
-              
-          }
+                      new InitializeList(d).execute();
+            }
       });
     }
     
@@ -688,6 +760,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel mainPane;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel numberOfClients;
+    private javax.swing.JPanel orders;
+    private javax.swing.JLabel ordersLabel;
     public javax.swing.JList ordersList;
     private javax.swing.JLabel pic;
     private javax.swing.JPanel results;
