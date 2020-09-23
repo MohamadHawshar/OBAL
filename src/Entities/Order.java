@@ -32,13 +32,13 @@ public class Order {
         this.Id = Id;
     }
 
-    public Order(int Id, LocalDate date, boolean paid, Client client, Doctor doctor, Bill bill) {
+    public Order(int Id, LocalDate date, boolean paid, Client client, Doctor doctor, List<Analysis> list) {
         this.Id = Id;
         this.date = date;
         this.paid = paid;
         this.client = client;
         this.doctor = doctor;
-        this.bill = bill;
+        this.listOrders = list;
     }
     public Order(Order o) {
         this.Id = o.Id;

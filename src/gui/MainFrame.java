@@ -568,6 +568,7 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         ImageText i= (ImageText) listModel.getElementAt(ordersList.getSelectedIndex());
         orderFrame.listOrder=i.getOrder();
+//        System.out.println(i.getOrder().getListOrders());
         orderFrame.deleteBtn.setEnabled(true);
         orderFrame.editBtn.setEnabled(true);
     }//GEN-LAST:event_ordersListMouseClicked
@@ -611,6 +612,7 @@ public class MainFrame extends javax.swing.JFrame {
           public void actionPerformed(ActionEvent e) {
                listModel.removeElementAt(ordersList.getSelectedIndex());
                r.setEnabled(false);
+               orderFrame.editBtn.setEnabled(false);
           }
       });
     }
@@ -623,18 +625,6 @@ public class MainFrame extends javax.swing.JFrame {
                       new InitializeList(d).execute();
             }
       });
-    }
-    
-    
-    private void editOrderFromList(){
-        JButton edit=orderFrame.editBtn;
-        edit.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-           
-            }
-        });
     }
     
     

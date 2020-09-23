@@ -30,21 +30,27 @@ public class OrderController {
     private String createString = "insert into `obal`.`ordonnance`(`date`,`idmedecin`,`idclient`,`isPayed`) values (?,?,?,?)";
     private String deleteString = "delete from ordonnance where idordonnance = ?  ;";
     private String resultCreateString = "insert into `obal`.`results` values(?,?,?,?)";
-    private String resultDeleteString = "delete from results where id ordonnance= ?";
+    private String resultDeleteString = "delete from results where idordonnance= ?";
     private String datesString = "select DISTINCT date FROM ORDONNANCE ORDER BY date DESC";
     private String findByDate = "SELECT ordonnance.idclient,ordonnance.idordonnance,ordonnance.date,ordonnance.ispayed," +
 "            client.first_name,client.last_name,client.tel,client.localite,medecin.nom,medecin.prenom,medecin.titre,medecin.phone" +
 "             from ordonnance join client on ordonnance.idClient=client.idClient " +
 "			 join medecin on ordonnance.idMedecin=medecin.idmedecin" +
 "             where date=?;";
-
+    //private String findByDateResults="select * from results where results.idordonnance= ? ";
+    private String findByDateAnalysis="select analyse.* from analyse,results where analyse.idAnalyse=results.idAnalyse and results.idordonnance=?";
+    private String lastID="select idordonnance from ordonnance order by idordonnance desc limit 1;";
+    
+    
     private PreparedStatement createStmt;
     private PreparedStatement deleteStatement;
     private PreparedStatement resultCreateStatement;
     private PreparedStatement resultDeleteStatement;
     private PreparedStatement dateStatement;
     private PreparedStatement findByDateStatement;
-
+    private PreparedStatement lastIDStatement;
+    private PreparedStatement findByDateAnalysisStatement;
+//    private PreparedStatement findByDateResultsStatement;
     public OrderController() {
 
         try {
@@ -54,6 +60,11 @@ public class OrderController {
             resultDeleteStatement = DataSource.getConnection().prepareStatement(resultDeleteString);
             dateStatement = DataSource.getConnection().prepareStatement(datesString);
             findByDateStatement = DataSource.getConnection().prepareStatement(findByDate);
+            lastIDStatement=DataSource.getConnection().prepareStatement(lastID);
+            findByDateAnalysisStatement=DataSource.getConnection().prepareStatement(findByDateAnalysis);
+
+//findByDateResultsStatement=DataSource.getConnection().prepareStatement(findByDateResults);
+            
         } catch (SQLException ex) {
             Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,8 +79,10 @@ public class OrderController {
         createStmt.setInt(3, x);
         createStmt.setInt(4, 0);
         createStmt.executeUpdate();
+        System.out.println("ADDING RESULTSS"+order.getListOrders());
         for (Analysis a : order.getListOrders()) {
-            int z = order.getId();
+            System.out.println("ADDING RESULTSS");
+            int z = OrderController.instance.getLastID();
             int s = a.getId();
             resultCreateStatement.setDouble(1, 0);
             resultCreateStatement.setDouble(2, 0);
@@ -81,11 +94,12 @@ public class OrderController {
     }
 
     public void delete(Order order) throws SQLException {
-        deleteStatement.setString(1, String.valueOf(order.getId()));
+        
         for (Analysis a : order.getListOrders()) {
             resultDeleteStatement.setString(1, String.valueOf(order.getId()));
             resultDeleteStatement.executeUpdate();
         }
+        deleteStatement.setString(1, String.valueOf(order.getId()));
         deleteStatement.executeUpdate();
 
     }
@@ -110,24 +124,43 @@ public class OrderController {
         Doctor doctor;
         Boolean paid;
         Order o;
+        Analysis a;
         while (set.next()) {
+            List<Analysis> listAnalysis=new ArrayList();
             id = set.getInt(2);
             client = new Client(set.getInt(1), set.getString(5), set.getString(6), set.getString(7), set.getString(8));
             doctor=new Doctor(null,set.getString(10), set.getString(9), set.getString(12), null, set.getString(11));
             paid = set.getInt(4)==1;
-            o=new Order(id,valueOf(d.toString()).toLocalDate(), paid, client,doctor, null);
+            findByDateAnalysisStatement.setInt(1,id);
+            ResultSet sett=findByDateAnalysisStatement.executeQuery();
+            while(sett.next()){
+                a=new Analysis(sett.getInt(1), sett.getString(2), sett.getString(3), sett.getString(4), (float) sett.getDouble(5));
+                System.out.println(a);
+                listAnalysis.add(a);
+            }
+            o=new Order(id,valueOf(d.toString()).toLocalDate(), paid, client,doctor,listAnalysis);
             list.add(o);
         }
 
         return list;
 
     }
+    
+    public int getLastID() throws SQLException{
+        ResultSet set=lastIDStatement.executeQuery();
+        while(set.next()){
+            return set.getInt(1);
+            
+        }   
+        return 0;
+    }
+    
 
     public static final OrderController instance = new OrderController();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+        
         Order order = new Order();
         order.setClient(new Client(2));
-        System.out.println(order.getClient().getId());
     }
 }

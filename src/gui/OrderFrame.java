@@ -54,7 +54,7 @@ public class OrderFrame extends javax.swing.JPanel {
     private final DefaultComboBoxModel doctorModel = new DefaultComboBoxModel();
     private final DefaultComboBoxModel analyseModel = new DefaultComboBoxModel();
     private final AnalysisTableModel analysisTableModel=new AnalysisTableModel();
-    private static int idOrder=43;
+   // private static int idOrder=43;
     public Object shared=new Object();
     /**
      * Creates new form OrderFrame
@@ -381,6 +381,13 @@ public class OrderFrame extends javax.swing.JPanel {
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         // TODO add your handling code here:
+        editBtn.setEnabled(false);
+        clear();
+        firstNameField.setText(listOrder.getClient().getFirstName());
+        lastNameField.setText(listOrder.getClient().getLastName());
+        searchButtonActionPerformed(evt);
+        doctorComboBox.setSelectedItem(listOrder.getDoctor());
+        analysisTableModel.add(listOrder.getListOrders());
         
     }//GEN-LAST:event_editBtnActionPerformed
 
@@ -412,11 +419,11 @@ public class OrderFrame extends javax.swing.JPanel {
         order.setDoctor(doctor);
         order.setDate(date);
         order.setPaid(false);
-        order.setListOrders(list);
-        order.setId(idOrder);
+        order.setListOrders(list); 
         currentOrder = order;
         new OrderFrame.SaveOrderPerformed(currentOrder).execute();
-        idOrder++;
+        //list.removeAll(list);
+     //   idOrder++;
 
         
     }//GEN-LAST:event_saveBtnMousePressed
