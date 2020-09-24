@@ -81,6 +81,7 @@ public class MainFrame extends javax.swing.JFrame {
         billLabel = new javax.swing.JLabel();
         orders = new javax.swing.JPanel();
         ordersLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         dateComboBox = new javax.swing.JComboBox();
         pic = new javax.swing.JLabel();
@@ -130,18 +131,18 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(195, 195, 195)
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(headerText, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(line, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 535, Short.MAX_VALUE)
+                    .addComponent(line, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 471, Short.MAX_VALUE)
                 .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(headerLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(headerText, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(line, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(line, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
                 .addGap(30, 30, 30))
         );
 
@@ -152,7 +153,8 @@ public class MainFrame extends javax.swing.JFrame {
         mainPane.setLayout(new java.awt.BorderLayout());
         mainPanel.add(mainPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 1200, 930));
 
-        sidePanel.setBackground(new java.awt.Color(227, 234, 238));
+        sidePanel.setBackground(new java.awt.Color(247, 247, 247));
+        sidePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 113, 185)));
         sidePanel.setPreferredSize(new java.awt.Dimension(320, 930));
         sidePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -208,7 +210,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         clientsLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         clientsLabel.setForeground(new java.awt.Color(255, 255, 255));
-        clientsLabel.setText("Clients And Tests");
+        clientsLabel.setText("Clients");
 
         javax.swing.GroupLayout clientsLayout = new javax.swing.GroupLayout(clients);
         clients.setLayout(clientsLayout);
@@ -343,6 +345,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         sidePanel.add(orders, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, -1, -1));
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IMG-20200923-WA0007.jpg"))); // NOI18N
+        sidePanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 740, 190, 180));
+
         mainPanel.add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, -1, -1));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.blue, java.awt.Color.yellow));
@@ -418,9 +423,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -560,6 +563,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void dateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateComboBoxActionPerformed
         // TODO add your handling code here:
+          ordersList.clearSelection();
+          orderFrame.editBtn.setEnabled(false);
+          orderFrame.deleteBtn.setEnabled(false);
           java.sql.Date d=(java.sql.Date)dateComboBox.getSelectedItem();
           new InitializeList(d).execute();
     }//GEN-LAST:event_dateComboBoxActionPerformed
@@ -756,6 +762,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel header;
     private javax.swing.JLabel headerText;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label;
