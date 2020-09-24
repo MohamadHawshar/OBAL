@@ -41,7 +41,6 @@ public class OrderController {
     private String findByDateAnalysis="select analyse.* from analyse,results where analyse.idAnalyse=results.idAnalyse and results.idordonnance=?";
     private String lastID="select idordonnance from ordonnance order by idordonnance desc limit 1;";
     
-    
     private PreparedStatement createStmt;
     private PreparedStatement deleteStatement;
     private PreparedStatement resultCreateStatement;
@@ -79,9 +78,7 @@ public class OrderController {
         createStmt.setInt(3, x);
         createStmt.setInt(4, 0);
         createStmt.executeUpdate();
-        System.out.println("ADDING RESULTSS"+order.getListOrders());
         for (Analysis a : order.getListOrders()) {
-            System.out.println("ADDING RESULTSS");
             int z = OrderController.instance.getLastID();
             int s = a.getId();
             resultCreateStatement.setDouble(1, 0);
@@ -95,15 +92,31 @@ public class OrderController {
 
     public void delete(Order order) throws SQLException {
         
-        for (Analysis a : order.getListOrders()) {
+        //for (Analysis a : order.getListOrders()) {
             resultDeleteStatement.setString(1, String.valueOf(order.getId()));
             resultDeleteStatement.executeUpdate();
-        }
+       // }
         deleteStatement.setString(1, String.valueOf(order.getId()));
         deleteStatement.executeUpdate();
 
     }
 
+    public void updateAnalysis(Order order) throws SQLException{
+        
+        resultDeleteStatement.setString(1, String.valueOf(order.getId()));
+        resultDeleteStatement.executeUpdate();
+        
+        for (Analysis a : order.getListOrders()) {
+            int s = a.getId();
+            resultCreateStatement.setDouble(1, 0);
+            resultCreateStatement.setDouble(2, 0);
+            resultCreateStatement.setInt(3, order.getId());
+            resultCreateStatement.setInt(4, s);
+            resultCreateStatement.executeUpdate();
+        }
+
+        
+    }
     public List<Date> date() throws SQLException {
         List<Date> list = new ArrayList();
         ResultSet set = dateStatement.executeQuery();
@@ -135,7 +148,6 @@ public class OrderController {
             ResultSet sett=findByDateAnalysisStatement.executeQuery();
             while(sett.next()){
                 a=new Analysis(sett.getInt(1), sett.getString(2), sett.getString(3), sett.getString(4), (float) sett.getDouble(5));
-                System.out.println(a);
                 listAnalysis.add(a);
             }
             o=new Order(id,valueOf(d.toString()).toLocalDate(), paid, client,doctor,listAnalysis);
