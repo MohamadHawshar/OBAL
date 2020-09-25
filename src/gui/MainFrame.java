@@ -69,7 +69,9 @@ public class MainFrame extends javax.swing.JFrame {
         line = new javax.swing.JSeparator();
         exit = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnExit = new javax.swing.JLabel();
+        exitBtn = new javax.swing.JLabel();
+        maximizeBtn = new javax.swing.JLabel();
+        minimizeBtn = new javax.swing.JLabel();
         mainPane = new javax.swing.JPanel();
         sidePanel = new javax.swing.JPanel();
         doctors = new javax.swing.JPanel();
@@ -108,21 +110,43 @@ public class MainFrame extends javax.swing.JFrame {
         exit.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled.png"))); // NOI18N
-        exit.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, -1));
+        exit.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, -1));
 
-        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG"))); // NOI18N
-        btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG"))); // NOI18N
+        exitBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnExitMouseEntered(evt);
+                exitBtnMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnExitMouseExited(evt);
+                exitBtnMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnExitMousePressed(evt);
+                exitBtnMousePressed(evt);
             }
         });
-        exit.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 40, 50));
+        exit.add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 40, 50));
+
+        maximizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/maximize.png"))); // NOI18N
+        maximizeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                maximizeBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                maximizeBtnMouseExited(evt);
+            }
+        });
+        exit.add(maximizeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 42, 50));
+
+        minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minimize.png"))); // NOI18N
+        minimizeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minimizeBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minimizeBtnMouseExited(evt);
+            }
+        });
+        exit.add(minimizeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 42, 50));
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
@@ -430,7 +454,7 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnExitMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMousePressed
+    private void exitBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMousePressed
         try {
             // TODO add your handling code here:
             Thread.sleep(400);
@@ -438,7 +462,7 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.exit(0);
-    }//GEN-LAST:event_btnExitMousePressed
+    }//GEN-LAST:event_exitBtnMousePressed
 
     private void mousePress(JPanel panel) {//change color of option panell
         panel.setBackground(new Color(0, 113, 197));
@@ -481,16 +505,16 @@ public class MainFrame extends javax.swing.JFrame {
         repaint();
     }
     
-    private void btnExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseEntered
+    private void exitBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseEntered
         // TODO add your handling code here:
-         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit_blue.png")));
+         exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit_blue.png")));
 
-    }//GEN-LAST:event_btnExitMouseEntered
+    }//GEN-LAST:event_exitBtnMouseEntered
 
-    private void btnExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseExited
+    private void exitBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseExited
         // TODO add your handling code here:
-         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG")));
-    }//GEN-LAST:event_btnExitMouseExited
+         exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG")));
+    }//GEN-LAST:event_exitBtnMouseExited
 
     private void doctorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doctorsMouseEntered
         mouseOnOption(doctors, doctorsLabel);
@@ -619,6 +643,26 @@ public class MainFrame extends javax.swing.JFrame {
         orderFrame.setVisible(true);
         repaint();
     }//GEN-LAST:event_ordersMouseClicked
+
+    private void maximizeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_maximizeBtnMouseEntered
+        // TODO add your handling code here:
+        maximizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/maximize_blue.png")));
+    }//GEN-LAST:event_maximizeBtnMouseEntered
+
+    private void maximizeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_maximizeBtnMouseExited
+        // TODO add your handling code here:
+        maximizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/maximize.png")));
+    }//GEN-LAST:event_maximizeBtnMouseExited
+
+    private void minimizeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseEntered
+        // TODO add your handling code here:
+        minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minimize_blue.png")));
+    }//GEN-LAST:event_minimizeBtnMouseEntered
+
+    private void minimizeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseExited
+        // TODO add your handling code here:
+        minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minimize.png")));
+    }//GEN-LAST:event_minimizeBtnMouseExited
    
     private void removeDeletedFromList(){
       JButton r=orderFrame.getDelete();
@@ -762,13 +806,13 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bill;
     private javax.swing.JLabel billLabel;
-    private javax.swing.JLabel btnExit;
     private javax.swing.JPanel clients;
     private javax.swing.JLabel clientsLabel;
     private javax.swing.JComboBox dateComboBox;
     private javax.swing.JPanel doctors;
     private javax.swing.JLabel doctorsLabel;
     private javax.swing.JPanel exit;
+    private javax.swing.JLabel exitBtn;
     private javax.swing.JPanel header;
     private javax.swing.JLabel headerText;
     private javax.swing.JLabel jLabel1;
@@ -779,6 +823,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator line;
     private javax.swing.JPanel mainPane;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JLabel maximizeBtn;
+    private javax.swing.JLabel minimizeBtn;
     private javax.swing.JLabel numberOfClients;
     private javax.swing.JPanel orders;
     private javax.swing.JLabel ordersLabel;
