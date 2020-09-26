@@ -6,6 +6,7 @@
 package Controllers;
 
 import Entities.Analysis;
+import Entities.Order;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,11 +23,17 @@ import utilities.DataSource;
 public class AnalyseController {
     
     private String findAll="select * from analyse";
+    private String findByOrder = "select Analyse.idAnalyse , Analyse.name , Analyse.unite , Analyse.valeur , Analyse.price ,results.results from analyse, results where results.idordonnance = ? and results.idanalyse = analyse.idanalyse;";
+    private String addResult = "update results set results = ? where idordonnance = ? and idanalyse = ?;";
+    private PreparedStatement addResultStatement;
     private PreparedStatement findAllStatement;
+    private PreparedStatement findByOrderStatement;
 
     private AnalyseController() {
         try {
             findAllStatement=DataSource.getConnection().prepareStatement(findAll);
+            findByOrderStatement=DataSource.getConnection().prepareStatement(findByOrder);
+            addResultStatement=DataSource.getConnection().prepareStatement(addResult);
         } catch (SQLException ex) {
             Logger.getLogger(AnalyseController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,6 +59,30 @@ public class AnalyseController {
         
         
         return list;
+    }
+    public Order findByOrder(Order o) throws SQLException{
+        
+        findByOrderStatement.setInt(1,o.getId());
+        ResultSet res = findByOrderStatement.executeQuery();
+        Analysis a;
+        while(res.next()){
+            a = new Analysis(res.getInt(1),res.getString(2),res.getString(3),res.getString(4),res.getFloat(5));
+            a.setResult(res.getFloat(6));
+            o.listAnalysis.add(a);
+        }
+        return o;
+        
+    }
+    public Void addResult(Order o) throws SQLException{
+        
+        for(Analysis a : o.listAnalysis){
+            addResultStatement.setDouble(1,a.getResult());
+            addResultStatement.setInt(2,o.getId());
+            addResultStatement.setInt(3,a.getId());
+            addResultStatement.executeUpdate();
+            
+        }
+        return null;
     }
     public static final AnalyseController instance=new AnalyseController() ;
     

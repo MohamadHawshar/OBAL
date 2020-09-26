@@ -30,7 +30,7 @@ public class DataSource {
 	String lsConnexion = "jdbc:mysql://localhost:330/obal";
 
 	String lsUt  = "root";
-	String lsMdp = "root";
+	String lsMdp = "database";
         
         if (con == null) {
             try {

@@ -105,15 +105,19 @@ public class ClientController {
         deleteByKeyStmt.setString(1, String.valueOf(client.getId()));
         deleteByKeyStmt.executeUpdate();
     }
-    public List<Client> findByLike(String firstName, String lastName) {
+    public List<Client> findByLike(String firstName) {
         List<Client> ls = new ArrayList();
+        String fName,lName;
+        String[] table = firstName.split(" ");
+        fName = table[0];
+        lName = table[1];
         try {
-            if (firstName == null || lastName == null) {
-                JOptionPane.showMessageDialog(null, " please enter both first and last name");
+            if (fName == null || lName == null) {
+                JOptionPane.showMessageDialog(null, " please enter full name");
                 return null;
             }else {
-                findByLikeStmt.setString(1, "%" + firstName + "%");
-                findByLikeStmt.setString(2, "%" + lastName + "%");
+                findByLikeStmt.setString(1, "%" + fName + "%");
+                findByLikeStmt.setString(2, "%" + lName + "%");
             }
             ResultSet set = findByLikeStmt.executeQuery();
             while (set.next()) {

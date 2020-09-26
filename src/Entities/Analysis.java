@@ -17,6 +17,7 @@ public class Analysis {
     private String unit;
     private String value;
     private float defaultPrice;
+    private float result;
 
     public Analysis(int Id, String name, String unit, String value, float defaultPrice) {
         this.Id = Id;
@@ -24,6 +25,14 @@ public class Analysis {
         this.unit = unit;
         this.value = value;
         this.defaultPrice = defaultPrice;
+    }
+
+    public float getResult() {
+        return result;
+    }
+
+    public void setResult(float result) {
+        this.result = result;
     }
 
     

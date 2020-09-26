@@ -36,6 +36,7 @@ public class MainFrame extends javax.swing.JFrame {
    private final OrderFrame orderFrame=new OrderFrame();
    private final DoctorsPage doctorsPage=new DoctorsPage();
    private final ClientPage  clientPage=new ClientPage();
+   private final ResultsPane  resultPage=new ResultsPane();
    
    private final DefaultComboBoxModel dateModel=new DefaultComboBoxModel();
    private final DefaultListModel listModel=new DefaultListModel();
@@ -507,6 +508,7 @@ public class MainFrame extends javax.swing.JFrame {
         mainPane.add(doctorsPage);
         orderFrame.setVisible(false);
         clientPage.setVisible(false);
+        resultPage.setVisible(false);
         doctorsPage.setVisible(true);
         repaint();
         revalidate();
@@ -527,6 +529,7 @@ public class MainFrame extends javax.swing.JFrame {
         mainPane.add(clientPage);
         orderFrame.setVisible(false);
         doctorsPage.setVisible(false);
+        resultPage.setVisible(false);
         clientPage.setVisible(true);
         repaint();
     }//GEN-LAST:event_clientsMousePressed
@@ -543,6 +546,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         mousePress(results);
         mousePressLabel(resultsLabel);
+        mainPane.add(resultPage);
+        orderFrame.setVisible(false);
+        doctorsPage.setVisible(false);
+        clientPage.setVisible(false);
+        resultPage.setVisible(true);
         repaint();
     }//GEN-LAST:event_resultsMousePressed
 
@@ -595,6 +603,7 @@ public class MainFrame extends javax.swing.JFrame {
         mousePressLabel(ordersLabel);
         mainPane.add(orderFrame);
         clientPage.setVisible(false);
+        resultPage.setVisible(false);
         doctorsPage.setVisible(false);
         orderFrame.setVisible(true);
         repaint();
@@ -605,6 +614,7 @@ public class MainFrame extends javax.swing.JFrame {
          mousePress(orders);
         mousePressLabel(ordersLabel);
         clientPage.setVisible(false);
+        resultPage.setVisible(false);
         doctorsPage.setVisible(false);
         orderFrame.setVisible(true);
         repaint();

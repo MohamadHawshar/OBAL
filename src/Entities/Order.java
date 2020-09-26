@@ -23,7 +23,7 @@ public class Order {
     private Client client;
     private Doctor doctor;
     private Bill bill;
-    private List<Analysis> listOrders = new ArrayList();
+    public List<Analysis> listAnalysis = new ArrayList();
     public Order(){
         
     }
@@ -38,7 +38,7 @@ public class Order {
         this.paid = paid;
         this.client = client;
         this.doctor = doctor;
-        this.listOrders = list;
+        this.listAnalysis = list;
     }
     public Order(Order o) {
         this.Id = o.Id;
@@ -50,11 +50,11 @@ public class Order {
     }
 
     public List<Analysis> getListOrders() {
-        return listOrders;
+        return listAnalysis;
     }
 
     public void setListOrders(List<Analysis> listOrders) {
-        this.listOrders = listOrders;
+        this.listAnalysis = listOrders;
     }
     
     
@@ -119,7 +119,7 @@ public class Order {
         return true;
     }
     public String toString() {
-        return Id + " " + date + "" +(paid==true?"paid":"not paid");
+        return Id + " " + date;
     }
 //    public Analysis getAnalysisById(int Id){
 //        //todo

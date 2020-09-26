@@ -118,10 +118,8 @@ public class OrderFrame extends javax.swing.JPanel {
         clientsTable = new javax.swing.JTable();
         doctorComboBox = new javax.swing.JComboBox();
         searchButton = new javax.swing.JButton();
-        lastNameField = new javax.swing.JTextField();
         removeTestBtn = new javax.swing.JButton();
         clearBtn = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         editBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -271,9 +269,6 @@ public class OrderFrame extends javax.swing.JPanel {
             }
         });
 
-        lastNameField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lastNameField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
-
         removeTestBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         removeTestBtn.setForeground(new java.awt.Color(22, 113, 185));
         removeTestBtn.setText("Remove Test");
@@ -293,10 +288,6 @@ public class OrderFrame extends javax.swing.JPanel {
                 clearBtnActionPerformed(evt);
             }
         });
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(22, 113, 185));
-        jLabel3.setText("Last name");
 
         editBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         editBtn.setForeground(new java.awt.Color(22, 113, 185));
@@ -330,12 +321,8 @@ public class OrderFrame extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(firstNameField)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(analysisComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 749, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -353,10 +340,7 @@ public class OrderFrame extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                     .addComponent(firstNameField)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(lastNameField, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                        .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
@@ -408,9 +392,8 @@ public class OrderFrame extends javax.swing.JPanel {
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
         String firstName = firstNameField.getText();
-        String lastName = lastNameField.getText();
         clientModel.removeAll();
-        new SearchClientPerformed(firstName, lastName).execute();
+        new SearchClientPerformed(firstName).execute();
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
@@ -422,8 +405,7 @@ public class OrderFrame extends javax.swing.JPanel {
         // TODO add your handling code here:
         editBtn.setEnabled(false);
         clear();
-        firstNameField.setText(listOrder.getClient().getFirstName());
-        lastNameField.setText(listOrder.getClient().getLastName());
+        firstNameField.setText(listOrder.getClient().getFirstName() + " " + listOrder.getClient().getLastName());
         searchButtonActionPerformed(evt);
         doctorComboBox.setSelectedItem(listOrder.getDoctor());
         analysisTableModel.add(listOrder.getListOrders());
@@ -511,16 +493,15 @@ public class OrderFrame extends javax.swing.JPanel {
     private class SearchClientPerformed extends SwingWorker<List<Client>, Void> {
 
         private final String fName;
-        private final String lName;
 
-        public SearchClientPerformed(String firstName, String lastName) {
+        public SearchClientPerformed(String firstName) {
             this.fName = firstName;
-            this.lName = lastName;
+           
         }
 
         @Override
         protected List<Client> doInBackground() throws Exception {
-            return ClientController.instance.findByLike(fName, lName);
+            return ClientController.instance.findByLike(fName);
         }
 
         @Override
@@ -560,10 +541,8 @@ public class OrderFrame extends javax.swing.JPanel {
     public javax.swing.JButton editBtn;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField lastNameField;
     private javax.swing.JButton removeTestBtn;
     private javax.swing.JButton saveBtn;
     private javax.swing.JButton searchButton;

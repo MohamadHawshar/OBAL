@@ -40,6 +40,7 @@ public class OrderController {
     //private String findByDateResults="select * from results where results.idordonnance= ? ";
     private String findByDateAnalysis="select analyse.* from analyse,results where analyse.idAnalyse=results.idAnalyse and results.idordonnance=?";
     private String lastID="select idordonnance from ordonnance order by idordonnance desc limit 1;";
+    private String findByClient = "select * from ordonnance where idclient = ?";
     
     private PreparedStatement createStmt;
     private PreparedStatement deleteStatement;
@@ -49,6 +50,7 @@ public class OrderController {
     private PreparedStatement findByDateStatement;
     private PreparedStatement lastIDStatement;
     private PreparedStatement findByDateAnalysisStatement;
+    private PreparedStatement findByClientStatment;
 //    private PreparedStatement findByDateResultsStatement;
     public OrderController() {
 
@@ -61,6 +63,8 @@ public class OrderController {
             findByDateStatement = DataSource.getConnection().prepareStatement(findByDate);
             lastIDStatement=DataSource.getConnection().prepareStatement(lastID);
             findByDateAnalysisStatement=DataSource.getConnection().prepareStatement(findByDateAnalysis);
+            findByClientStatment=DataSource.getConnection().prepareStatement(findByClient);
+
 
 //findByDateResultsStatement=DataSource.getConnection().prepareStatement(findByDateResults);
             
@@ -165,6 +169,19 @@ public class OrderController {
             
         }   
         return 0;
+    }
+    public List<Order> findByClient(Client cl) throws SQLException{
+        findByClientStatment.setInt(1, cl.getId());
+        ResultSet res = findByClientStatment.executeQuery();
+        List<Order> ls=new ArrayList();
+        Order o;
+        Boolean isPaid;
+        while(res.next()){
+            isPaid = (res.getInt(3) == 1)? true : false;
+            o = new Order(res.getInt(1), res.getDate(2).toLocalDate(),isPaid,null,null,null);
+            ls.add(o);
+        }
+        return ls;
     }
     
 
