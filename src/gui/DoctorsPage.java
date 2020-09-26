@@ -8,9 +8,6 @@ package gui;
 
 import Controllers.DoctorController;
 import Entities.Doctor;
-import gui.DoctorPagePanels.DoctorPageMenuPanel;
-import gui.DoctorPagePanels.SearchDoctorPanel;
-import gui.DoctorPagePanels.addDoctorPanel;
 import java.awt.BorderLayout;
 import java.sql.SQLException;
 import java.util.List;
@@ -33,7 +30,6 @@ public class DoctorsPage extends javax.swing.JPanel {
     private final DoctorsTableModel doctorModel = new DoctorsTableModel();
     public DoctorsPage() {
         initComponents();
-        this.add(new DoctorPageMenuPanel());
         this.setVisible(false);
         this.repaint();
         doctorsTable.setModel(doctorModel);
@@ -419,9 +415,9 @@ private class SearchDoctorPerformed extends SwingWorker<List<Doctor>, Void> {
                     
                 }
             } catch (InterruptedException ex) {
-                Logger.getLogger(SearchDoctorPanel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DoctorsPage.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ExecutionException ex) {
-                Logger.getLogger(SearchDoctorPanel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DoctorsPage.class.getName()).log(Level.SEVERE, null, ex);
             }
             
 
@@ -449,7 +445,7 @@ private class DeleteDoctorWorker extends SwingWorker<String, Void> {
                    
                 }
             } catch (InterruptedException | ExecutionException ex) {
-                Logger.getLogger(SearchDoctorPanel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DoctorsPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -490,9 +486,9 @@ private class SaveWorker extends SwingWorker<String, Void> {
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (InterruptedException ex) {
-                Logger.getLogger(gui.DoctorPagePanels.editDoctor.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DoctorsPage.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ExecutionException ex) {
-                Logger.getLogger(gui.DoctorPagePanels.editDoctor.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DoctorsPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
