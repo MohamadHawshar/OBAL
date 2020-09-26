@@ -116,15 +116,19 @@ public class DoctorController {
         deleteByKeyStmt.setString(1,doctor.getId());
         deleteByKeyStmt.executeUpdate();
     }
-    public List<Doctor> findByLike(String firstName, String lastName) {
+    public List<Doctor> findByLike(String firstName) {
         List<Doctor> ls = new ArrayList();
+        String fName,lName;
+        String[] table = firstName.split(" ");
+        fName = table[0];
+        lName = table[1];
         try {
-            if (firstName == null || lastName == null) {
-                JOptionPane.showMessageDialog(null, " please enter both first and last name");
+            if (firstName == null ) {
+                JOptionPane.showMessageDialog(null, " please enter full name");
                 return null;
             }else {
-                findByLikeStmt.setString(1, "%" + firstName + "%");
-                findByLikeStmt.setString(2, "%" + lastName + "%");
+                findByLikeStmt.setString(1, "%" + fName + "%");
+                findByLikeStmt.setString(2, "%" + lName + "%");
             }
             ResultSet set = findByLikeStmt.executeQuery();
             while (set.next()) {
