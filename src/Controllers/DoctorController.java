@@ -28,7 +28,7 @@ public class DoctorController {
     private String findAllString = "select * from medecin";
     private String findByKeyString = "select * from medecin where idMedecin = ?";
     private String deleteByKeyString = "delete from medecin where idMedecin = ?";
-    private String findByLikeString = "select * from medecin where lower(nom) like ? and lower(prenom) like ?";
+    private String findByLikeString = "select * from medecin where lower(nom) like lower(?) and lower(prenom) like lower(?)";
 
     private PreparedStatement createStmt;
     private PreparedStatement updateStmt;
