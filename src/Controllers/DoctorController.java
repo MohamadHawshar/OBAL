@@ -121,7 +121,12 @@ public class DoctorController {
         String fName,lName;
         String[] table = firstName.split(" ");
         fName = table[0];
-        lName = table[1];
+        try{ 
+            lName = table[1];
+        }
+        catch(ArrayIndexOutOfBoundsException ex){
+            lName="";
+        }
         try {
             if (firstName == null ) {
                 JOptionPane.showMessageDialog(null, " please enter full name");
