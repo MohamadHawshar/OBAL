@@ -26,7 +26,7 @@ public class ClientController {
     private String findAllString = "select * from Client";
     private String findByKeyString = "select * from Client where idClient = ?";
     private String deleteByKeyString = "delete from Client where idClient = ?";
-    private String findByLikeString = "select * from Client where lower(first_name) like ? and lower(last_name) like ?";
+    private String findByLikeString = "select * from Client where lower(first_name) like lower(?) and lower(last_name) like lower(?)";
     
     
     private PreparedStatement createStmt;
