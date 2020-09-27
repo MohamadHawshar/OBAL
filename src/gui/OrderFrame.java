@@ -371,6 +371,7 @@ public class OrderFrame extends javax.swing.JPanel {
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
 
         new OrderFrame.DeleteOrderPerformed(listOrder).execute();
+           editing=false;
 
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -399,6 +400,7 @@ public class OrderFrame extends javax.swing.JPanel {
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         // TODO add your handling code here:
         clear();
+        editing=false;
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
@@ -445,6 +447,7 @@ public class OrderFrame extends javax.swing.JPanel {
         }
         else
         {
+            editing=false;
             List<Analysis> list = analysisTableModel.getAll();
             listOrder.setListOrders(list);
             new OrderFrame.editOrderPerformed(listOrder).execute();
