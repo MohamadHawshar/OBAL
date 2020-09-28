@@ -1,6 +1,5 @@
 package gui;
 
-
 import Controllers.OrderController;
 import Entities.Order;
 import java.awt.Color;
@@ -33,17 +32,19 @@ import utilities.Renderer;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-   private final OrderFrame orderFrame=new OrderFrame();
-   private final DoctorsPage doctorsPage=new DoctorsPage();
-   private final ClientPage  clientPage=new ClientPage();
-   private final ResultsPane  resultPage=new ResultsPane();
-   
-   private final DefaultComboBoxModel dateModel=new DefaultComboBoxModel();
-   private final DefaultListModel listModel=new DefaultListModel();
+    private final OrderFrame orderFrame = new OrderFrame();
+    private final DoctorsPage doctorsPage = new DoctorsPage();
+    private final ClientPage clientPage = new ClientPage();
+    private final ResultsPane resultPage = new ResultsPane();
+    private final BillFrame billPage = new BillFrame();
+
+    private final DefaultComboBoxModel dateModel = new DefaultComboBoxModel();
+    private final DefaultListModel listModel = new DefaultListModel();
+
     /**
      * Creates new form MainFrame
      */
-   public MainFrame() throws InterruptedException {
+    public MainFrame() throws InterruptedException {
         initComponents();
         clientPage.setVisible(false);
         mainPane.add(orderFrame);
@@ -52,8 +53,8 @@ public class MainFrame extends javax.swing.JFrame {
         dateComboBox.setModel(dateModel);
         removeDeletedFromList();
         addNewToList();
-   }
-      
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -69,7 +70,9 @@ public class MainFrame extends javax.swing.JFrame {
         line = new javax.swing.JSeparator();
         exit = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnExit = new javax.swing.JLabel();
+        exitBtn = new javax.swing.JLabel();
+        maximizeBtn = new javax.swing.JLabel();
+        minimizeBtn = new javax.swing.JLabel();
         mainPane = new javax.swing.JPanel();
         sidePanel = new javax.swing.JPanel();
         doctors = new javax.swing.JPanel();
@@ -108,21 +111,43 @@ public class MainFrame extends javax.swing.JFrame {
         exit.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled.png"))); // NOI18N
-        exit.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, -1));
+        exit.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, -1));
 
-        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG"))); // NOI18N
-        btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG"))); // NOI18N
+        exitBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnExitMouseEntered(evt);
+                exitBtnMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnExitMouseExited(evt);
+                exitBtnMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnExitMousePressed(evt);
+                exitBtnMousePressed(evt);
             }
         });
-        exit.add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 40, 50));
+        exit.add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 40, 50));
+
+        maximizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/maximize.png"))); // NOI18N
+        maximizeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                maximizeBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                maximizeBtnMouseExited(evt);
+            }
+        });
+        exit.add(maximizeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 42, 50));
+
+        minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minimize.png"))); // NOI18N
+        minimizeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minimizeBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minimizeBtnMouseExited(evt);
+            }
+        });
+        exit.add(minimizeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 42, 50));
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
@@ -430,7 +455,7 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnExitMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMousePressed
+    private void exitBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMousePressed
         try {
             // TODO add your handling code here:
             Thread.sleep(400);
@@ -438,7 +463,7 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.exit(0);
-    }//GEN-LAST:event_btnExitMousePressed
+    }//GEN-LAST:event_exitBtnMousePressed
 
     private void mousePress(JPanel panel) {//change color of option panell
         panel.setBackground(new Color(0, 113, 197));
@@ -448,9 +473,9 @@ public class MainFrame extends javax.swing.JFrame {
         bill.setOpaque(false);
         orders.setOpaque(false);
         panel.setOpaque(true);
-        
+
     }
-    
+
     private void mousePressLabel(JLabel label) {  // change color of option label(text)
         clientsLabel.setForeground(new Color(45, 137, 206));
         resultsLabel.setForeground(new Color(45, 137, 206));
@@ -459,8 +484,8 @@ public class MainFrame extends javax.swing.JFrame {
         ordersLabel.setForeground(new Color(45, 137, 206));
         label.setForeground(new Color(255, 255, 255));
     }
-   
-     private void mouseOnOption(JPanel panel, JLabel label) {
+
+    private void mouseOnOption(JPanel panel, JLabel label) {
         if (panel.isOpaque() == true) {
             return;                                  // already clicked
         }
@@ -469,28 +494,29 @@ public class MainFrame extends javax.swing.JFrame {
         panel.setOpaque(true);
         repaint();
         revalidate();
-        
+
     }
-    
+
     private void mouseOffOption(JPanel panel, JLabel label) {
-      if(panel.getBackground().getRGB()==new Color(0,113,197).getRGB())
-          return;
+        if (panel.getBackground().getRGB() == new Color(0, 113, 197).getRGB()) {
+            return;
+        }
         panel.setBackground(new Color(0, 113, 197));
         label.setForeground(new Color(45, 137, 206));
         panel.setOpaque(false);
         repaint();
     }
-    
-    private void btnExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseEntered
-        // TODO add your handling code here:
-         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit_blue.png")));
 
-    }//GEN-LAST:event_btnExitMouseEntered
-
-    private void btnExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseExited
+    private void exitBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseEntered
         // TODO add your handling code here:
-         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG")));
-    }//GEN-LAST:event_btnExitMouseExited
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit_blue.png")));
+
+    }//GEN-LAST:event_exitBtnMouseEntered
+
+    private void exitBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseExited
+        // TODO add your handling code here:
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG")));
+    }//GEN-LAST:event_exitBtnMouseExited
 
     private void doctorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doctorsMouseEntered
         mouseOnOption(doctors, doctorsLabel);
@@ -510,6 +536,7 @@ public class MainFrame extends javax.swing.JFrame {
         clientPage.setVisible(false);
         resultPage.setVisible(false);
         doctorsPage.setVisible(true);
+        billPage.setVisible(false);
         repaint();
         revalidate();
     }//GEN-LAST:event_doctorsMousePressed
@@ -530,7 +557,9 @@ public class MainFrame extends javax.swing.JFrame {
         orderFrame.setVisible(false);
         doctorsPage.setVisible(false);
         resultPage.setVisible(false);
+        billPage.setVisible(false);
         clientPage.setVisible(true);
+
         repaint();
     }//GEN-LAST:event_clientsMousePressed
 
@@ -550,7 +579,9 @@ public class MainFrame extends javax.swing.JFrame {
         orderFrame.setVisible(false);
         doctorsPage.setVisible(false);
         clientPage.setVisible(false);
-        resultPage.setVisible(true);
+        resultPage.setVisible(true);      
+        billPage.setVisible(false);
+
         repaint();
     }//GEN-LAST:event_resultsMousePressed
 
@@ -566,22 +597,28 @@ public class MainFrame extends javax.swing.JFrame {
 
         mousePress(bill);
         mousePressLabel(billLabel);
+        mainPane.add(billPage);
+        orderFrame.setVisible(false);
+        doctorsPage.setVisible(false);
+        clientPage.setVisible(false);
+        resultPage.setVisible(false);      
+        billPage.setVisible(true);
         repaint();
     }//GEN-LAST:event_billMousePressed
 
     private void dateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateComboBoxActionPerformed
         // TODO add your handling code here:
-          ordersList.clearSelection();
-          orderFrame.editBtn.setEnabled(false);
-          orderFrame.deleteBtn.setEnabled(false);
-          java.sql.Date d=(java.sql.Date)dateComboBox.getSelectedItem();
-          new InitializeList(d).execute();
+        ordersList.clearSelection();
+        orderFrame.editBtn.setEnabled(false);
+        orderFrame.deleteBtn.setEnabled(false);
+        java.sql.Date d = (java.sql.Date) dateComboBox.getSelectedItem();
+        new InitializeList(d).execute();
     }//GEN-LAST:event_dateComboBoxActionPerformed
 
     private void ordersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersListMouseClicked
         // TODO add your handling code here:
-        ImageText i= (ImageText) listModel.getElementAt(ordersList.getSelectedIndex());
-        orderFrame.listOrder=i.getOrder();
+        ImageText i = (ImageText) listModel.getElementAt(ordersList.getSelectedIndex());
+        orderFrame.listOrder = i.getOrder();
 //        System.out.println(i.getOrder().getListOrders());
         orderFrame.deleteBtn.setEnabled(true);
         orderFrame.editBtn.setEnabled(true);
@@ -603,111 +640,127 @@ public class MainFrame extends javax.swing.JFrame {
         mousePressLabel(ordersLabel);
         mainPane.add(orderFrame);
         clientPage.setVisible(false);
-        resultPage.setVisible(false);
         doctorsPage.setVisible(false);
+        resultPage.setVisible(false);      
+        billPage.setVisible(false);
         orderFrame.setVisible(true);
         repaint();
     }//GEN-LAST:event_ordersMousePressed
 
     private void ordersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersMouseClicked
         // TODO add your handling code here:
-         mousePress(orders);
-        mousePressLabel(ordersLabel);
-        clientPage.setVisible(false);
-        resultPage.setVisible(false);
-        doctorsPage.setVisible(false);
-        orderFrame.setVisible(true);
-        repaint();
+      
     }//GEN-LAST:event_ordersMouseClicked
-   
-    private void removeDeletedFromList(){
-      JButton r=orderFrame.getDelete();
-      r.addActionListener(new ActionListener() {
 
-          @Override
-          public void actionPerformed(ActionEvent e) {
-               listModel.removeElementAt(ordersList.getSelectedIndex());
-               r.setEnabled(false);
-               orderFrame.editBtn.setEnabled(false);
-          }
-      });
-    }
-    private void addNewToList(){
-        JButton save=orderFrame.getSave();
-      save.addActionListener(new ActionListener() {
+    private void maximizeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_maximizeBtnMouseEntered
+        // TODO add your handling code here:
+        maximizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/maximize_blue.png")));
+    }//GEN-LAST:event_maximizeBtnMouseEntered
+
+    private void maximizeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_maximizeBtnMouseExited
+        // TODO add your handling code here:
+        maximizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/maximize.png")));
+    }//GEN-LAST:event_maximizeBtnMouseExited
+
+    private void minimizeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseEntered
+        // TODO add your handling code here:
+        minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minimize_blue.png")));
+    }//GEN-LAST:event_minimizeBtnMouseEntered
+
+    private void minimizeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseExited
+        // TODO add your handling code here:
+        minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minimize.png")));
+    }//GEN-LAST:event_minimizeBtnMouseExited
+
+    private void removeDeletedFromList() {
+        JButton r = orderFrame.getDelete();
+        r.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                   java.sql.Date d=(java.sql.Date)dateComboBox.getSelectedItem();
-                      new InitializeList(d).execute();
+                listModel.removeElementAt(ordersList.getSelectedIndex());
+                r.setEnabled(false);
+                orderFrame.editBtn.setEnabled(false);
             }
-      });
+        });
     }
-    
-    
-    private class InitializeList extends SwingWorker<List<Order>,Void>{
+
+    private void addNewToList() {
+        JButton save = orderFrame.getSave();
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                java.sql.Date d = (java.sql.Date) dateComboBox.getSelectedItem();
+                new InitializeList(d).execute();
+            }
+        });
+    }
+
+    private class InitializeList extends SwingWorker<List<Order>, Void> {
 
         private Date d;
 
         public InitializeList(Date d) {
             this.d = d;
         }
-        
+
         @Override
         protected List<Order> doInBackground() throws Exception {
             return OrderController.instance.findByDate((java.sql.Date) d);
         }
-        public void done(){
+
+        public void done() {
             try {
-                if(get()==null){
+                if (get() == null) {
                     return;
-                }
-                else{
+                } else {
                     listModel.removeAllElements();
                     List<Order> list;
-                    list=get();
-                    for(Order o:get()){
-                        if(!o.isPaid())
-                    listModel.addElement(new ImageText( o,
-                            new ImageIcon(getClass().getResource("/images/false.png"))));
-                        else  
-                            listModel.addElement(new ImageText( o,
-                            new ImageIcon(getClass().getResource("/images/truee.png"))));
-                    
-                    }    
+                    list = get();
+                    for (Order o : get()) {
+                        if (!o.isPaid()) {
+                            listModel.addElement(new ImageText(o,
+                                    new ImageIcon(getClass().getResource("/images/false.png"))));
+                        } else {
+                            listModel.addElement(new ImageText(o,
+                                    new ImageIcon(getClass().getResource("/images/truee.png"))));
+                        }
+
+                    }
                     ordersList.setCellRenderer(new Renderer());
                     ordersList.setModel(listModel);
                 }
-                    } catch (InterruptedException ex) {
+            } catch (InterruptedException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ExecutionException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }
-    
-    private class InitializeDateComboBox extends SwingWorker<List<java.util.Date>,Void>{
+
+    private class InitializeDateComboBox extends SwingWorker<List<java.util.Date>, Void> {
 
         @Override
         protected List<java.util.Date> doInBackground() throws Exception {
-            return 
-                    OrderController.instance.date();
+            return OrderController.instance.date();
         }
+
         @Override
-        public void done(){
+        public void done() {
             try {
-                if(get()==null){
+                if (get() == null) {
                     return;
-                }
-                else{
+                } else {
                     LocalDate x = LocalDate.now();
-                    Date date=Date.valueOf(x);
+                    Date date = Date.valueOf(x);
                     dateModel.addElement(date);
                     List<java.util.Date> list;
-                    list=get();
-                    for(java.util.Date d:get()){
-                        if(!d.equals(date))
-                        dateModel.addElement(d);
+                    list = get();
+                    for (java.util.Date d : get()) {
+                        if (!d.equals(date)) {
+                            dateModel.addElement(d);
+                        }
                     }
                     dateComboBox.setModel(dateModel);
                 }
@@ -718,8 +771,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }
-    
-    
+
     /**
      * @param args the command line arguments
      */
@@ -754,7 +806,7 @@ public class MainFrame extends javax.swing.JFrame {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
         });
     }
@@ -762,13 +814,13 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bill;
     private javax.swing.JLabel billLabel;
-    private javax.swing.JLabel btnExit;
     private javax.swing.JPanel clients;
     private javax.swing.JLabel clientsLabel;
     private javax.swing.JComboBox dateComboBox;
     private javax.swing.JPanel doctors;
     private javax.swing.JLabel doctorsLabel;
     private javax.swing.JPanel exit;
+    private javax.swing.JLabel exitBtn;
     private javax.swing.JPanel header;
     private javax.swing.JLabel headerText;
     private javax.swing.JLabel jLabel1;
@@ -779,6 +831,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator line;
     private javax.swing.JPanel mainPane;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JLabel maximizeBtn;
+    private javax.swing.JLabel minimizeBtn;
     private javax.swing.JLabel numberOfClients;
     private javax.swing.JPanel orders;
     private javax.swing.JLabel ordersLabel;

@@ -26,7 +26,7 @@ public class ClientController {
     private String findAllString = "select * from Client";
     private String findByKeyString = "select * from Client where idClient = ?";
     private String deleteByKeyString = "delete from Client where idClient = ?";
-    private String findByLikeString = "select * from Client where lower(first_name) like ? and lower(last_name) like ?";
+    private String findByLikeString = "select * from Client where lower(first_name) like lower(?) and lower(last_name) like lower(?)";
     
     
     private PreparedStatement createStmt;
@@ -108,23 +108,26 @@ public class ClientController {
     public List<Client> findByLike(String firstName) {
         List<Client> ls = new ArrayList();
         String fName,lName;
+        if(firstName==null){
+            fName="";
+            lName="";
+        }
+        else{
         String[] table = firstName.split(" ");
-        fName = table[0];
+       
+            fName = table[0];
         try{ 
             lName = table[1];
         }
         catch(ArrayIndexOutOfBoundsException ex){
             lName="";
         }
+        }
         
         try {
-            if (fName == null || lName == null) {
-                JOptionPane.showMessageDialog(null, " please enter full name");
-                return null;
-            }else {
                 findByLikeStmt.setString(1, "%" + fName + "%");
                 findByLikeStmt.setString(2, "%" + lName + "%");
-            }
+            
             ResultSet set = findByLikeStmt.executeQuery();
             while (set.next()) {
                 Client c = new Client(Integer.parseInt(set.getString(1)), set.getString(2), set.getString(3),set.getString(4),set.getString(5));
