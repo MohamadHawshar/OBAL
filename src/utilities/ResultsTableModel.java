@@ -16,10 +16,10 @@ public class ResultsTableModel extends AbstractGuiTableModels<Analysis> {
     private final String[] columnNames = {"Test Name ", " unit ","reference value","result"};
     private final Class[] columnClasses = {String.class, String.class,String.class,Float.class};
     
-    @Override
+     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex)
     {
-        return true;
+        return columnIndex>2;
     }
 
     @Override
