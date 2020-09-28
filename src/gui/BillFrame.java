@@ -357,9 +357,7 @@ public class BillFrame extends javax.swing.JPanel {
             return;
         }
         String s = participationTextField.getText();
-        System.out.println("***********" + s);
         double p = Double.parseDouble(s);
-        System.out.println("___________" + p);
 
         //r.setParticip(p);
         Object a = analysisList.getSelectedValue();
