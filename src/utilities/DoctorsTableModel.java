@@ -13,8 +13,8 @@ import Entities.Doctor;
  */
 public class DoctorsTableModel extends AbstractGuiTableModels<Doctor> {
 
-    private final String[] columnNames = {"Name", "Location", "Number"};
-    private final Class[] columnClasses = {String.class, String.class, String.class};
+    private final String[] columnNames = {"Title","Name", "Location", "Number"};
+    private final Class[] columnClasses = {String.class,String.class, String.class, String.class};
 
     @Override
     public int getColumnCount() {
@@ -31,10 +31,12 @@ public class DoctorsTableModel extends AbstractGuiTableModels<Doctor> {
         Doctor d = list.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return d.getFirstName() +" "+ d.getLastName();
+                return d.getTitle();
             case 1:
-                return d.getLocation();
+                return d.getFirstName() +" "+ d.getLastName();
             case 2:
+                return d.getLocation();
+            case 3:
                 return d.getPhone();
             default:
                 return null;
