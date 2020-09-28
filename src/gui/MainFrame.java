@@ -1,6 +1,5 @@
 package gui;
 
-
 import Controllers.OrderController;
 import Entities.Order;
 import java.awt.Color;
@@ -33,17 +32,19 @@ import utilities.Renderer;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-   private final OrderFrame orderFrame=new OrderFrame();
-   private final DoctorsPage doctorsPage=new DoctorsPage();
-   private final ClientPage  clientPage=new ClientPage();
-   private final ResultsPane  resultPage=new ResultsPane();
-   
-   private final DefaultComboBoxModel dateModel=new DefaultComboBoxModel();
-   private final DefaultListModel listModel=new DefaultListModel();
+    private final OrderFrame orderFrame = new OrderFrame();
+    private final DoctorsPage doctorsPage = new DoctorsPage();
+    private final ClientPage clientPage = new ClientPage();
+    private final ResultsPane resultPage = new ResultsPane();
+    private final BillFrame billPage = new BillFrame();
+
+    private final DefaultComboBoxModel dateModel = new DefaultComboBoxModel();
+    private final DefaultListModel listModel = new DefaultListModel();
+
     /**
      * Creates new form MainFrame
      */
-   public MainFrame() throws InterruptedException {
+    public MainFrame() throws InterruptedException {
         initComponents();
         clientPage.setVisible(false);
         mainPane.add(orderFrame);
@@ -52,8 +53,8 @@ public class MainFrame extends javax.swing.JFrame {
         dateComboBox.setModel(dateModel);
         removeDeletedFromList();
         addNewToList();
-   }
-      
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -472,9 +473,9 @@ public class MainFrame extends javax.swing.JFrame {
         bill.setOpaque(false);
         orders.setOpaque(false);
         panel.setOpaque(true);
-        
+
     }
-    
+
     private void mousePressLabel(JLabel label) {  // change color of option label(text)
         clientsLabel.setForeground(new Color(45, 137, 206));
         resultsLabel.setForeground(new Color(45, 137, 206));
@@ -483,8 +484,8 @@ public class MainFrame extends javax.swing.JFrame {
         ordersLabel.setForeground(new Color(45, 137, 206));
         label.setForeground(new Color(255, 255, 255));
     }
-   
-     private void mouseOnOption(JPanel panel, JLabel label) {
+
+    private void mouseOnOption(JPanel panel, JLabel label) {
         if (panel.isOpaque() == true) {
             return;                                  // already clicked
         }
@@ -493,27 +494,28 @@ public class MainFrame extends javax.swing.JFrame {
         panel.setOpaque(true);
         repaint();
         revalidate();
-        
+
     }
-    
+
     private void mouseOffOption(JPanel panel, JLabel label) {
-      if(panel.getBackground().getRGB()==new Color(0,113,197).getRGB())
-          return;
+        if (panel.getBackground().getRGB() == new Color(0, 113, 197).getRGB()) {
+            return;
+        }
         panel.setBackground(new Color(0, 113, 197));
         label.setForeground(new Color(45, 137, 206));
         panel.setOpaque(false);
         repaint();
     }
-    
+
     private void exitBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseEntered
         // TODO add your handling code here:
-         exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit_blue.png")));
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit_blue.png")));
 
     }//GEN-LAST:event_exitBtnMouseEntered
 
     private void exitBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseExited
         // TODO add your handling code here:
-         exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG")));
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG")));
     }//GEN-LAST:event_exitBtnMouseExited
 
     private void doctorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doctorsMouseEntered
@@ -534,6 +536,7 @@ public class MainFrame extends javax.swing.JFrame {
         clientPage.setVisible(false);
         resultPage.setVisible(false);
         doctorsPage.setVisible(true);
+        billPage.setVisible(false);
         repaint();
         revalidate();
     }//GEN-LAST:event_doctorsMousePressed
@@ -554,7 +557,9 @@ public class MainFrame extends javax.swing.JFrame {
         orderFrame.setVisible(false);
         doctorsPage.setVisible(false);
         resultPage.setVisible(false);
+        billPage.setVisible(false);
         clientPage.setVisible(true);
+
         repaint();
     }//GEN-LAST:event_clientsMousePressed
 
@@ -574,7 +579,9 @@ public class MainFrame extends javax.swing.JFrame {
         orderFrame.setVisible(false);
         doctorsPage.setVisible(false);
         clientPage.setVisible(false);
-        resultPage.setVisible(true);
+        resultPage.setVisible(true);      
+        billPage.setVisible(false);
+
         repaint();
     }//GEN-LAST:event_resultsMousePressed
 
@@ -590,22 +597,28 @@ public class MainFrame extends javax.swing.JFrame {
 
         mousePress(bill);
         mousePressLabel(billLabel);
+        mainPane.add(billPage);
+        orderFrame.setVisible(false);
+        doctorsPage.setVisible(false);
+        clientPage.setVisible(false);
+        resultPage.setVisible(false);      
+        billPage.setVisible(true);
         repaint();
     }//GEN-LAST:event_billMousePressed
 
     private void dateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateComboBoxActionPerformed
         // TODO add your handling code here:
-          ordersList.clearSelection();
-          orderFrame.editBtn.setEnabled(false);
-          orderFrame.deleteBtn.setEnabled(false);
-          java.sql.Date d=(java.sql.Date)dateComboBox.getSelectedItem();
-          new InitializeList(d).execute();
+        ordersList.clearSelection();
+        orderFrame.editBtn.setEnabled(false);
+        orderFrame.deleteBtn.setEnabled(false);
+        java.sql.Date d = (java.sql.Date) dateComboBox.getSelectedItem();
+        new InitializeList(d).execute();
     }//GEN-LAST:event_dateComboBoxActionPerformed
 
     private void ordersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersListMouseClicked
         // TODO add your handling code here:
-        ImageText i= (ImageText) listModel.getElementAt(ordersList.getSelectedIndex());
-        orderFrame.listOrder=i.getOrder();
+        ImageText i = (ImageText) listModel.getElementAt(ordersList.getSelectedIndex());
+        orderFrame.listOrder = i.getOrder();
 //        System.out.println(i.getOrder().getListOrders());
         orderFrame.deleteBtn.setEnabled(true);
         orderFrame.editBtn.setEnabled(true);
@@ -627,21 +640,16 @@ public class MainFrame extends javax.swing.JFrame {
         mousePressLabel(ordersLabel);
         mainPane.add(orderFrame);
         clientPage.setVisible(false);
-        resultPage.setVisible(false);
         doctorsPage.setVisible(false);
+        resultPage.setVisible(false);      
+        billPage.setVisible(false);
         orderFrame.setVisible(true);
         repaint();
     }//GEN-LAST:event_ordersMousePressed
 
     private void ordersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersMouseClicked
         // TODO add your handling code here:
-         mousePress(orders);
-        mousePressLabel(ordersLabel);
-        clientPage.setVisible(false);
-        resultPage.setVisible(false);
-        doctorsPage.setVisible(false);
-        orderFrame.setVisible(true);
-        repaint();
+      
     }//GEN-LAST:event_ordersMouseClicked
 
     private void maximizeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_maximizeBtnMouseEntered
@@ -663,95 +671,96 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minimize.png")));
     }//GEN-LAST:event_minimizeBtnMouseExited
-   
-    private void removeDeletedFromList(){
-      JButton r=orderFrame.getDelete();
-      r.addActionListener(new ActionListener() {
 
-          @Override
-          public void actionPerformed(ActionEvent e) {
-               listModel.removeElementAt(ordersList.getSelectedIndex());
-               r.setEnabled(false);
-               orderFrame.editBtn.setEnabled(false);
-          }
-      });
-    }
-    private void addNewToList(){
-        JButton save=orderFrame.getSave();
-      save.addActionListener(new ActionListener() {
+    private void removeDeletedFromList() {
+        JButton r = orderFrame.getDelete();
+        r.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                   java.sql.Date d=(java.sql.Date)dateComboBox.getSelectedItem();
-                      new InitializeList(d).execute();
+                listModel.removeElementAt(ordersList.getSelectedIndex());
+                r.setEnabled(false);
+                orderFrame.editBtn.setEnabled(false);
             }
-      });
+        });
     }
-    
-    
-    private class InitializeList extends SwingWorker<List<Order>,Void>{
+
+    private void addNewToList() {
+        JButton save = orderFrame.getSave();
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                java.sql.Date d = (java.sql.Date) dateComboBox.getSelectedItem();
+                new InitializeList(d).execute();
+            }
+        });
+    }
+
+    private class InitializeList extends SwingWorker<List<Order>, Void> {
 
         private Date d;
 
         public InitializeList(Date d) {
             this.d = d;
         }
-        
+
         @Override
         protected List<Order> doInBackground() throws Exception {
             return OrderController.instance.findByDate((java.sql.Date) d);
         }
-        public void done(){
+
+        public void done() {
             try {
-                if(get()==null){
+                if (get() == null) {
                     return;
-                }
-                else{
+                } else {
                     listModel.removeAllElements();
                     List<Order> list;
-                    list=get();
-                    for(Order o:get()){
-                        if(!o.isPaid())
-                    listModel.addElement(new ImageText( o,
-                            new ImageIcon(getClass().getResource("/images/false.png"))));
-                        else  
-                            listModel.addElement(new ImageText( o,
-                            new ImageIcon(getClass().getResource("/images/truee.png"))));
-                    
-                    }    
+                    list = get();
+                    for (Order o : get()) {
+                        if (!o.isPaid()) {
+                            listModel.addElement(new ImageText(o,
+                                    new ImageIcon(getClass().getResource("/images/false.png"))));
+                        } else {
+                            listModel.addElement(new ImageText(o,
+                                    new ImageIcon(getClass().getResource("/images/truee.png"))));
+                        }
+
+                    }
                     ordersList.setCellRenderer(new Renderer());
                     ordersList.setModel(listModel);
                 }
-                    } catch (InterruptedException ex) {
+            } catch (InterruptedException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ExecutionException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }
-    
-    private class InitializeDateComboBox extends SwingWorker<List<java.util.Date>,Void>{
+
+    private class InitializeDateComboBox extends SwingWorker<List<java.util.Date>, Void> {
 
         @Override
         protected List<java.util.Date> doInBackground() throws Exception {
-            return 
-                    OrderController.instance.date();
+            return OrderController.instance.date();
         }
+
         @Override
-        public void done(){
+        public void done() {
             try {
-                if(get()==null){
+                if (get() == null) {
                     return;
-                }
-                else{
+                } else {
                     LocalDate x = LocalDate.now();
-                    Date date=Date.valueOf(x);
+                    Date date = Date.valueOf(x);
                     dateModel.addElement(date);
                     List<java.util.Date> list;
-                    list=get();
-                    for(java.util.Date d:get()){
-                        if(!d.equals(date))
-                        dateModel.addElement(d);
+                    list = get();
+                    for (java.util.Date d : get()) {
+                        if (!d.equals(date)) {
+                            dateModel.addElement(d);
+                        }
                     }
                     dateComboBox.setModel(dateModel);
                 }
@@ -762,8 +771,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }
-    
-    
+
     /**
      * @param args the command line arguments
      */
@@ -798,7 +806,7 @@ public class MainFrame extends javax.swing.JFrame {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
         });
     }

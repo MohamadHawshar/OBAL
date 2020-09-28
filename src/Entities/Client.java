@@ -25,6 +25,10 @@ public class Client {
     private String location;
   //  private List<Order> listOrders = new ArrayList();
     
+    public Client(String firstName, String lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
     public Client(int Id, String firstName, String lastName, String phone, String location) {
         this.Id = Id;
         this.firstName = firstName;

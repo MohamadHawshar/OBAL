@@ -17,6 +17,10 @@ public class Analysis {
     private String unit;
     private String value;
     private float defaultPrice;
+    
+    public Analysis(String name){
+        this.name = name;
+    }
     private float result;
 
     public Analysis(int Id, String name, String unit, String value, float defaultPrice) {
@@ -93,6 +97,8 @@ public class Analysis {
         }
         return true;
     }
+    
+    @Override
     public String toString() {
         return  name;
     }
