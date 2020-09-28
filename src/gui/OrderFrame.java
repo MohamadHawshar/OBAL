@@ -134,6 +134,11 @@ public class OrderFrame extends javax.swing.JPanel {
                 saveBtnMousePressed(evt);
             }
         });
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
 
         deleteBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         deleteBtn.setForeground(new java.awt.Color(22, 113, 185));
@@ -457,6 +462,10 @@ public class OrderFrame extends javax.swing.JPanel {
         
         analysisTableModel.remove(analysisTable.getSelectedRow());
     }//GEN-LAST:event_removeTestBtnActionPerformed
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveBtnActionPerformed
 
     private class editOrderPerformed extends SwingWorker<String, Void> {
 
