@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Panel;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -32,6 +33,7 @@ import utilities.Renderer;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final OrderFrame orderFrame = new OrderFrame();
     private final DoctorsPage doctorsPage = new DoctorsPage();
     private final ClientPage clientPage = new ClientPage();
@@ -96,10 +98,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(screenSize);
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
-        mainPanel.setPreferredSize(new java.awt.Dimension(1920, 1080));
-        mainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        mainPanel.setPreferredSize(screenSize);
+        mainPanel.setLayout(new java.awt.BorderLayout());
 
         header.setBackground(new java.awt.Color(22, 113, 185));
 
@@ -158,7 +161,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(headerText, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(line, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 471, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         headerLayout.setVerticalGroup(
@@ -168,16 +171,16 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(headerText, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(line, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
+                .addComponent(line, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
                 .addGap(30, 30, 30))
         );
 
-        mainPanel.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 150));
+        mainPanel.add(header, java.awt.BorderLayout.NORTH);
 
         mainPane.setBackground(new java.awt.Color(255, 255, 255));
         mainPane.setPreferredSize(new java.awt.Dimension(1200, 930));
         mainPane.setLayout(new java.awt.BorderLayout());
-        mainPanel.add(mainPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 1200, 930));
+        mainPanel.add(mainPane, java.awt.BorderLayout.CENTER);
 
         sidePanel.setBackground(new java.awt.Color(247, 247, 247));
         sidePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 113, 185)));
@@ -374,7 +377,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IMG-20200923-WA0007.jpg"))); // NOI18N
         sidePanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 740, 190, 180));
 
-        mainPanel.add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, -1, -1));
+        mainPanel.add(sidePanel, java.awt.BorderLayout.LINE_START);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.blue, java.awt.Color.yellow));
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 930));
@@ -417,7 +420,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(numberOfClients)
-                        .addGap(0, 61, Short.MAX_VALUE))
+                        .addGap(0, 68, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -437,7 +440,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        mainPanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1520, 150, 400, 930));
+        mainPanel.add(jPanel1, java.awt.BorderLayout.EAST);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
