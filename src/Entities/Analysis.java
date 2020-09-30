@@ -17,12 +17,11 @@ public class Analysis {
     private String unit;
     private String value;
     private float defaultPrice;
+    private float result;
     
     public Analysis(String name){
         this.name = name;
     }
-    private float result;
-
     public Analysis(int Id, String name, String unit, String value, float defaultPrice) {
         this.Id = Id;
         this.name = name;
