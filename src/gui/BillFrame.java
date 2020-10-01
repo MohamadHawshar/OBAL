@@ -45,8 +45,7 @@ public class BillFrame extends javax.swing.JPanel {
     private final GuiListModels<Analysis> analyselist = new GuiListModels();
     private final GuiListModels<Result> resultlist = new GuiListModels<>();
     Result r = null;
-    Order o;
-
+    
     public BillFrame() {
         initComponents();
         initActions();
@@ -62,6 +61,7 @@ public class BillFrame extends javax.swing.JPanel {
         particip.setVisible(false);
 
     }
+    Order o;
 
     /**
      * This method is called from within the constructor to initialize the form.
