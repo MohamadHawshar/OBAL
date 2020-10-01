@@ -6,6 +6,7 @@
 package gui;
 
 import Controllers.BillController;
+import Controllers.ClientController;
 import Entities.Analysis;
 import Entities.Client;
 import Entities.Order;
@@ -39,11 +40,12 @@ import java.lang.NullPointerException;
  */
 public class BillFrame extends javax.swing.JPanel {
 
-    private final GuiListModels<String> listModel = new GuiListModels();
+    private final DefaultListModel listModel = new DefaultListModel();
     private final OrderTableModels ordertable = new OrderTableModels();
     private final GuiListModels<Analysis> analyselist = new GuiListModels();
     private final GuiListModels<Result> resultlist = new GuiListModels<>();
     Result r = null;
+    Order o;
 
     public BillFrame() {
         initComponents();
@@ -58,6 +60,7 @@ public class BillFrame extends javax.swing.JPanel {
         participationTextField.setVisible(false);
         saveParticipBtn.setVisible(false);
         particip.setVisible(false);
+
     }
 
     /**
@@ -75,7 +78,7 @@ public class BillFrame extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        analysisList = new javax.swing.JList<>();
+        analysisList = new javax.swing.JList<String>();
         participationTextField = new javax.swing.JTextField();
         particip = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -89,7 +92,7 @@ public class BillFrame extends javax.swing.JPanel {
         searchClientText = new javax.swing.JTextField();
         searchClientBtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        clientsList = new javax.swing.JList<>();
+        clientsList = new javax.swing.JList<String>();
         jLabel4 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -245,6 +248,7 @@ public class BillFrame extends javax.swing.JPanel {
             }
         });
 
+        clientsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         clientsList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 clientsListMouseClicked(evt);
@@ -317,13 +321,16 @@ public class BillFrame extends javax.swing.JPanel {
             if (listModel.isEmpty()) {
                 return;
             }
-            searchClientText.setText(clientsList.getSelectedValue());
+            try {
+                Client c = (Client) listModel.getElementAt(clientsList.getSelectedIndex());
+                searchClientText.setText(c.getFirstName() + " " + c.getLastName());
+                String fn = c.getFirstName();
+                String ln = c.getLastName();
+                new AddOrder(fn, ln).execute();
+            } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
 
-            String[] st = clientsList.getSelectedValue().split(" ");
-            String fn = st[0];
-            String ln = st[1];
+            }
 
-            new AddOrder(fn, ln).execute();
         }
     }//GEN-LAST:event_clientsListMouseClicked
 
@@ -332,7 +339,7 @@ public class BillFrame extends javax.swing.JPanel {
             if (ordertable.isEmpty()) {
                 return;
             }
-            Order o = ordertable.get(appointmentsTable.getSelectedRow());
+            o = ordertable.get(appointmentsTable.getSelectedRow());
             int id = o.getId();
             LocalDate date = o.getDate();
 
@@ -356,27 +363,44 @@ public class BillFrame extends javax.swing.JPanel {
             participationTextField.requestFocus();
             return;
         }
+        double p;
         String s = participationTextField.getText();
-        double p = Double.parseDouble(s);
+        try{
+            p = Double.parseDouble(s);
+        }catch(java.lang.NumberFormatException ex){
+            JOptionPane.showMessageDialog(BillFrame.this,
+                            "enter a number",
+                            "Failed",
+                            INFORMATION_MESSAGE);
+            return;
+        }
 
         //r.setParticip(p);
-        Object a = analysisList.getSelectedValue();
-        String st = a.toString();
+      //  Object a = analysisList.getSelectedValue();
+      //  String st = a.toString();
         //Double particip = Double.parseDouble(st);
 
-        try {
-            int id = new BillController().instance.getAnalysisId(st);
-            new SaveWorker(id, p).execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //r.setParticip(p);
+      //  Object a = analysisList.getSelectedValue();
+      //  String st = a.toString();
+        //Double particip = Double.parseDouble(st);
+
+        
+        Analysis x=analyselist.getElementAt(analysisList.getSelectedIndex());
+        
+        
+       // try {
+            new SaveWorker(x.getId(), p,o.getId()).execute();
+     //   } catch (SQLException ex) {
+     //       Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
+      //  }
 
         //System.out.println("Analysis: " + st);
         /*Analysis an = new Analysis(st);
         
-        r = new Result(an);
-        r.setParticip(p);
-        r.setA(an);*/
+         r = new Result(an);
+         r.setParticip(p);
+         r.setA(an);*/
         //JOptionPane.showMessageDialog(this,"Participation Added","Succeded",INFORMATION_MESSAGE);
         // participationTextField.setText(null);
         //searchClientText.setText(null);
@@ -391,9 +415,9 @@ public class BillFrame extends javax.swing.JPanel {
             if (analyselist.isEmpty()) {
                 return;
             }
-            Analysis a = analyselist.getElementAt(analysisList.getSelectedIndex());
-            int id = a.getId();
-            new AddParticip(id).execute();
+         //   Analysis a = analyselist.getElementAt(analysisList.getSelectedIndex());
+           // int id = a.getId();
+           // new AddParticip(id).execute();
 
         }
     }//GEN-LAST:event_analysisListMouseClicked
@@ -402,16 +426,16 @@ public class BillFrame extends javax.swing.JPanel {
 
         private int id;
         private double p;
-
-        public SaveWorker(int id, double p) {
+        private int orderId;
+        public SaveWorker(int id, double p,int orderId) {
             this.id = id;
             this.p = p;
+            this.orderId=orderId;
         }
 
         @Override
         protected String doInBackground() throws Exception {
-            new BillController().instance.updateResult(id, p);
-            System.out.println("DO IN BACKGROUND");
+            new BillController().instance.updateResult(id, p,orderId);
             return null;
         }
 
@@ -419,38 +443,23 @@ public class BillFrame extends javax.swing.JPanel {
         //@SuppressWarnings("empty-statement")
 
         public void done() {
-            JOptionPane.showMessageDialog(BillFrame.this,
-                    "Participation Added",
-                    "Succeded",
-                    INFORMATION_MESSAGE);
-
-        }
-    }
-
-    private class AddParticip extends SwingWorker<String, Void> {
-
-        private final int id;
-
-        public AddParticip(int id) {
-            this.id = id;
-        }
-
-        @Override
-        protected String doInBackground() throws Exception {
-            return BillController.instance.findParticip(id);
-        }
-
-        @Override
-        public void done() {
-            participationTextField.setText(null);
             try {
-                participationTextField.setText(get());
-            } catch (InterruptedException | ExecutionException ex) {
+                if(get()==null)
+                    JOptionPane.showMessageDialog(BillFrame.this,
+                            "Participation Added",
+                            "Succeded",
+                            INFORMATION_MESSAGE);
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExecutionException ex) {
                 Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
 
+        }
     }
+
+  
 
     private class AddAnalysis extends SwingWorker<List<Analysis>, Void> {
 
@@ -504,7 +513,7 @@ public class BillFrame extends javax.swing.JPanel {
         }
     }
 
-    private class SearchClientPerformed extends SwingWorker<List<String>, Void> {
+    private class SearchClientPerformed extends SwingWorker<List<Client>, Void> {
 
         private final String subName;
 
@@ -513,15 +522,17 @@ public class BillFrame extends javax.swing.JPanel {
         }
 
         @Override
-        protected List<String> doInBackground() throws Exception {
-            return BillController.instance.findClient(subName);
+        protected List<Client> doInBackground() throws Exception {
+            return ClientController.instance.findByLike(subName);
         }
 
         @Override
         public void done() {
-            listModel.removeAll();
+            listModel.removeAllElements();
             try {
-                listModel.set(get());
+                for (Client c : get()) {
+                    listModel.addElement(c);
+                }
             } catch (InterruptedException | ExecutionException ex) {
                 Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
             }

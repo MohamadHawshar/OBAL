@@ -43,7 +43,7 @@ public class BillController {
    
     private String getAnalyseId = "select idAnalyse from analyse where name like ?";
     
-    private String updateResultString = "update `obal`.`results` set particip=? where results.idAnalyse=?;";
+    private String updateResultString = "update `obal`.`results` set particip=? where results.idAnalyse=? and results.idordonnance=?;";
     
     
 
@@ -125,7 +125,7 @@ public class BillController {
         findAnalyseByOrdStmt.setInt(1, id);
         ResultSet set = findAnalyseByOrdStmt.executeQuery();
         while (set.next()) {
-            ls.add(new Analysis(set.getString(8)));
+            ls.add(new Analysis(set.getInt(7),set.getString(8)));
         }
         set.close();
         return ls;
@@ -151,11 +151,10 @@ public class BillController {
         return id;
     }
 
-    public void updateResult(int id, double particip) throws SQLException {
+    public void updateResult(int id, double particip,int orderId) throws SQLException {
         updateResultStmt.setDouble(1, particip);
-        System.out.println("AHHHHHHHHHH" + particip);
         updateResultStmt.setInt(2, id);
-        System.out.println("HEEEYYYY" + id);
+        updateResultStmt.setInt(3, orderId);
         updateResultStmt.executeUpdate();
     }
     public static final BillController instance = new BillController();
