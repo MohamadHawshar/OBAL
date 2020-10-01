@@ -111,7 +111,7 @@ public class Client {
         return true;
     }
     public String toString() {
-        return Id + " " +firstName + " " + lastName +" " + phone+" " +location;
+        return firstName + " " + lastName;
     }
      
   
