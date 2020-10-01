@@ -34,15 +34,15 @@
                   <Component id="jScrollPane2" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jLabel2" min="-2" pref="122" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="firstNameField" max="32767" attributes="0"/>
-                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Component id="searchButton" min="-2" pref="123" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="searchButton" min="-2" pref="131" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jScrollPane1" alignment="0" pref="608" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" pref="583" max="32767" attributes="0"/>
                           <Component id="doctorComboBox" alignment="0" max="32767" attributes="0"/>
                           <Component id="analysisComboBox" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -52,9 +52,9 @@
                           <Component id="clearBtn" alignment="1" max="32767" attributes="0"/>
                           <Component id="saveBtn" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="addAnalysisBtn" pref="153" max="32767" attributes="0"/>
+                              <Component id="addAnalysisBtn" pref="141" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="removeTestBtn" pref="184" max="32767" attributes="0"/>
+                              <Component id="removeTestBtn" pref="172" max="32767" attributes="0"/>
                           </Group>
                           <Component id="editBtn" alignment="1" max="32767" attributes="0"/>
                       </Group>
@@ -70,14 +70,14 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="firstNameField" alignment="3" pref="40" max="32767" attributes="0"/>
                   <Component id="jLabel2" alignment="3" pref="40" max="32767" attributes="0"/>
-                  <Component id="searchButton" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Component id="searchButton" min="-2" pref="42" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="379" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" pref="376" max="32767" attributes="0"/>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="deleteBtn" max="32767" attributes="0"/>
-                  <Component id="doctorComboBox" pref="95" max="32767" attributes="0"/>
+                  <Component id="doctorComboBox" pref="98" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">

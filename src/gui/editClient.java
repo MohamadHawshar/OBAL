@@ -7,6 +7,8 @@ package gui;
 
 import Controllers.ClientController;
 import Entities.Client;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -24,6 +26,7 @@ public class editClient extends javax.swing.JFrame {
      * Creates new form editClient
      */
     private Client cl;
+    public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     
     public editClient() {
         initComponents();
@@ -68,7 +71,7 @@ public class editClient extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setLocation(new java.awt.Point(691, 350));
+        setLocation((int)(691*screenSize.getWidth()/1920),300);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

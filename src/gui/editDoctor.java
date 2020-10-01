@@ -9,6 +9,8 @@ import Controllers.ClientController;
 import Controllers.DoctorController;
 import Entities.Client;
 import Entities.Doctor;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 //import gui.ClientPagePanels.editClient;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
@@ -27,6 +29,7 @@ public class editDoctor extends javax.swing.JFrame {
      * Creates new form editDoctor
      */
     private Doctor dr;
+    public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     public editDoctor() {
         initComponents();
         //setLocation(WIDTH/2-50, HEIGHT/2-50);
@@ -74,7 +77,7 @@ public class editDoctor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setLocation(new java.awt.Point(759, 350));
+        setLocation((int)(795*screenSize.getWidth()/1920),350);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

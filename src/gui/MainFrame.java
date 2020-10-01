@@ -33,7 +33,7 @@ import utilities.Renderer;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final OrderFrame orderFrame = new OrderFrame();
     private final DoctorsPage doctorsPage = new DoctorsPage();
     private final ClientPage clientPage = new ClientPage();
@@ -55,6 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
         dateComboBox.setModel(dateModel);
         removeDeletedFromList();
         addNewToList();
+    
     }
 
     /**
