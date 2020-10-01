@@ -7,6 +7,7 @@ package gui;
 
 import Controllers.ClientController;
 import Entities.Client;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class ClientPage extends javax.swing.JPanel {
         clientsTable.getColumnModel().getColumn(0).setMaxWidth(256);
         clientsTable.getColumnModel().getColumn(1).setMinWidth(128);
         clientsTable.getColumnModel().getColumn(1).setMaxWidth(128);
+        jScrollPane1.getViewport().setBackground(new Color(250, 251, 252));
     }
     public void reset() {
         firstNameTf.setText(null);
@@ -80,6 +82,7 @@ public class ClientPage extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
+        FirstNameField.setBackground(new java.awt.Color(250, 251, 252));
         FirstNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FirstNameFieldActionPerformed(evt);
@@ -99,6 +102,9 @@ public class ClientPage extends javax.swing.JPanel {
             }
         });
 
+        jScrollPane1.setBackground(new java.awt.Color(0, 0, 0));
+
+        clientsTable.setBackground(new java.awt.Color(250, 251, 252));
         clientsTable.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         clientsTable.setForeground(new java.awt.Color(22, 113, 185));
         clientsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -117,7 +123,7 @@ public class ClientPage extends javax.swing.JPanel {
 
         editBtn.setBackground(new java.awt.Color(22, 113, 185));
         editBtn.setForeground(new java.awt.Color(22, 113, 185));
-        editBtn.setText("edit");
+        editBtn.setText("Edit");
         editBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editBtnActionPerformed(evt);
@@ -126,7 +132,7 @@ public class ClientPage extends javax.swing.JPanel {
 
         deleteBtn.setBackground(new java.awt.Color(22, 113, 185));
         deleteBtn.setForeground(new java.awt.Color(22, 113, 185));
-        deleteBtn.setText("delete");
+        deleteBtn.setText("Delete");
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteBtnActionPerformed(evt);
@@ -141,6 +147,12 @@ public class ClientPage extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(22, 113, 185));
         jLabel2.setText("First Name");
 
+        firstNameTf.setBackground(new java.awt.Color(250, 251, 252));
+
+        LastNameTf.setBackground(new java.awt.Color(250, 251, 252));
+
+        locationTf.setBackground(new java.awt.Color(250, 251, 252));
+
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(22, 113, 185));
         jLabel4.setText("Location");
@@ -149,9 +161,11 @@ public class ClientPage extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(22, 113, 185));
         jLabel5.setText("Last Name");
 
+        phoneTf.setBackground(new java.awt.Color(250, 251, 252));
+
         saveBtn.setBackground(new java.awt.Color(22, 113, 185));
         saveBtn.setForeground(new java.awt.Color(22, 113, 185));
-        saveBtn.setText("save");
+        saveBtn.setText("Save");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveBtnActionPerformed(evt);
@@ -160,7 +174,7 @@ public class ClientPage extends javax.swing.JPanel {
 
         cancelBtn.setBackground(new java.awt.Color(22, 113, 185));
         cancelBtn.setForeground(new java.awt.Color(22, 113, 185));
-        cancelBtn.setText("cancel");
+        cancelBtn.setText("Cancel");
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);

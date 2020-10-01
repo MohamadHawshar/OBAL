@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import utilities.ImageText;
 import utilities.Renderer;
@@ -55,7 +56,9 @@ public class MainFrame extends javax.swing.JFrame {
         dateComboBox.setModel(dateModel);
         removeDeletedFromList();
         addNewToList();
-    
+       
+        
+
     }
 
     /**
@@ -74,7 +77,6 @@ public class MainFrame extends javax.swing.JFrame {
         exit = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         exitBtn = new javax.swing.JLabel();
-        maximizeBtn = new javax.swing.JLabel();
         minimizeBtn = new javax.swing.JLabel();
         mainPane = new javax.swing.JPanel();
         sidePanel = new javax.swing.JPanel();
@@ -91,15 +93,11 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         dateComboBox = new javax.swing.JComboBox();
-        pic = new javax.swing.JLabel();
-        label = new javax.swing.JLabel();
-        numberOfClients = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ordersList = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(screenSize);
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel.setPreferredSize(screenSize);
@@ -110,6 +108,8 @@ public class MainFrame extends javax.swing.JFrame {
         headerText.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         headerText.setForeground(new java.awt.Color(255, 255, 255));
         headerText.setText("OBAL Medical Laboratory");
+
+        line.setForeground(new java.awt.Color(255, 255, 255));
 
         exit.setBackground(new java.awt.Color(250, 251, 252));
         exit.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -131,17 +131,6 @@ public class MainFrame extends javax.swing.JFrame {
         });
         exit.add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 40, 50));
 
-        maximizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/maximize.png"))); // NOI18N
-        maximizeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                maximizeBtnMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                maximizeBtnMouseExited(evt);
-            }
-        });
-        exit.add(maximizeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 42, 50));
-
         minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minimize.png"))); // NOI18N
         minimizeBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -151,7 +140,7 @@ public class MainFrame extends javax.swing.JFrame {
                 minimizeBtnMouseExited(evt);
             }
         });
-        exit.add(minimizeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 42, 50));
+        exit.add(minimizeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 42, 50));
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
@@ -162,11 +151,11 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(headerLayout.createSequentialGroup()
                         .addComponent(headerText)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(headerLayout.createSequentialGroup()
-                        .addComponent(line)
-                        .addGap(6, 6, 6)))
-                .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(line, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,14 +163,15 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(headerText, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(line, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(line, javax.swing.GroupLayout.DEFAULT_SIZE, 7, Short.MAX_VALUE)
                 .addGap(30, 30, 30))
         );
 
         mainPanel.add(header, java.awt.BorderLayout.NORTH);
 
         mainPane.setBackground(new java.awt.Color(255, 255, 255));
+        mainPane.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(22, 113, 185)));
         mainPane.setPreferredSize(new java.awt.Dimension(1200, 930));
         mainPane.setLayout(new java.awt.BorderLayout());
         mainPanel.add(mainPane, java.awt.BorderLayout.CENTER);
@@ -383,23 +373,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainPanel.add(sidePanel, java.awt.BorderLayout.LINE_START);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.blue, java.awt.Color.yellow));
+        jPanel1.setBackground(new java.awt.Color(247, 247, 247));
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 0, new java.awt.Color(22, 113, 185)));
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 930));
 
-        dateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        dateComboBox.setBackground(new java.awt.Color(150, 250, 46));
+        dateComboBox.setMaximumRowCount(5);
         dateComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dateComboBoxActionPerformed(evt);
             }
         });
-
-        pic.setText("ICON");
-
-        label.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        label.setText("Number Of Clients: ");
-
-        numberOfClients.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        numberOfClients.setText("X");
 
         ordersList.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         ordersList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -418,14 +402,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dateComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(pic, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(numberOfClients)
-                        .addGap(0, 68, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -435,12 +412,6 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(dateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(numberOfClients))
-                    .addComponent(pic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -546,6 +517,7 @@ public class MainFrame extends javax.swing.JFrame {
         billPage.setVisible(false);
         repaint();
         revalidate();
+        dateComboBox.getEditor().getEditorComponent().setBackground(Color.red);
     }//GEN-LAST:event_doctorsMousePressed
 
     private void clientsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientsMouseEntered
@@ -586,7 +558,7 @@ public class MainFrame extends javax.swing.JFrame {
         orderFrame.setVisible(false);
         doctorsPage.setVisible(false);
         clientPage.setVisible(false);
-        resultPage.setVisible(true);      
+        resultPage.setVisible(true);
         billPage.setVisible(false);
 
         repaint();
@@ -608,7 +580,7 @@ public class MainFrame extends javax.swing.JFrame {
         orderFrame.setVisible(false);
         doctorsPage.setVisible(false);
         clientPage.setVisible(false);
-        resultPage.setVisible(false);      
+        resultPage.setVisible(false);
         billPage.setVisible(true);
         repaint();
     }//GEN-LAST:event_billMousePressed
@@ -624,11 +596,16 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void ordersListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersListMouseClicked
         // TODO add your handling code here:
-        ImageText i = (ImageText) listModel.getElementAt(ordersList.getSelectedIndex());
-        orderFrame.listOrder = i.getOrder();
-//        System.out.println(i.getOrder().getListOrders());
-        orderFrame.deleteBtn.setEnabled(true);
-        orderFrame.editBtn.setEnabled(true);
+        try {
+            ImageText i = (ImageText) listModel.getElementAt(ordersList.getSelectedIndex());
+
+            orderFrame.listOrder = i.getOrder();
+            orderFrame.deleteBtn.setEnabled(true);
+            orderFrame.editBtn.setEnabled(true);
+        } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+            
+            ordersList.clearSelection();
+        }
     }//GEN-LAST:event_ordersListMouseClicked
 
     private void ordersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersMouseEntered
@@ -648,7 +625,7 @@ public class MainFrame extends javax.swing.JFrame {
         mainPane.add(orderFrame);
         clientPage.setVisible(false);
         doctorsPage.setVisible(false);
-        resultPage.setVisible(false);      
+        resultPage.setVisible(false);
         billPage.setVisible(false);
         orderFrame.setVisible(true);
         repaint();
@@ -656,18 +633,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void ordersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordersMouseClicked
         // TODO add your handling code here:
-      
+
     }//GEN-LAST:event_ordersMouseClicked
-
-    private void maximizeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_maximizeBtnMouseEntered
-        // TODO add your handling code here:
-        maximizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/maximize_blue.png")));
-    }//GEN-LAST:event_maximizeBtnMouseEntered
-
-    private void maximizeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_maximizeBtnMouseExited
-        // TODO add your handling code here:
-        maximizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/maximize.png")));
-    }//GEN-LAST:event_maximizeBtnMouseExited
 
     private void minimizeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseEntered
         // TODO add your handling code here:
@@ -834,17 +801,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel label;
     private javax.swing.JSeparator line;
     private javax.swing.JPanel mainPane;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JLabel maximizeBtn;
     private javax.swing.JLabel minimizeBtn;
-    private javax.swing.JLabel numberOfClients;
     private javax.swing.JPanel orders;
     private javax.swing.JLabel ordersLabel;
     public javax.swing.JList ordersList;
-    private javax.swing.JLabel pic;
     private javax.swing.JPanel results;
     private javax.swing.JLabel resultsLabel;
     private javax.swing.JPanel sidePanel;

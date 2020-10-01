@@ -5,13 +5,6 @@
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="ff" green="ff" red="ff" type="rgb"/>
     </Property>
-    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-        <LineBorder>
-          <Color PropertyName="color" blue="b9" green="71" red="16" type="rgb"/>
-        </LineBorder>
-      </Border>
-    </Property>
   </Properties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -42,7 +35,7 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jScrollPane1" alignment="0" pref="583" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" pref="584" max="32767" attributes="0"/>
                           <Component id="doctorComboBox" alignment="0" max="32767" attributes="0"/>
                           <Component id="analysisComboBox" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -52,7 +45,7 @@
                           <Component id="clearBtn" alignment="1" max="32767" attributes="0"/>
                           <Component id="saveBtn" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="addAnalysisBtn" pref="141" max="32767" attributes="0"/>
+                              <Component id="addAnalysisBtn" pref="142" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="removeTestBtn" pref="172" max="32767" attributes="0"/>
                           </Group>
@@ -77,7 +70,7 @@
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="deleteBtn" max="32767" attributes="0"/>
-                  <Component id="doctorComboBox" pref="98" max="32767" attributes="0"/>
+                  <Component id="doctorComboBox" pref="100" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
