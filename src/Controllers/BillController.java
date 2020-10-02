@@ -6,6 +6,7 @@
 package Controllers;
 
 import Entities.Analysis;
+import Entities.Bill;
 import Entities.Client;
 import Entities.Order;
 import Entities.Result;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import utilities.DataSource;
 
 /**
@@ -26,13 +28,16 @@ import utilities.DataSource;
  */
 public class BillController {
 
+    Double total = 0.0;
+
     private String findClientString = "select * from Client where lower(first_name) like ?;";
     private String findOrdString = "select ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
             + "client.idclient, client.first_name, client.last_name from ordonnance join client on "
             + "ordonnance.idclient=client.idclient where ordonnance.idclient=?;";
 
-    private String findAnalysisByOrdString = "select ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
-            + "results.idordonnance, results.idAnalyse, analyse.idAnalyse, analyse.name from ordonnance join results on "
+   private String findAnalysisByOrdString = "select ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
+            + "results.idordonnance, results.idAnalyse, analyse.idAnalyse, analyse.name, analyse.price, results.particip "
+            + "from ordonnance join results on "
             + "ordonnance.idordonnance=results.idordonnance join analyse on results.idAnalyse=analyse.idAnalyse "
             + "where ordonnance.idordonnance=?;";
 
@@ -40,13 +45,24 @@ public class BillController {
 
     private String findParticipString = "select analyse.idAnalyse, analyse.name, results.idAnalyse, results.particip "
             + "from analyse join results on analyse.idAnalyse=results.idAnalyse where analyse.idAnalyse=?; ";
-   
-    private String getAnalyseId = "select idAnalyse from analyse where name like ?";
-    
-    private String updateResultString = "update `obal`.`results` set particip=? where results.idAnalyse=? and results.idordonnance=?;";
-    
-    
 
+    private String getAnalyseId = "select idAnalyse from analyse where name like ?";
+
+    private String updateResultString = "update `obal`.`results` set particip=? where results.idAnalyse=? and results.idordonnance=?;";
+
+    private String getDoctorFirst = "select ordonnance.idordonnance, ordonnance.idMedecin, "
+            + "medecin.idMedecin, medecin.nom from ordonnance join medecin "
+            + "on ordonnance.idMedecin=medecin.idMedecin where ordonnance.idordonnance=?;";
+
+    private String getDoctorLast = "select ordonnance.idordonnance, ordonnance.idMedecin, "
+            + "medecin.idMedecin, medecin.prenom from ordonnance join medecin "
+            + "on ordonnance.idMedecin=medecin.idMedecin where ordonnance.idordonnance=?;";
+
+    private String getBillCount = "select count(*) from facture;";
+    private String insertFacture = "insert into facture values(?,?,?);";
+
+    
+    
     private PreparedStatement findClientStmt;
     private PreparedStatement findOrdStmt;
     private PreparedStatement findAnalyseByOrdStmt;
@@ -54,7 +70,11 @@ public class BillController {
     private PreparedStatement findParticipStmt;
     private PreparedStatement getAnalyseIdStmt;
     private PreparedStatement updateResultStmt;
-
+    private PreparedStatement getDoctorFirstStmt;
+    private PreparedStatement getDoctorLastStmt;
+    private PreparedStatement getBillCountStmt;
+    private PreparedStatement insertFactureStmt;
+    
     public BillController() {
         try {
             findClientStmt = DataSource.getConnection().prepareStatement(findClientString);
@@ -64,6 +84,11 @@ public class BillController {
             findParticipStmt = DataSource.getConnection().prepareStatement(findParticipString);
             getAnalyseIdStmt = DataSource.getConnection().prepareStatement(getAnalyseId);
             updateResultStmt = DataSource.getConnection().prepareStatement(updateResultString);
+            getDoctorFirstStmt = DataSource.getConnection().prepareStatement(getDoctorFirst);
+            getDoctorLastStmt = DataSource.getConnection().prepareStatement(getDoctorLast);
+            getBillCountStmt = DataSource.getConnection().prepareStatement(getBillCount);
+            insertFactureStmt = DataSource.getConnection().prepareStatement(insertFacture);
+
         } catch (SQLException ex) {
             Logger.getLogger(BillController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -125,7 +150,7 @@ public class BillController {
         findAnalyseByOrdStmt.setInt(1, id);
         ResultSet set = findAnalyseByOrdStmt.executeQuery();
         while (set.next()) {
-            ls.add(new Analysis(set.getInt(7),set.getString(8)));
+            ls.add(new Analysis(set.getInt(7), set.getString(8)));
         }
         set.close();
         return ls;
@@ -141,8 +166,8 @@ public class BillController {
         set.close();
         return part;
     }
-    
-    public int getAnalysisId(String st) throws SQLException{
+
+    public int getAnalysisId(String st) throws SQLException {
         int id;
         getAnalyseIdStmt.setString(1, st);
         ResultSet set = getAnalyseIdStmt.executeQuery();
@@ -151,11 +176,75 @@ public class BillController {
         return id;
     }
 
-    public void updateResult(int id, double particip,int orderId) throws SQLException {
+    public void updateResult(int id, double particip, int orderId) throws SQLException {
         updateResultStmt.setDouble(1, particip);
         updateResultStmt.setInt(2, id);
         updateResultStmt.setInt(3, orderId);
         updateResultStmt.executeUpdate();
     }
+
+    public DefaultTableModel showAnalysis(int id) throws SQLException {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Analysis ID");
+        model.addColumn("Name");
+        model.addColumn("Price");
+        model.addColumn("Participation %");
+        model.addColumn("Rest");
+
+        findAnalyseByOrdStmt.setInt(1, id);
+        ResultSet set = findAnalyseByOrdStmt.executeQuery();
+        while (set.next()) {
+            Double price = set.getDouble(9);
+            Double partic = set.getDouble(10);
+            Double rest = (price * partic) / 100;
+            model.addRow(new Object[]{set.getInt(7), set.getString(8),
+                set.getDouble(9), set.getDouble(10), rest});
+            total += rest;
+        }
+        set.close();
+        return model;
+    }
+
+    public String getDoctorFirst(int id) throws SQLException {
+        String first;
+
+        getDoctorFirstStmt.setInt(1, id);
+        ResultSet set = getDoctorFirstStmt.executeQuery();
+        set.next();
+        first = set.getString(4);
+        return first;
+
+    }
+
+    public String getDoctorLast(int id) throws SQLException {
+        String last;
+
+        getDoctorLastStmt.setInt(1, id);
+        ResultSet set = getDoctorLastStmt.executeQuery();
+        set.next();
+        last = set.getString(4);
+        return last;
+    }
+    
+     public int getBillCount() throws SQLException{
+        int count;
+        
+        ResultSet set = getBillCountStmt.executeQuery();
+        set.next();
+        count = set.getInt(1);
+        return count;
+    }
+    
+    public void insertFacture(Bill b) throws SQLException{
+        insertFactureStmt.setInt(1, b.getId());
+        insertFactureStmt.setString(2, b.getDate().toString());
+        insertFactureStmt.setInt(3, b.getOrder().getId());
+        insertFactureStmt.executeUpdate();
+    }
+    
+    public double getTotal() {
+        return total;
+    }
+
     public static final BillController instance = new BillController();
 }
