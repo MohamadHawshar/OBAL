@@ -62,6 +62,7 @@ public class BillFrame extends javax.swing.JPanel {
 
     }
     Order o;
+    Client c;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -85,7 +86,7 @@ public class BillFrame extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         saveParticipBtn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        doneButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         appointmentsTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -155,10 +156,15 @@ public class BillFrame extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(22, 113, 185));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(22, 113, 185));
-        jButton1.setText("Done");
+        doneButton.setBackground(new java.awt.Color(22, 113, 185));
+        doneButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        doneButton.setForeground(new java.awt.Color(22, 113, 185));
+        doneButton.setText("Done");
+        doneButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doneButtonActionPerformed(evt);
+            }
+        });
 
         appointmentsTable.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         appointmentsTable.setForeground(new java.awt.Color(22, 113, 185));
@@ -211,7 +217,7 @@ public class BillFrame extends javax.swing.JPanel {
                                 .addComponent(particip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(participationTextField)
                                 .addComponent(saveParticipBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(doneButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(112, 112, 112))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
@@ -241,7 +247,7 @@ public class BillFrame extends javax.swing.JPanel {
                                         .addGap(18, 18, 18)
                                         .addComponent(saveParticipBtn)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton1))
+                                        .addComponent(doneButton))
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))))))
                 .addGap(18, 18, 18))
         );
@@ -343,7 +349,7 @@ public class BillFrame extends javax.swing.JPanel {
                 return;
             }
             try {
-                Client c = (Client) listModel.getElementAt(clientsList.getSelectedIndex());
+                c = (Client) listModel.getElementAt(clientsList.getSelectedIndex());
                 searchClientText.setText(c.getFirstName() + " " + c.getLastName());
                 String fn = c.getFirstName();
                 String ln = c.getLastName();
@@ -442,6 +448,11 @@ public class BillFrame extends javax.swing.JPanel {
 
         }
     }//GEN-LAST:event_analysisListMouseClicked
+
+    private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
+       
+        new BillResultFrame(o, c).setVisible(true);
+    }//GEN-LAST:event_doneButtonActionPerformed
 
     private class SaveWorker extends SwingWorker<String, Void> {
 
@@ -564,7 +575,7 @@ public class BillFrame extends javax.swing.JPanel {
     private javax.swing.JList<String> analysisList;
     private javax.swing.JTable appointmentsTable;
     private javax.swing.JList<String> clientsList;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton doneButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

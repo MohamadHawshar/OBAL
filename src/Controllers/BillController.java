@@ -40,7 +40,13 @@ public class BillController {
             + "from ordonnance join results on "
             + "ordonnance.idordonnance=results.idordonnance join analyse on results.idAnalyse=analyse.idAnalyse "
             + "where ordonnance.idordonnance=?;";
+ private String findAnalysisByOrdString2 = "select ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
+            + "results.idordonnance, results.idAnalyse, analyse.idAnalyse, analyse.name,analyse.price,results.particip "
+            + "from ordonnance join results on "
+            + "ordonnance.idordonnance=results.idordonnance join analyse on results.idAnalyse=analyse.idAnalyse "
+            + "where ordonnance.idordonnance=?;";
 
+   
     private String findCliendId = "select idclient from Client where first_name like ? and last_name like ?;";
 
     private String findParticipString = "select analyse.idAnalyse, analyse.name, results.idAnalyse, results.particip "
@@ -66,6 +72,7 @@ public class BillController {
     private PreparedStatement findClientStmt;
     private PreparedStatement findOrdStmt;
     private PreparedStatement findAnalyseByOrdStmt;
+    private PreparedStatement findAnalyseByOrdStmt2;
     private PreparedStatement findClientIdStmt;
     private PreparedStatement findParticipStmt;
     private PreparedStatement getAnalyseIdStmt;
@@ -80,6 +87,7 @@ public class BillController {
             findClientStmt = DataSource.getConnection().prepareStatement(findClientString);
             findOrdStmt = DataSource.getConnection().prepareStatement(findOrdString);
             findAnalyseByOrdStmt = DataSource.getConnection().prepareStatement(findAnalysisByOrdString);
+            findAnalyseByOrdStmt2 = DataSource.getConnection().prepareStatement(findAnalysisByOrdString2);
             findClientIdStmt = DataSource.getConnection().prepareStatement(findCliendId);
             findParticipStmt = DataSource.getConnection().prepareStatement(findParticipString);
             getAnalyseIdStmt = DataSource.getConnection().prepareStatement(getAnalyseId);
@@ -190,8 +198,8 @@ public class BillController {
         model.addColumn("Price");
         model.addColumn("Participation %");
         model.addColumn("Rest");
-
-        ResultSet set = findAnalyseByOrdStmt.executeQuery();
+        findAnalyseByOrdStmt2.setInt(1, id);
+        ResultSet set = findAnalyseByOrdStmt2.executeQuery();
         while (set.next()) {
             Double price = set.getDouble(9);
             Double partic = set.getDouble(10);

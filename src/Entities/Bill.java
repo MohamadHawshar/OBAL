@@ -17,6 +17,7 @@ import java.util.Date;
 public class Bill {
     private int Id;
     private LocalDate date;
+    private Order order; 
     
     public Bill(){
         
@@ -26,9 +27,10 @@ public class Bill {
         this.Id = b.Id;
         this.date = b.date;
     }
-    public Bill(int Id, LocalDate date) {
+    public Bill(int Id, LocalDate date, Order order) {
         this.Id = Id;
         this.date = date;
+        this.order = order;
     }
 
     public int getId() {
@@ -37,6 +39,10 @@ public class Bill {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public Order getOrder() {
+        return order;
     }
 
     public void setDate(LocalDate date) {

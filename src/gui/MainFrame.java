@@ -433,16 +433,6 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMousePressed
-        try {
-            // TODO add your handling code here:
-            Thread.sleep(400);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.exit(0);
-    }//GEN-LAST:event_exitBtnMousePressed
-
     private void mousePress(JPanel panel) {//change color of option panell
         panel.setBackground(new Color(0, 113, 197));
         clients.setOpaque(false);
@@ -484,17 +474,6 @@ public class MainFrame extends javax.swing.JFrame {
         panel.setOpaque(false);
         repaint();
     }
-
-    private void exitBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseEntered
-        // TODO add your handling code here:
-        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit_blue.png")));
-
-    }//GEN-LAST:event_exitBtnMouseEntered
-
-    private void exitBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseExited
-        // TODO add your handling code here:
-        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG")));
-    }//GEN-LAST:event_exitBtnMouseExited
 
     private void doctorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doctorsMouseEntered
         mouseOnOption(doctors, doctorsLabel);
@@ -636,15 +615,35 @@ public class MainFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_ordersMouseClicked
 
+    private void minimizeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseExited
+        // TODO add your handling code here:
+        minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minimize.png")));
+    }//GEN-LAST:event_minimizeBtnMouseExited
+
     private void minimizeBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseEntered
         // TODO add your handling code here:
         minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minimize_blue.png")));
     }//GEN-LAST:event_minimizeBtnMouseEntered
 
-    private void minimizeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseExited
+    private void exitBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMousePressed
+        try {
+            // TODO add your handling code here:
+            Thread.sleep(400);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.exit(0);
+    }//GEN-LAST:event_exitBtnMousePressed
+
+    private void exitBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseExited
         // TODO add your handling code here:
-        minimizeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minimize.png")));
-    }//GEN-LAST:event_minimizeBtnMouseExited
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/llljl.PNG")));
+    }//GEN-LAST:event_exitBtnMouseExited
+
+    private void exitBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseEntered
+        // TODO add your handling code here:
+        exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit_blue.png")));
+    }//GEN-LAST:event_exitBtnMouseEntered
 
     private void removeDeletedFromList() {
         JButton r = orderFrame.getDelete();
