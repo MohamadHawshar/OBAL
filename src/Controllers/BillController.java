@@ -36,7 +36,7 @@ public class BillController {
             + "ordonnance.idclient=client.idclient where ordonnance.idclient=?;";
 
    private String findAnalysisByOrdString = "select ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
-            + "results.idordonnance, results.idAnalyse, analyse.idAnalyse, analyse.name, analyse.price, results.particip "
+            + "results.idordonnance, results.idAnalyse, analyse.idAnalyse, analyse.name,analyse.price,results.particip "
             + "from ordonnance join results on "
             + "ordonnance.idordonnance=results.idordonnance join analyse on results.idAnalyse=analyse.idAnalyse "
             + "where ordonnance.idordonnance=?;";
@@ -191,7 +191,6 @@ public class BillController {
         model.addColumn("Participation %");
         model.addColumn("Rest");
 
-        findAnalyseByOrdStmt.setInt(1, id);
         ResultSet set = findAnalyseByOrdStmt.executeQuery();
         while (set.next()) {
             Double price = set.getDouble(9);
