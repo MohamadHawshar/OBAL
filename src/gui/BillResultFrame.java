@@ -32,6 +32,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import com.itextpdf.text.pdf.PdfPTable;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -117,7 +120,7 @@ public class BillResultFrame extends javax.swing.JFrame {
         }
     }
 
-    public void printToPdf() throws FileNotFoundException, DocumentException {
+    public void printToPdf() throws FileNotFoundException, DocumentException, IOException {
         String pdfName = clientId.getFirstName() + "_" + clientId.getLastName() + "_" + orderId.getDate() + "_Bill";
         Document doc = new Document(PageSize.A4.rotate());
         PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("Bills PDF\\"
@@ -156,6 +159,19 @@ public class BillResultFrame extends javax.swing.JFrame {
 
         doc.close();
         
+        
+        File file = new File("Bills PDF\\"+ pdfName + ".pdf");
+        
+        //first check if Desktop is supported by Platform or not
+        if(!Desktop.isDesktopSupported()){
+            System.out.println("Desktop is not supported");
+            return;
+        }
+        else{
+            System.out.println("Desktop is  supported");
+        }
+        Desktop desktop = Desktop.getDesktop();
+        if(file.exists()) desktop.open(file);
         
     }
 
@@ -394,6 +410,8 @@ public class BillResultFrame extends javax.swing.JFrame {
             new AddFacture(new Bill(id, date, orderId)).execute();
 
         } catch (FileNotFoundException | DocumentException ex) {
+            Logger.getLogger(BillResultFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(BillResultFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonActionPerformed

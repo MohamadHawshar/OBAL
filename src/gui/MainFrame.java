@@ -5,6 +5,7 @@ import Entities.Order;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -138,6 +139,9 @@ public class MainFrame extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 minimizeBtnMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                minimizeBtnMouseReleased(evt);
             }
         });
         exit.add(minimizeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 42, 50));
@@ -644,6 +648,11 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         exitBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit_blue.png")));
     }//GEN-LAST:event_exitBtnMouseEntered
+
+    private void minimizeBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeBtnMouseReleased
+        // TODO add your handling code here:
+        this.setState(Frame.ICONIFIED);
+    }//GEN-LAST:event_minimizeBtnMouseReleased
 
     private void removeDeletedFromList() {
         JButton r = orderFrame.getDelete();
