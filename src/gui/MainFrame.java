@@ -57,9 +57,7 @@ public class MainFrame extends javax.swing.JFrame {
         dateComboBox.setModel(dateModel);
         removeDeletedFromList();
         addNewToList();
-       
-        
-
+        updatePayedList();
     }
 
     /**
@@ -581,12 +579,19 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             ImageText i = (ImageText) listModel.getElementAt(ordersList.getSelectedIndex());
-
-            orderFrame.listOrder = i.getOrder();
-            orderFrame.deleteBtn.setEnabled(true);
-            orderFrame.editBtn.setEnabled(true);
-        } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+            if(i.getOrder().isPaid())
+                return;
+            if (orderFrame.isVisible()) {
+                orderFrame.listOrder = i.getOrder();
+                orderFrame.deleteBtn.setEnabled(true);
+                orderFrame.editBtn.setEnabled(true);
+            }
+            if(resultPage.isVisible()){
+                resultPage.listClicked(i.getOrder());
+            }
             
+        } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+
             ordersList.clearSelection();
         }
     }//GEN-LAST:event_ordersListMouseClicked
@@ -673,6 +678,19 @@ public class MainFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 java.sql.Date d = (java.sql.Date) dateComboBox.getSelectedItem();
+                new InitializeList(d).execute();
+            }
+        });
+    }
+
+    private void updatePayedList() {
+        JButton done = billPage.getDone();
+        done.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                java.sql.Date d = (java.sql.Date) dateComboBox.getSelectedItem();
+                System.out.println("UPDATINGGG");
                 new InitializeList(d).execute();
             }
         });

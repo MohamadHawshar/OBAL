@@ -35,6 +35,7 @@ import utilities.AbstractGuiTableModels;
 import utilities.GuiListModels;
 import utilities.OrderTableModels;
 import java.lang.NullPointerException;
+import javax.swing.JButton;
 import utilities.ResultsPDF;
 
 /**
@@ -163,6 +164,11 @@ public class BillFrame extends javax.swing.JPanel {
         doneButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         doneButton.setForeground(new java.awt.Color(22, 113, 185));
         doneButton.setText("Done");
+        doneButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                doneButtonMousePressed(evt);
+            }
+        });
         doneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 doneButtonActionPerformed(evt);
@@ -453,7 +459,13 @@ public class BillFrame extends javax.swing.JPanel {
     }//GEN-LAST:event_analysisListMouseClicked
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
-       o.setClient(c);
+       
+    }//GEN-LAST:event_doneButtonActionPerformed
+
+    private void doneButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doneButtonMousePressed
+        // TODO add your handling code here:
+        o.setClient(c);
+        new update().execute();
         new BillResultFrame(o, c).setVisible(true);
         /*ResultsPDF r;
             r = new ResultsPDF(o);
@@ -464,8 +476,12 @@ public class BillFrame extends javax.swing.JPanel {
         } catch (DocumentException ex) {
             Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
         }*/
-    }//GEN-LAST:event_doneButtonActionPerformed
+    }//GEN-LAST:event_doneButtonMousePressed
 
+    public JButton getDone(){
+        return doneButton;
+    }
+    
     private class SaveWorker extends SwingWorker<String, Void> {
 
         private int id;
@@ -504,6 +520,16 @@ public class BillFrame extends javax.swing.JPanel {
     }
 
   
+    private class update extends SwingWorker<Void, Void>{
+
+        @Override
+        protected Void doInBackground() throws Exception {
+            new BillController().instance.updatePaid(o.getId());
+            return null;
+            
+        }
+        
+    }
 
     private class AddAnalysis extends SwingWorker<List<Analysis>, Void> {
 

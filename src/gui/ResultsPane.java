@@ -41,6 +41,7 @@ public class ResultsPane extends javax.swing.JPanel {
     private final GuiListModels<Order> searchModel = new GuiListModels();
     private Order o;
     
+    
     public ResultsPane() {
         initComponents();
         clientsTable.getColumnModel().getColumn(0).setMinWidth(256);
@@ -249,6 +250,17 @@ public class ResultsPane extends javax.swing.JPanel {
         new GetAnalysisWorker(o).execute();
     }//GEN-LAST:event_listOrderMousePressed
 
+    
+    public void listClicked(Order order){
+        o=order;
+        firstNameField.setText(order.getClient().getFirstName()+" "+order.getClient().getLastName());
+        firstNameField.setEnabled(false);
+        listOrder.removeAll();
+        new SearchOrdersWorker(order.getClient()).execute();
+        System.out.println(order.getListOrders());
+        analysisModel.removeAll();
+        analysisModel.set(order.getListOrders());
+    }
 private class SearchClientPerformed extends SwingWorker<List<Client>, Void> {
 
         private final String fName;

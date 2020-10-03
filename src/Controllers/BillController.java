@@ -66,7 +66,8 @@ public class BillController {
 
     private String getBillCount = "select count(*) from facture;";
     private String insertFacture = "insert into facture values(?,?,?);";
-
+    
+    private String paidOrder="update  `obal`.`ordonnance` set isPayed=1 where idOrdonnance=?   ";
     
     
     private PreparedStatement findClientStmt;
@@ -81,6 +82,8 @@ public class BillController {
     private PreparedStatement getDoctorLastStmt;
     private PreparedStatement getBillCountStmt;
     private PreparedStatement insertFactureStmt;
+    private PreparedStatement paidOrderStatement;
+    
     
     public BillController() {
         try {
@@ -96,7 +99,8 @@ public class BillController {
             getDoctorLastStmt = DataSource.getConnection().prepareStatement(getDoctorLast);
             getBillCountStmt = DataSource.getConnection().prepareStatement(getBillCount);
             insertFactureStmt = DataSource.getConnection().prepareStatement(insertFacture);
-
+            paidOrderStatement=DataSource.getConnection().prepareStatement(paidOrder);
+            
         } catch (SQLException ex) {
             Logger.getLogger(BillController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -118,6 +122,14 @@ public class BillController {
         return ls;
     }
 
+    
+    public void updatePaid(int id) throws SQLException{
+    paidOrderStatement.setInt(1, id);
+    paidOrderStatement.executeUpdate();
+        
+    }
+    
+    
     public List<Order> findOrd(String subFirst, String subLast) throws SQLException {
         List<Order> ls = new ArrayList();
 
@@ -247,6 +259,7 @@ public class BillController {
         insertFactureStmt.setString(2, b.getDate().toString());
         insertFactureStmt.setInt(3, b.getOrder().getId());
         insertFactureStmt.executeUpdate();
+        total=0.0;
     }
     
     public double getTotal() {
