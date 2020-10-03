@@ -11,9 +11,11 @@ import Entities.Analysis;
 import Entities.Client;
 import Entities.Order;
 import Entities.Result;
+import com.itextpdf.text.DocumentException;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import static java.io.FileDescriptor.out;
+import java.io.FileNotFoundException;
 import static java.lang.System.out;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -33,6 +35,7 @@ import utilities.AbstractGuiTableModels;
 import utilities.GuiListModels;
 import utilities.OrderTableModels;
 import java.lang.NullPointerException;
+import utilities.ResultsPDF;
 
 /**
  *
@@ -450,8 +453,17 @@ public class BillFrame extends javax.swing.JPanel {
     }//GEN-LAST:event_analysisListMouseClicked
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
-       
+       o.setClient(c);
         new BillResultFrame(o, c).setVisible(true);
+        /*ResultsPDF r;
+            r = new ResultsPDF(o);
+        try {
+            r.printResultsPDF();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
     }//GEN-LAST:event_doneButtonActionPerformed
 
     private class SaveWorker extends SwingWorker<String, Void> {

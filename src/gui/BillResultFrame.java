@@ -5,7 +5,9 @@
  */
 package gui;
 
+import Controllers.AnalyseController;
 import Controllers.BillController;
+import Entities.Analysis;
 import Entities.Bill;
 import Entities.Client;
 import Entities.Order;
@@ -30,8 +32,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import com.itextpdf.text.pdf.PdfPTable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 //import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import javax.swing.SwingWorker;
+import utilities.ResultsPDF;
 
 /**
  *
@@ -49,6 +55,7 @@ public class BillResultFrame extends javax.swing.JFrame {
     LocalDate date = LocalDate.now();
 
     public BillResultFrame(Order orderId, Client clientId) {
+        orderId.setClient(clientId);
         this.orderId = orderId;
         this.clientId = clientId;
         model = new DefaultTableModel();
@@ -83,6 +90,7 @@ public class BillResultFrame extends javax.swing.JFrame {
 
             String d = date.toString();
             dateBill.setText(d);
+            new AnalysisGetter(orderId).execute();
         } catch (SQLException ex) {
             Logger.getLogger(BillResultFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -90,29 +98,27 @@ public class BillResultFrame extends javax.swing.JFrame {
     }
 
     public void printTable(PdfPTable analysisTable) {
-       
-        
+
         analysisTable.addCell("Analysis ID");
         analysisTable.addCell("Name");
         analysisTable.addCell("Price");
         analysisTable.addCell("Participation %");
         analysisTable.addCell("Rest");
-        for(int i=0;i<table.getRowCount();i++)
-    {
-        for(int j=0;j<table.getColumnCount();j++)
-        {
-            Object val = table.getModel().getValueAt(i, j);
-            if((val!=null))
-                analysisTable.addCell(val.toString());
-            else
-                analysisTable.addCell("null");
+        for (int i = 0; i < table.getRowCount(); i++) {
+            for (int j = 0; j < table.getColumnCount(); j++) {
+                Object val = table.getModel().getValueAt(i, j);
+                if ((val != null)) {
+                    analysisTable.addCell(val.toString());
+                } else {
+                    analysisTable.addCell("null");
+                }
 
+            }
         }
     }
-    }
- 
+
     public void printToPdf() throws FileNotFoundException, DocumentException {
-        String pdfName = clientId.getFirstName()+"_"+clientId.getLastName()+"_"+orderId.getDate()+"_Bill";
+        String pdfName = clientId.getFirstName() + "_" + clientId.getLastName() + "_" + orderId.getDate() + "_Bill";
         Document doc = new Document(PageSize.A4.rotate());
         PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("Bills PDF\\"
                 + pdfName + ".pdf"));
@@ -132,25 +138,25 @@ public class BillResultFrame extends javax.swing.JFrame {
         parag.add(new Paragraph("Patient:           " + patientIdLabel.getText(), font2));
         parag.add(new Paragraph("                   " + nameLabel.getText() + " " + lastnameLabel.getText(), font2));
         parag.add(new Paragraph("                   " + locationLabel.getText() + "\n \n", font2));
-        parag.add(new Paragraph("Doctor treating:   " + docName.getText() + " " + docLastname.getText()+"\n \n \n", font2));
+        parag.add(new Paragraph("Doctor treating:   " + docName.getText() + " " + docLastname.getText() + "\n \n \n", font2));
 
-     
         PdfPTable analysisTable = new PdfPTable(table.getColumnCount());
         printTable(analysisTable);
-       
-        
+
         doc.add(parag);
-        doc.add(analysisTable); 
-       
+        doc.add(analysisTable);
+
         Paragraph p = new Paragraph();
         p.add(new Paragraph("\n \n   "));
         p.add(new Paragraph("                                              "
                 + "                                               "
                 + "               Total:" + totalLabel.getText(), font1));
-       
+
         doc.add(p);
-        
+
         doc.close();
+        
+        
     }
 
     /**
@@ -372,11 +378,21 @@ public class BillResultFrame extends javax.swing.JFrame {
     private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
         try {
             int id = Integer.parseInt(idBillLabel.getText());
-            LocalDate date = LocalDate.now();          
+            LocalDate date = LocalDate.now();
             printToPdf();
-            
-            new AddFacture(new Bill(id,date,orderId)).execute();
-            
+            System.out.println("printToPDF");
+            ResultsPDF r;
+            r = new ResultsPDF(orderId);
+        try {
+            r.printResultsPDF();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+            new AddFacture(new Bill(id, date, orderId)).execute();
+
         } catch (FileNotFoundException | DocumentException ex) {
             Logger.getLogger(BillResultFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -385,27 +401,54 @@ public class BillResultFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
-    
-     private class AddFacture extends SwingWorker<String, Void>{
+    private class AddFacture extends SwingWorker<String, Void> {
+
         Bill b;
 
         public AddFacture(Bill b) {
             this.b = b;
         }
-        
-        
+
         @Override
         protected String doInBackground() throws Exception {
             BillController.instance.insertFacture(b);
             return null;
         }
-        
+
         @Override
-        public void done(){
-            
+        public void done() {
+            System.out.println("BILL ADDEDD");
         }
     }
+    
+        private class AnalysisGetter extends SwingWorker<List<Analysis>, Void> {
+            
+            Order order;
+        public AnalysisGetter(Order order) {
+            this.order=order;
+        }
+
+        @Override
+        protected List<Analysis> doInBackground() throws Exception {
+            return AnalyseController.instance.getAnalysis(order.getId());
+        }
+
+        @Override
+        public void done() {
+
+            try {
+                List<Analysis> l=new ArrayList();
+                for (Analysis a : get()) {
+                    l.add(a);
+                    System.out.println(a);
+                }
+                order.setListOrders(l);
+            } catch (InterruptedException | ExecutionException ex) {
+                Logger.getLogger(ResultsPDF.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

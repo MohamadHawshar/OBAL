@@ -25,15 +25,20 @@ public class AnalyseController {
     private String findAll="select * from analyse";
     private String findByOrder = "select Analyse.idAnalyse , Analyse.name , Analyse.unite , Analyse.valeur , Analyse.price ,results.results from analyse, results where results.idordonnance = ? and results.idanalyse = analyse.idanalyse;";
     private String addResult = "update results set results = ? where idordonnance = ? and idanalyse = ?;";
+    private String findAnalysisOrder="select analyse.name,results.results,analyse.unite,analyse.valeur from analyse,results where analyse.idAnalyse=results.idAnalyse and results.idordonnance=?";
+    
+    
     private PreparedStatement addResultStatement;
     private PreparedStatement findAllStatement;
     private PreparedStatement findByOrderStatement;
-
+    private PreparedStatement findAnalysisOrderStatement;
+    
     private AnalyseController() {
         try {
             findAllStatement=DataSource.getConnection().prepareStatement(findAll);
             findByOrderStatement=DataSource.getConnection().prepareStatement(findByOrder);
             addResultStatement=DataSource.getConnection().prepareStatement(addResult);
+            findAnalysisOrderStatement=DataSource.getConnection().prepareStatement(findAnalysisOrder);
         } catch (SQLException ex) {
             Logger.getLogger(AnalyseController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -55,8 +60,6 @@ public class AnalyseController {
             price=(float) set.getDouble(5);
             list.add(new Analysis(id,name,unit,value,price));
         }
-            
-        
         
         return list;
     }
@@ -84,6 +87,21 @@ public class AnalyseController {
         }
         return null;
     }
+    
+    public List<Analysis> getAnalysis(int id) throws SQLException{
+        List<Analysis> list=new ArrayList();
+        findAnalysisOrderStatement.setInt(1, id);
+        ResultSet set=findAnalysisOrderStatement.executeQuery();
+        while(set.next()){
+            Analysis a=new Analysis(set.getString(1));
+            a.setResult((float) set.getDouble(2));
+            a.setValue(set.getString(4));
+            a.setUnit(set.getString(3));
+            list.add(a);
+        }
+        return list;
+    }
+    
     public static final AnalyseController instance=new AnalyseController() ;
     
 }
