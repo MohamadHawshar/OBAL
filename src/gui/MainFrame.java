@@ -589,7 +589,9 @@ public class MainFrame extends javax.swing.JFrame {
             if(resultPage.isVisible()){
                 resultPage.listClicked(i.getOrder());
             }
-            
+            if(billPage.isVisible()){
+                billPage.listClicked(i.getOrder());
+            }
         } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
 
             ordersList.clearSelection();

@@ -464,6 +464,7 @@ public class BillFrame extends javax.swing.JPanel {
 
     private void doneButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doneButtonMousePressed
         // TODO add your handling code here:
+        searchClientText.setEnabled(true);
         o.setClient(c);
         new update().execute();
         new BillResultFrame(o, c).setVisible(true);
@@ -529,6 +530,17 @@ public class BillFrame extends javax.swing.JPanel {
             
         }
         
+    }
+    
+    public void listClicked(Order order){
+        
+        o=order;
+        searchClientText.setText(order.getClient().getFirstName()+" "+order.getClient().getLastName());
+        searchClientText.setEnabled(false);
+        ordertable.removeAll();
+        analyselist.removeAll();
+        new AddOrder(order.getClient().getFirstName(), order.getClient().getLastName()).execute();
+        new AddAnalysis(order.getId()).execute();
     }
 
     private class AddAnalysis extends SwingWorker<List<Analysis>, Void> {
