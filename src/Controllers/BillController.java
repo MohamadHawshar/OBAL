@@ -33,7 +33,7 @@ public class BillController {
     private String findClientString = "select * from Client where lower(first_name) like ?;";
     private String findOrdString = "select ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
             + "client.idclient, client.first_name, client.last_name from ordonnance join client on "
-            + "ordonnance.idclient=client.idclient where ordonnance.idclient=?;";
+            + "ordonnance.idclient=client.idclient where ordonnance.idclient=? and ordonnance.isPayed=false;";
 
    private String findAnalysisByOrdString = "select ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
             + "results.idordonnance, results.idAnalyse, analyse.idAnalyse, analyse.name,analyse.price,results.particip "
@@ -143,7 +143,7 @@ public class BillController {
         } else {
             findClientIdStmt.setString(2, subLast);
         }
-
+        
         ResultSet set_1 = findClientIdStmt.executeQuery();
         set_1.next();
         int clientId = set_1.getInt(1);

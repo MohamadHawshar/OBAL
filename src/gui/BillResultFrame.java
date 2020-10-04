@@ -89,6 +89,7 @@ public class BillResultFrame extends javax.swing.JFrame {
             totalLabel.setText(total + " $");
 
             int idbill = BillController.instance.getBillCount();
+            idbill++;
             idBillLabel.setText(Integer.toString(idbill));
 
             String d = date.toString();
@@ -399,21 +400,19 @@ public class BillResultFrame extends javax.swing.JFrame {
             System.out.println("printToPDF");
             ResultsPDF r;
             r = new ResultsPDF(orderId);
-        try {
-            r.printResultsPDF();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DocumentException ex) {
-            Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
+            r.printResultsPDF();
+         
             new AddFacture(new Bill(id, date, orderId)).execute();
+            
+            
 
         } catch (FileNotFoundException | DocumentException ex) {
             Logger.getLogger(BillResultFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(BillResultFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_buttonActionPerformed
 
     /**
