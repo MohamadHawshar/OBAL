@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.ComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -26,6 +27,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
+import javax.swing.UIManager;
 import utilities.ImageText;
 import utilities.Renderer;
 
@@ -49,6 +51,7 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() throws InterruptedException {
+                
         initComponents();
         clientPage.setVisible(false);
         mainPane.add(orderFrame);
@@ -379,8 +382,8 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 0, new java.awt.Color(22, 113, 185)));
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 930));
 
-        dateComboBox.setBackground(new java.awt.Color(150, 250, 46));
         dateComboBox.setMaximumRowCount(5);
+        dateComboBox.setAutoscrolls(true);
         dateComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dateComboBoxActionPerformed(evt);
@@ -498,7 +501,6 @@ public class MainFrame extends javax.swing.JFrame {
         billPage.setVisible(false);
         repaint();
         revalidate();
-        dateComboBox.getEditor().getEditorComponent().setBackground(Color.red);
     }//GEN-LAST:event_doctorsMousePressed
 
     private void clientsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientsMouseEntered

@@ -548,13 +548,11 @@
           <SubComponents>
             <Component class="javax.swing.JComboBox" name="dateComboBox">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="2e" green="fa" red="96" type="rgb"/>
-                </Property>
                 <Property name="maximumRowCount" type="int" value="5"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
+                <Property name="autoscrolls" type="boolean" value="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dateComboBoxActionPerformed"/>
