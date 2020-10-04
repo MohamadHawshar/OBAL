@@ -26,11 +26,11 @@ public class DataSource {
 
     public static Connection getConnection() {
       	// --- Pour une connexion MySQL native
-	String lsPilote    = "com.mysql.jdbc.Driver";
-	String lsConnexion = "jdbc:mysql://localhost:330/obal";
+	String lsPilote    = "com.mysql.cj.jdbc.Driver";
+	String lsConnexion = "jdbc:mysql://localhost:3306/obal";
 
 	String lsUt  = "root";
-	String lsMdp = "database";
+	String lsMdp = "* 159753 *";
         
         if (con == null) {
             try {

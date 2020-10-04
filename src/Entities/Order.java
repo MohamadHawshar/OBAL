@@ -31,6 +31,12 @@ public class Order {
     public void setId(int Id) {
         this.Id = Id;
     }
+
+    public Order(int Id) {
+        this.Id = Id;
+    }
+    
+    
     public Order(int Id, LocalDate date){
         this.Id = Id;
         this.date = date;

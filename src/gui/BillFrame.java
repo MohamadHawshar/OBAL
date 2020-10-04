@@ -47,7 +47,7 @@ public class BillFrame extends javax.swing.JPanel {
     private final DefaultListModel listModel = new DefaultListModel();
     private final OrderTableModels ordertable = new OrderTableModels();
     private final GuiListModels<Analysis> analyselist = new GuiListModels();
-    private final GuiListModels<Result> resultlist = new GuiListModels<>();
+   // private final GuiListModels<Result> resultlist = new GuiListModels<>();
     Result r = null;
     
     public BillFrame() {
