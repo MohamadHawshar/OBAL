@@ -3,34 +3,29 @@ package gui;
 import Controllers.OrderController;
 import Entities.Order;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.ComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import utilities.ImageText;
 import utilities.Renderer;
-
 /**
  *
  * @author lenovo
@@ -61,6 +56,8 @@ public class MainFrame extends javax.swing.JFrame {
         removeDeletedFromList();
         addNewToList();
         updatePayedList();
+        //com.alee.laf.combobox.WebComboBoxUI.COMBOBOX_INSTANCE.set(dateComboBox, dateComboBox);
+
     }
 
     /**
@@ -154,22 +151,22 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(headerLayout.createSequentialGroup()
                 .addGap(195, 195, 195)
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(headerLayout.createSequentialGroup()
-                        .addComponent(headerText)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(headerLayout.createSequentialGroup()
-                        .addComponent(line, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(headerText)
+                    .addComponent(line, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(headerText, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(line, javax.swing.GroupLayout.DEFAULT_SIZE, 7, Short.MAX_VALUE)
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(headerLayout.createSequentialGroup()
+                        .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(headerLayout.createSequentialGroup()
+                        .addComponent(headerText, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(line, javax.swing.GroupLayout.DEFAULT_SIZE, 7, Short.MAX_VALUE)))
                 .addGap(30, 30, 30))
         );
 
@@ -374,7 +371,7 @@ public class MainFrame extends javax.swing.JFrame {
         sidePanel.add(orders, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IMG-20200923-WA0007.jpg"))); // NOI18N
-        sidePanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 740, 190, 180));
+        sidePanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 720, 190, 180));
 
         mainPanel.add(sidePanel, java.awt.BorderLayout.LINE_START);
 
@@ -382,6 +379,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 0, new java.awt.Color(22, 113, 185)));
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 930));
 
+        dateComboBox.setBackground(new java.awt.Color(255, 255, 254));
         dateComboBox.setMaximumRowCount(5);
         dateComboBox.setAutoscrolls(true);
         dateComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -802,6 +800,8 @@ public class MainFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+          
+        //UIManager.put("ComboBoxUI", Comb)
              /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

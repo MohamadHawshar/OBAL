@@ -40,7 +40,7 @@ public class OrderController {
     //private String findByDateResults="select * from results where results.idordonnance= ? ";
     private String findByDateAnalysis="select analyse.* from analyse,results where analyse.idAnalyse=results.idAnalyse and results.idordonnance=?";
     private String lastID="select idordonnance from ordonnance order by idordonnance desc limit 1;";
-    private String findByClient = "select * from ordonnance where idclient = ?";
+    private String findByClient = "select * from ordonnance where idclient = ? and isPayed=0";
     
     private PreparedStatement createStmt;
     private PreparedStatement deleteStatement;

@@ -107,7 +107,7 @@ public class Analysis {
     
     @Override
     public String toString() {
-        return  name;
+        return  name+" - "+ unit;
     }
     
 }

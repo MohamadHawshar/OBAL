@@ -11,6 +11,7 @@ import Controllers.OrderController;
 import Entities.Analysis;
 import Entities.Client;
 import Entities.Order;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,10 @@ public class ResultsPane extends javax.swing.JPanel {
     
     public ResultsPane() {
         initComponents();
+        
+        listOrder.setModel(searchModel);
+       
+            clientsTable.setModel(clientModel);
         clientsTable.getColumnModel().getColumn(0).setMinWidth(256);
         clientsTable.getColumnModel().getColumn(0).setMaxWidth(256);
         clientsTable.getColumnModel().getColumn(1).setMinWidth(128);
@@ -51,15 +56,16 @@ public class ResultsPane extends javax.swing.JPanel {
 //        ordersTable.getColumnModel().getColumn(0).setMinWidth(256);
 //        ordersTable.getColumnModel().getColumn(0).setMaxWidth(256);
 //        ordersTable.getColumnModel().getColumn(1).setMinWidth(128);
-//        ordersTable.getColumnModel().getColumn(1).setMaxWidth(128);
+//     1   ordersTable.getColumnModel().getColumn(1).setMaxWidth(128);
+         analysisTable.setModel(analysisModel);
         analysisTable.getColumnModel().getColumn(0).setMinWidth(256);
         analysisTable.getColumnModel().getColumn(0).setMaxWidth(256);
         analysisTable.getColumnModel().getColumn(1).setMinWidth(128);
         analysisTable.getColumnModel().getColumn(1).setMaxWidth(128);
-        clientsTable.setModel(clientModel);
+       jScrollPane1.getViewport().setBackground(new Color(250, 251, 252));
+         jScrollPane3.getViewport().setBackground(new Color(250, 251, 252));
 //        ordersTable.setModel(orderModel);
-        analysisTable.setModel(analysisModel);
-        listOrder.setModel(searchModel);
+       
     }
 
     /**
@@ -83,70 +89,71 @@ public class ResultsPane extends javax.swing.JPanel {
         listOrder = new javax.swing.JList();
         jSeparator1 = new javax.swing.JSeparator();
         selectBtn = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
+        firstNameField.setBackground(new java.awt.Color(250, 251, 252));
         firstNameField.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        firstNameField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         firstNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 firstNameFieldActionPerformed(evt);
             }
         });
 
-        clientsTable.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        clientsTable.setBackground(new java.awt.Color(250, 251, 252));
+        clientsTable.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
+        clientsTable.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         clientsTable.setForeground(new java.awt.Color(22, 113, 185));
-        clientsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        clientsTable.setRowHeight(32);
+        clientsTable.setGridColor(new java.awt.Color(255, 255, 255));
+        clientsTable.setRowHeight(40);
+        clientsTable.setRowMargin(3);
         jScrollPane1.setViewportView(clientsTable);
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(22, 113, 185));
-        jButton1.setText("select");
+        jButton1.setText("Search");
+        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(22, 113, 185));
         jLabel3.setText("First Name");
 
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(22, 113, 185));
-        jButton3.setText("Save");
+        jButton3.setText("Save Results");
+        jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        analysisTable.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 113, 185)));
+
+        analysisTable.setBackground(new java.awt.Color(250, 251, 252));
+        analysisTable.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
+        analysisTable.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         analysisTable.setForeground(new java.awt.Color(22, 113, 185));
-        analysisTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        analysisTable.setRowHeight(32);
+        analysisTable.setGridColor(new java.awt.Color(255, 255, 255));
+        analysisTable.setRowHeight(40);
+        analysisTable.setRowMargin(3);
         jScrollPane3.setViewportView(analysisTable);
 
-        listOrder.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        listOrder.setForeground(new java.awt.Color(0, 102, 102));
+        jScrollPane4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
+        jScrollPane4.setMinimumSize(new java.awt.Dimension(258, 130));
+        jScrollPane4.setPreferredSize(new java.awt.Dimension(258, 352));
+
+        listOrder.setBackground(new java.awt.Color(250, 251, 252));
+        listOrder.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        listOrder.setForeground(new java.awt.Color(22, 113, 185));
+        listOrder.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         listOrder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 listOrderMousePressed(evt);
@@ -157,13 +164,19 @@ public class ResultsPane extends javax.swing.JPanel {
         jSeparator1.setForeground(new java.awt.Color(22, 113, 185));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        selectBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         selectBtn.setForeground(new java.awt.Color(22, 113, 185));
-        selectBtn.setText("select");
+        selectBtn.setText("Select Order");
+        selectBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 113, 185)));
         selectBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectBtnActionPerformed(evt);
             }
         });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(22, 113, 185));
+        jLabel4.setText("Client Orders");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -172,27 +185,27 @@ public class ResultsPane extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1164, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
                         .addComponent(firstNameField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(selectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 738, Short.MAX_VALUE)
+                                .addComponent(selectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3))))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -205,17 +218,19 @@ public class ResultsPane extends javax.swing.JPanel {
                         .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(selectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
-                    .addComponent(jSeparator1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                            .addComponent(selectBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jSeparator1)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(23, 23, 23))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -304,6 +319,27 @@ private class SearchOrdersWorker extends SwingWorker<List<Order>, Void> {
             
         }
         public void done() {
+        try {
+            System.out.println(get());
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ResultsPane.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(ResultsPane.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            try {
+            if(get().isEmpty()){
+                 JOptionPane.showMessageDialog(ResultsPane.this,
+                            " This client has no Available orders ",
+                            "NO ORDERS",
+                            JOptionPane.ERROR_MESSAGE);
+                 return;
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ResultsPane.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(ResultsPane.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
             searchModel.removeAll();
             try {
                 searchModel.set(get());
@@ -388,6 +424,7 @@ private class AddResultWorker extends SwingWorker<String, Void> {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;

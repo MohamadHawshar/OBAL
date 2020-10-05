@@ -25,6 +25,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.attribute.standard.MediaSize;
+import javax.swing.ComboBoxEditor;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -32,6 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -65,8 +67,27 @@ public class OrderFrame extends javax.swing.JPanel {
     public OrderFrame() {
 
         initComponents();
+        comboBoxes();
         setVisible(true);
         initialize();
+    }
+    private void comboBoxes(){
+        doctorComboBox.getEditor().getEditorComponent().setBackground(new Color(250, 251, 252));
+        doctorComboBox.getEditor().getEditorComponent().setForeground(new Color(45,137,206));
+        ((JTextField) doctorComboBox.getEditor().getEditorComponent()).setOpaque(true);
+        ComboBoxEditor editor = doctorComboBox.getEditor();
+        JTextField textField = (JTextField) editor.getEditorComponent();
+        textField.setSelectedTextColor(new Color(0,0,0));
+        textField.setSelectionColor(new Color(250, 251, 252));
+        
+        analysisComboBox.getEditor().getEditorComponent().setBackground(new Color(250, 251, 252));
+        analysisComboBox.getEditor().getEditorComponent().setForeground(new Color(45,137,206));
+        ((JTextField) analysisComboBox.getEditor().getEditorComponent()).setOpaque(true);
+        ComboBoxEditor editor2 = analysisComboBox.getEditor();
+        JTextField textField1 = (JTextField) editor2.getEditorComponent();
+        textField1.setSelectedTextColor(new Color(0,0,0));
+        textField1.setSelectionColor(new Color(250, 251, 252));
+        
     }
 
     private void initialize() {
@@ -75,11 +96,16 @@ public class OrderFrame extends javax.swing.JPanel {
         clientsTable.getColumnModel().getColumn(0).setMaxWidth(350);
         clientsTable.getColumnModel().getColumn(1).setMinWidth(450);
         clientsTable.getColumnModel().getColumn(1).setMaxWidth(512);
+        analysisTable.setModel(analysisTableModel);
+        analysisTable.getColumnModel().getColumn(0).setMinWidth(400);
+        analysisTable.getColumnModel().getColumn(0).setMaxWidth(400);
         new InitializeDoctorsComboBox().execute();
         AutoCompletion.enable(doctorComboBox);
         new InitializeAnalysisComboBox().execute();
         AutoCompletion.enable(analysisComboBox);
-        analysisTable.setModel(analysisTableModel);
+       // analysisTable.setModel(analysisTableModel);
+         jScrollPane5.getViewport().setBackground(new Color(250, 251, 252));
+         jScrollPane2.getViewport().setBackground(new Color(250, 251, 252));
         /*       clientsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
          @Override
@@ -108,7 +134,7 @@ public class OrderFrame extends javax.swing.JPanel {
 
         saveBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
         analysisTable = new javax.swing.JTable();
         analysisComboBox = new javax.swing.JComboBox();
         addAnalysisBtn = new javax.swing.JButton();
@@ -150,22 +176,27 @@ public class OrderFrame extends javax.swing.JPanel {
             }
         });
 
+        jScrollPane5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 113, 185)));
+
+        analysisTable.setBackground(new java.awt.Color(250, 251, 252));
+        analysisTable.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
+        analysisTable.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        analysisTable.setForeground(new java.awt.Color(45, 137, 206));
         analysisTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2"
             }
         ));
-        analysisTable.setGridColor(new java.awt.Color(158, 158, 158));
+        analysisTable.setGridColor(new java.awt.Color(255, 255, 255));
         analysisTable.setPreferredSize(new java.awt.Dimension(900, 250));
-        analysisTable.setRowHeight(25);
+        analysisTable.setRowHeight(40);
+        analysisTable.setRowMargin(3);
+        analysisTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         analysisTable.setSurrendersFocusOnKeystroke(true);
-        jScrollPane1.setViewportView(analysisTable);
+        jScrollPane5.setViewportView(analysisTable);
 
         analysisComboBox.setBackground(new java.awt.Color(22, 113, 185));
         analysisComboBox.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -187,6 +218,7 @@ public class OrderFrame extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(22, 113, 185));
         jLabel2.setText("First name");
 
+        firstNameField.setBackground(new java.awt.Color(250, 251, 252));
         firstNameField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         firstNameField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         firstNameField.addActionListener(new java.awt.event.ActionListener() {
@@ -196,32 +228,16 @@ public class OrderFrame extends javax.swing.JPanel {
         });
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(22, 113, 185)));
+        jScrollPane2.setToolTipText("");
 
+        clientsTable.setAutoCreateRowSorter(true);
+        clientsTable.setBackground(new java.awt.Color(250, 251, 252));
         clientsTable.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(22, 113, 185)));
         clientsTable.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         clientsTable.setForeground(new java.awt.Color(45, 137, 206));
         clientsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3"
@@ -242,7 +258,10 @@ public class OrderFrame extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        clientsTable.setGridColor(new java.awt.Color(255, 255, 255));
         clientsTable.setRowHeight(40);
+        clientsTable.setRowMargin(3);
+        clientsTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         clientsTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(clientsTable);
         clientsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -257,9 +276,8 @@ public class OrderFrame extends javax.swing.JPanel {
 
         doctorComboBox.setBackground(new java.awt.Color(247, 247, 247));
         doctorComboBox.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        doctorComboBox.setForeground(new java.awt.Color(45, 137, 206));
+        doctorComboBox.setForeground(new java.awt.Color(22, 113, 185));
         doctorComboBox.setMaximumRowCount(10);
-        doctorComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4", "t", "t", "t", " ", "t", "t", "t", "t", "t", "tt", "t", "t", "tt", "t", "t", " ", "t", "t", "t", "t", "t" }));
         doctorComboBox.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(22, 113, 185)));
 
         searchButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -311,29 +329,29 @@ public class OrderFrame extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+                            .addComponent(doctorComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(analysisComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(addAnalysisBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(removeTestBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+                            .addComponent(clearBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(saveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(editBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(deleteBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(firstNameField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
-                            .addComponent(doctorComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(analysisComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(deleteBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(clearBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(saveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(addAnalysisBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(removeTestBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
-                            .addComponent(editBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,7 +370,7 @@ public class OrderFrame extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(analysisComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -461,8 +479,11 @@ public class OrderFrame extends javax.swing.JPanel {
 
     private void removeTestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTestBtnActionPerformed
         // TODO add your handling code here:
-
+        try{
         analysisTableModel.remove(analysisTable.getSelectedRow());
+        }catch(java.lang.ArrayIndexOutOfBoundsException ex){
+            
+        }
     }//GEN-LAST:event_removeTestBtnActionPerformed
 
     private class editOrderPerformed extends SwingWorker<String, Void> {
@@ -550,6 +571,8 @@ public class OrderFrame extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JButton removeTestBtn;
     private javax.swing.JButton saveBtn;
     private javax.swing.JButton searchButton;
