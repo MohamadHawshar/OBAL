@@ -90,6 +90,7 @@ public class ResultsPane extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         selectBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        clear = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -166,8 +167,8 @@ public class ResultsPane extends javax.swing.JPanel {
 
         selectBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         selectBtn.setForeground(new java.awt.Color(22, 113, 185));
-        selectBtn.setText("Select Order");
-        selectBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 113, 185)));
+        selectBtn.setText("Select Client");
+        selectBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         selectBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectBtnActionPerformed(evt);
@@ -177,6 +178,16 @@ public class ResultsPane extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(22, 113, 185));
         jLabel4.setText("Client Orders");
+
+        clear.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        clear.setForeground(new java.awt.Color(22, 113, 185));
+        clear.setText("Clear");
+        clear.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
+        clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -203,6 +214,8 @@ public class ResultsPane extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(selectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE))))
@@ -228,7 +241,8 @@ public class ResultsPane extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                            .addComponent(selectBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(selectBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(clear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jSeparator1)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(23, 23, 23))
@@ -265,8 +279,17 @@ public class ResultsPane extends javax.swing.JPanel {
         new GetAnalysisWorker(o).execute();
     }//GEN-LAST:event_listOrderMousePressed
 
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+        // TODO add your handling code here:
+        firstNameField.setText("");
+        clientModel.removeAll();
+        searchModel.removeAll();
+        analysisModel.removeAll();
+    }//GEN-LAST:event_clearActionPerformed
+
     
     public void listClicked(Order order){
+        clearActionPerformed(null);
         o=order;
         firstNameField.setText(order.getClient().getFirstName()+" "+order.getClient().getLastName());
         firstNameField.setEnabled(false);
@@ -419,6 +442,7 @@ private class AddResultWorker extends SwingWorker<String, Void> {
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable analysisTable;
+    private javax.swing.JButton clear;
     private javax.swing.JTable clientsTable;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JButton jButton1;

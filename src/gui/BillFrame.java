@@ -12,6 +12,7 @@ import Entities.Client;
 import Entities.Order;
 import Entities.Result;
 import com.itextpdf.text.DocumentException;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import static java.io.FileDescriptor.out;
@@ -47,22 +48,24 @@ public class BillFrame extends javax.swing.JPanel {
     private final DefaultListModel listModel = new DefaultListModel();
     private final OrderTableModels ordertable = new OrderTableModels();
     private final GuiListModels<Analysis> analyselist = new GuiListModels();
-   // private final GuiListModels<Result> resultlist = new GuiListModels<>();
+    private final GuiListModels<String> resultlist = new GuiListModels<>();
     Result r = null;
     
     public BillFrame() {
         initComponents();
+        jScrollPane4.getViewport().setBackground(new Color(250,251,252));
         initActions();
-
+        new findAllResultsOrders().execute();
+        resultsOrders.setModel(resultlist);
     }
 
     private void initActions() {
         analysisList.setModel((ListModel) analyselist);
         clientsList.setModel((ListModel) listModel);
         appointmentsTable.setModel(ordertable);
-        participationTextField.setVisible(false);
-        saveParticipBtn.setVisible(false);
-        particip.setVisible(false);
+        //participationTextField.setVisible(false);
+        //saveParticipBtn.setVisible(false);
+        //particip.setVisible(false);
 
     }
     Order o;
@@ -93,12 +96,17 @@ public class BillFrame extends javax.swing.JPanel {
         doneButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         appointmentsTable = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         searchClientText = new javax.swing.JTextField();
         searchClientBtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         clientsList = new javax.swing.JList<String>();
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        resultsOrders = new javax.swing.JList();
+        jLabel3 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -120,8 +128,11 @@ public class BillFrame extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        analysisList.setBackground(new java.awt.Color(250, 251, 252));
+        analysisList.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         analysisList.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         analysisList.setForeground(new java.awt.Color(22, 113, 185));
+        analysisList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         analysisList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 analysisListMouseClicked(evt);
@@ -129,6 +140,8 @@ public class BillFrame extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(analysisList);
 
+        participationTextField.setBackground(new java.awt.Color(250, 251, 252));
+        participationTextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         participationTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 participationTextFieldActionPerformed(evt);
@@ -141,7 +154,7 @@ public class BillFrame extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(22, 113, 185));
-        jLabel5.setText("Orders");
+        jLabel5.setText("Client's Orders");
 
         jSeparator1.setForeground(new java.awt.Color(22, 113, 185));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -151,9 +164,10 @@ public class BillFrame extends javax.swing.JPanel {
         jLabel6.setText("Analysis");
 
         saveParticipBtn.setBackground(new java.awt.Color(22, 113, 185));
-        saveParticipBtn.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        saveParticipBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         saveParticipBtn.setForeground(new java.awt.Color(22, 113, 185));
         saveParticipBtn.setText("Save");
+        saveParticipBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         saveParticipBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveParticipBtnActionPerformed(evt);
@@ -161,9 +175,10 @@ public class BillFrame extends javax.swing.JPanel {
         });
 
         doneButton.setBackground(new java.awt.Color(22, 113, 185));
-        doneButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        doneButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         doneButton.setForeground(new java.awt.Color(22, 113, 185));
         doneButton.setText("Done");
+        doneButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         doneButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 doneButtonMousePressed(evt);
@@ -174,6 +189,8 @@ public class BillFrame extends javax.swing.JPanel {
                 doneButtonActionPerformed(evt);
             }
         });
+
+        jScrollPane4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 2, true));
 
         appointmentsTable.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         appointmentsTable.setForeground(new java.awt.Color(22, 113, 185));
@@ -205,6 +222,16 @@ public class BillFrame extends javax.swing.JPanel {
             appointmentsTable.getColumnModel().getColumn(0).setMaxWidth(40);
         }
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(22, 113, 185));
+        jButton1.setText("Clear");
+        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -212,25 +239,23 @@ public class BillFrame extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE))
                 .addGap(22, 22, 22)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(particip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(participationTextField)
-                                .addComponent(saveParticipBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(doneButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(112, 112, 112))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(332, 332, 332))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(particip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(doneButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(participationTextField)
+                            .addComponent(saveParticipBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel6))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,24 +273,28 @@ public class BillFrame extends javax.swing.JPanel {
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel6))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(particip)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(participationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(saveParticipBtn)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(doneButton))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))))))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(particip)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(participationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)
+                                .addComponent(saveParticipBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(doneButton)))))
                 .addGap(18, 18, 18))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        searchClientText.setBackground(new java.awt.Color(250, 251, 252));
         searchClientText.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         searchClientText.setForeground(new java.awt.Color(22, 113, 185));
+        searchClientText.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         searchClientText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchClientTextActionPerformed(evt);
@@ -276,12 +305,15 @@ public class BillFrame extends javax.swing.JPanel {
         searchClientBtn.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         searchClientBtn.setForeground(new java.awt.Color(22, 113, 185));
         searchClientBtn.setText("Search");
+        searchClientBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         searchClientBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchClientBtnActionPerformed(evt);
             }
         });
 
+        clientsList.setBackground(new java.awt.Color(250, 251, 252));
+        clientsList.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
         clientsList.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         clientsList.setForeground(new java.awt.Color(22, 113, 185));
         clientsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -296,6 +328,28 @@ public class BillFrame extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(22, 113, 185));
         jLabel4.setText("Clients");
 
+        resultsOrders.setBackground(new java.awt.Color(250, 251, 252));
+        resultsOrders.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
+        resultsOrders.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        resultsOrders.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                resultsOrdersMousePressed(evt);
+            }
+        });
+        jScrollPane5.setViewportView(resultsOrders);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(22, 113, 185));
+        jLabel3.setText("Orders with finished Results");
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rsz_refresh.png"))); // NOI18N
+        jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 113, 185), 1, true));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -303,27 +357,42 @@ public class BillFrame extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane3)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(searchClientText)
-                            .addGap(18, 18, 18)
-                            .addComponent(searchClientBtn))))
-                .addGap(318, 318, 318))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchClientText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchClientBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane5))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchClientText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchClientBtn))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3)
-                .addGap(18, 18, 18))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(13, 13, 13))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3))
+                            .addComponent(searchClientBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(searchClientText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -421,12 +490,21 @@ public class BillFrame extends javax.swing.JPanel {
       //  String st = a.toString();
         //Double particip = Double.parseDouble(st);
 
-        
+       try{ 
         Analysis x=analyselist.getElementAt(analysisList.getSelectedIndex());
+        new SaveWorker(x.getId(), p,o.getId()).execute();
+       }catch(java.lang.ArrayIndexOutOfBoundsException ex){
+            JOptionPane.showMessageDialog(BillFrame.this,
+                            "Select Analysis",
+                            "Failed",
+                            INFORMATION_MESSAGE);
+       }
+       
         
         
        // try {
-            new SaveWorker(x.getId(), p,o.getId()).execute();
+            
+            analysisList.setSelectedIndex(analysisList.getSelectedIndex()+1);
      //   } catch (SQLException ex) {
      //       Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
       //  }
@@ -479,6 +557,29 @@ public class BillFrame extends javax.swing.JPanel {
         }*/
     }//GEN-LAST:event_doneButtonMousePressed
 
+    private void resultsOrdersMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resultsOrdersMousePressed
+        // TODO add your handling code here:
+          if (evt.getClickCount() == 2) {
+        String x=resultlist.getElementAt(resultsOrders.getSelectedIndex());
+        String [] s=x.split(" /");
+        searchClientText.setText(s[0]);
+          }
+    }//GEN-LAST:event_resultsOrdersMousePressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        searchClientText.setText("");
+        listModel.removeAllElements();
+        resultsOrders.clearSelection();
+        ordertable.removeAll();
+        analyselist.removeAll();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+           new findAllResultsOrders().execute();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     public JButton getDone(){
         return doneButton;
     }
@@ -506,11 +607,7 @@ public class BillFrame extends javax.swing.JPanel {
         public void done() {
             try {
                 if(get()==null)
-                    JOptionPane.showMessageDialog(BillFrame.this,
-                            "Participation Added",
-                            "Succeded",
-                            INFORMATION_MESSAGE);
-                
+                    return;
             } catch (InterruptedException ex) {
                 Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ExecutionException ex) {
@@ -533,7 +630,7 @@ public class BillFrame extends javax.swing.JPanel {
     }
     
     public void listClicked(Order order){
-        
+        jButton1ActionPerformed(null);
         o=order;
         searchClientText.setText(order.getClient().getFirstName()+" "+order.getClient().getLastName());
         searchClientText.setEnabled(false);
@@ -620,14 +717,44 @@ public class BillFrame extends javax.swing.JPanel {
             }
         }
     }
+    
+    
+    private class findAllResultsOrders extends SwingWorker<List<Client>, Void>{
+
+        @Override
+        protected List<Client> doInBackground() throws Exception {
+            return ClientController.instance.findAllResults();
+        }
+       
+        public void done(){
+            
+            try {
+                resultlist.removeAll();
+                for(Client c:get()){
+                 resultlist.add(c.getFirstName()+" "+c.getLastName()+" / "+c.getPhone());
+                }
+                
+                //resultlist.set(get());
+            } catch (InterruptedException ex) {
+                Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExecutionException ex) {
+                Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> analysisList;
     private javax.swing.JTable appointmentsTable;
     private javax.swing.JList<String> clientsList;
     private javax.swing.JButton doneButton;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -637,10 +764,12 @@ public class BillFrame extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel particip;
     private javax.swing.JTextField participationTextField;
+    private javax.swing.JList resultsOrders;
     private javax.swing.JButton saveParticipBtn;
     private javax.swing.JButton searchClientBtn;
     private javax.swing.JTextField searchClientText;

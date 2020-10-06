@@ -37,7 +37,11 @@ public class editDoctor extends javax.swing.JFrame {
     public editDoctor(Doctor dr) {
         this.dr = dr;
         initComponents();
-        titleFd.setText(dr.getTitle());
+        for(int i=0;i<1;i++){
+            titltefield.setSelectedIndex(i);
+            if(titltefield.toString().equals(dr.getTitle()))
+                break;
+        }
         firstNameFd.setText(dr.getFirstName());
         lastNameFd.setText(dr.getLastName());
         phoneFd.setText(String.valueOf(dr.getPhone()));
@@ -45,7 +49,7 @@ public class editDoctor extends javax.swing.JFrame {
     }
     public void reset() {
         firstNameFd.setText(null);
-        titleFd.setText(null);
+        titltefield.setSelectedIndex(0);
         lastNameFd.setText(null);
         phoneFd.setText(null);
         locationFd.setText(null);
@@ -70,10 +74,10 @@ public class editDoctor extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        titleFd = new javax.swing.JTextField();
         firstNameFd = new javax.swing.JTextField();
         lastNameFd = new javax.swing.JTextField();
         phoneFd = new javax.swing.JTextField();
+        titltefield = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -124,9 +128,6 @@ public class editDoctor extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(22, 113, 185));
         jLabel5.setText("location");
 
-        titleFd.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        titleFd.setForeground(new java.awt.Color(22, 113, 185));
-
         firstNameFd.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         firstNameFd.setForeground(new java.awt.Color(22, 113, 185));
 
@@ -135,6 +136,8 @@ public class editDoctor extends javax.swing.JFrame {
 
         phoneFd.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         phoneFd.setForeground(new java.awt.Color(22, 113, 185));
+
+        titltefield.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -152,11 +155,11 @@ public class editDoctor extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(titleFd)
                             .addComponent(firstNameFd)
                             .addComponent(lastNameFd)
                             .addComponent(phoneFd)
-                            .addComponent(locationFd, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(locationFd, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(titltefield, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -166,11 +169,10 @@ public class editDoctor extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(titleFd))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(titltefield))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(13, 13, 13)
@@ -220,7 +222,7 @@ public class editDoctor extends javax.swing.JFrame {
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // TODO add your handling code here:
         String firstName = firstNameFd.getText();
-        String title = titleFd.getText();
+        String title = (String) titltefield.getSelectedItem();
         String lastName = lastNameFd.getText();
         String phone = phoneFd.getText();
         String location = locationFd.getText();
@@ -406,6 +408,6 @@ public static boolean ignoreSQLException(String sqlState) {
     private javax.swing.JTextField locationFd;
     private javax.swing.JTextField phoneFd;
     private javax.swing.JButton saveBtn;
-    private javax.swing.JTextField titleFd;
+    private javax.swing.JComboBox titltefield;
     // End of variables declaration//GEN-END:variables
 }

@@ -457,7 +457,6 @@ public class BillResultFrame extends javax.swing.JFrame {
                 List<Analysis> l=new ArrayList();
                 for (Analysis a : get()) {
                     l.add(a);
-                    System.out.println(a);
                 }
                 order.setListOrders(l);
             } catch (InterruptedException | ExecutionException ex) {

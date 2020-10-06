@@ -15,8 +15,11 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +71,7 @@ public class ResultsPDF {
         }
     }
 
-    public void printResultsPDF() throws FileNotFoundException, DocumentException {
+    public void printResultsPDF() throws FileNotFoundException, DocumentException, IOException {
         System.out.println("PRINTRESULTT");
         String pdfName = o.getClient().getFirstName() + "_" + o.getClient().getLastName() + "_" + o.getDate() + "_Results";
         Document doc = new Document(PageSize.A4.rotate());
@@ -95,6 +98,19 @@ public class ResultsPDF {
         doc.add(parag);
         doc.add(analysisTable);
         doc.close();
+        
+        File file = new File("Bills PDF\\"+ pdfName + ".pdf");
+        
+         if(!Desktop.isDesktopSupported()){
+            System.out.println("Desktop is not supported");
+            return;
+        }
+        else{
+            System.out.println("Desktop is  supported");
+        }
+        Desktop desktop = Desktop.getDesktop();
+        if(file.exists()) desktop.open(file);
+        
     }
 
 

@@ -27,7 +27,9 @@ public class ClientController {
     private String findByKeyString = "select * from Client where idClient = ?";
     private String deleteByKeyString = "delete from Client where idClient = ?";
     private String findByLikeString = "select * from Client where lower(first_name) like lower(?) and lower(last_name) like lower(?)";
-    
+    private String findClientsFinishedResults="select first_name,last_name,tel from ordonnance,results,client " +
+"where ordonnance.idClient=client.idClient and " +
+"ordonnance.idordonnance=results.idordonnance and results.results!=0 and ordonnance.isPayed=0;";
     
     private PreparedStatement createStmt;
     private PreparedStatement updateStmt;
@@ -35,7 +37,8 @@ public class ClientController {
     private PreparedStatement findByKeyStmt;
     private PreparedStatement deleteByKeyStmt;
     private PreparedStatement findByLikeStmt;
-
+    private PreparedStatement findClientsFinishedResultsStatement;
+    
     private ClientController() {
         try {
             createStmt = DataSource.getConnection().prepareStatement(createString);
@@ -44,10 +47,25 @@ public class ClientController {
             findByKeyStmt = DataSource.getConnection().prepareStatement(findByKeyString);
             deleteByKeyStmt = DataSource.getConnection().prepareStatement(deleteByKeyString);
             findByLikeStmt = DataSource.getConnection().prepareStatement(findByLikeString);
+            findClientsFinishedResultsStatement=DataSource.getConnection().prepareStatement(findClientsFinishedResults);
         } catch (SQLException ex) {
             Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public List<Client> findAllResults() throws SQLException{
+        List<Client> ls=new ArrayList();
+        ResultSet set=findClientsFinishedResultsStatement.executeQuery();
+        while(set.next()){
+            Client c=new Client();
+            c.setFirstName(set.getString(1));
+            c.setLastName(set.getString(2));
+            c.setPhone(set.getString(3));
+            ls.add(c);
+        }
+        return ls;
+    }
+    
     public void create(Client client) throws SQLException {
         createStmt.setString(1, client.getFirstName());
         createStmt.setString(2, client.getLastName());
@@ -107,7 +125,7 @@ public class ClientController {
     }
     public List<Client> findByLike(String firstName) {
         List<Client> ls = new ArrayList();
-        String fName,lName;
+        String fName="",lName="";
         if(firstName==null){
             fName="";
             lName="";
@@ -115,13 +133,28 @@ public class ClientController {
         else{
         String[] table = firstName.split(" ");
        
+        if(table.length==1){
+            fName=table[0];
+            lName="";
+        }
+        if(table.length>1){
+            for(int i=0;i<table.length-1;i++){
+                fName = fName.concat(table[i]);
+                fName=fName+" ";
+                System.out.println(fName);
+            }
+            lName=table[table.length-1];
+            System.out.println(lName);
+        }
+        
+        /*
             fName = table[0];
         try{ 
             lName = table[1];
         }
         catch(ArrayIndexOutOfBoundsException ex){
             lName="";
-        }
+        }*/
         }
         
         try {
