@@ -132,29 +132,16 @@ public class ClientController {
         }
         else{
         String[] table = firstName.split(" ");
-       
-        if(table.length==1){
-            fName=table[0];
-            lName="";
-        }
-        if(table.length>1){
-            for(int i=0;i<table.length-1;i++){
-                fName = fName.concat(table[i]);
-                fName=fName+" ";
-                System.out.println(fName);
-            }
-            lName=table[table.length-1];
-            System.out.println(lName);
-        }
+      
         
-        /*
+        
             fName = table[0];
         try{ 
             lName = table[1];
         }
         catch(ArrayIndexOutOfBoundsException ex){
             lName="";
-        }*/
+        }
         }
         
         try {
