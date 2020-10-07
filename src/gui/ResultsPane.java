@@ -280,6 +280,7 @@ public class ResultsPane extends javax.swing.JPanel {
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
         // TODO add your handling code here:
+        firstNameField.setEnabled(true);
         firstNameField.setText("");
         clientModel.removeAll();
         searchModel.removeAll();

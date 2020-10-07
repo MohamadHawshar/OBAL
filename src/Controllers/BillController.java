@@ -31,9 +31,9 @@ public class BillController {
     Double total = 0.0;
 
     private String findClientString = "select * from Client where lower(first_name) like ?;";
-    private String findOrdString = "select ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
+    private String findOrdString = "select distinct ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
             + "client.idclient, client.first_name, client.last_name from ordonnance join client on "
-            + "ordonnance.idclient=client.idclient  where ordonnance.idclient=? and ordonnance.isPayed=false;";
+            + "ordonnance.idclient=client.idclient join results on ordonnance.idordonnance=results.idordonnance  where ordonnance.idclient=? and ordonnance.isPayed=false and results!=0;";
 
    private String findAnalysisByOrdString = "select ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
             + "results.idordonnance, results.idAnalyse, analyse.idAnalyse, analyse.name,analyse.unite,analyse.price,results.particip "

@@ -27,7 +27,7 @@ public class ClientController {
     private String findByKeyString = "select * from Client where idClient = ?";
     private String deleteByKeyString = "delete from Client where idClient = ?";
     private String findByLikeString = "select * from Client where lower(first_name) like lower(?) and lower(last_name) like lower(?)";
-    private String findClientsFinishedResults="select first_name,last_name,tel from ordonnance,results,client " +
+    private String findClientsFinishedResults="select distinct first_name,last_name,tel from ordonnance,results,client " +
 "where ordonnance.idClient=client.idClient and " +
 "ordonnance.idordonnance=results.idordonnance and results.results!=0 and ordonnance.isPayed=0;";
     
