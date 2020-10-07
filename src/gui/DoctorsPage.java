@@ -5,7 +5,6 @@
  */
 package gui;
 
-
 import Controllers.DoctorController;
 import Entities.Doctor;
 import java.awt.BorderLayout;
@@ -29,9 +28,10 @@ public class DoctorsPage extends javax.swing.JPanel {
      * Creates new form DoctorsPage
      */
     private final DoctorsTableModel doctorModel = new DoctorsTableModel();
+
     public DoctorsPage() {
         initComponents();
-        jScrollPane1.getViewport().setBackground(new Color(250,251,252));
+        jScrollPane1.getViewport().setBackground(new Color(250, 251, 252));
         this.setVisible(false);
         this.repaint();
         doctorsTable.setModel(doctorModel);
@@ -40,6 +40,7 @@ public class DoctorsPage extends javax.swing.JPanel {
         doctorsTable.getColumnModel().getColumn(1).setMinWidth(128);
         doctorsTable.getColumnModel().getColumn(1).setMaxWidth(128);
     }
+
     public void reset() {
         firstNameTf.setText(null);
         LastNameTf.setText(null);
@@ -302,17 +303,22 @@ public class DoctorsPage extends javax.swing.JPanel {
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
         // TODO add your handling code here:
-        Doctor d=doctorModel.get(doctorsTable.getSelectedRow());
+        try {
+            Doctor d = doctorModel.get(doctorsTable.getSelectedRow());
+            editDoctor editDoctorFrame = new editDoctor(d);
+            editDoctorFrame.setVisible(true);
+        } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+
+        }
         // System.out.println(cl);
 
-        editDoctor editDoctorFrame = new editDoctor(d);
-        editDoctorFrame.setVisible(true);
+
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
 
-        Doctor d=doctorModel.get(doctorsTable.getSelectedRow());
+        Doctor d = doctorModel.get(doctorsTable.getSelectedRow());
 
         new DeleteDoctorWorker(d).execute();
         doctorModel.remove(d);
@@ -326,45 +332,45 @@ public class DoctorsPage extends javax.swing.JPanel {
         String title = (String) tittleTf.getSelectedItem();
         String firstName = firstNameTf.getText();
         String lastName = LastNameTf.getText();
-        String phone =phoneTf.getText();
+        String phone = phoneTf.getText();
         String location = locationTf.getText();
 
         if (firstName == null || firstName.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "First Name field should not be empty",
-                "Entry Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "First Name field should not be empty",
+                    "Entry Error",
+                    JOptionPane.ERROR_MESSAGE);
             firstNameTf.requestFocus();
             return;
         }
         if (lastName == null || lastName.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "Last Name field should not be empty",
-                "Entry Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "Last Name field should not be empty",
+                    "Entry Error",
+                    JOptionPane.ERROR_MESSAGE);
             LastNameTf.requestFocus();
             return;
         }
-        if (phone ==null ) {
+        if (phone == null) {
             JOptionPane.showMessageDialog(this,
-                "phone field should not be empty",
-                "Entry Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "phone field should not be empty",
+                    "Entry Error",
+                    JOptionPane.ERROR_MESSAGE);
             phoneTf.requestFocus();
             return;
         }
         if (location == null || location.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "location field should not be empty",
-                "Entry Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "location field should not be empty",
+                    "Entry Error",
+                    JOptionPane.ERROR_MESSAGE);
             locationTf.requestFocus();
             return;
         }
         //Execute Worker
-        new SaveWorker(new Doctor( firstName, lastName,phone,location,title)).execute();
+        new SaveWorker(new Doctor(firstName, lastName, phone, location, title)).execute();
     }//GEN-LAST:event_saveBtnActionPerformed
-private class SearchDoctorPerformed extends SwingWorker<List<Doctor>, Void> {
+    private class SearchDoctorPerformed extends SwingWorker<List<Doctor>, Void> {
 
         private final String fName;
 
@@ -381,26 +387,24 @@ private class SearchDoctorPerformed extends SwingWorker<List<Doctor>, Void> {
         public void done() {
             //Table tab = new Table();
             try {
-                if(get() == null){
+                if (get() == null) {
                     return;
-                }else{
-                doctorModel.set(get());
-                doctorsTable.setModel(doctorModel);
-                repaint();
+                } else {
+                    doctorModel.set(get());
+                    doctorsTable.setModel(doctorModel);
+                    repaint();
 
-                    
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(DoctorsPage.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ExecutionException ex) {
                 Logger.getLogger(DoctorsPage.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
 
-           
         }
     }
-private class DeleteDoctorWorker extends SwingWorker<String, Void> {
+
+    private class DeleteDoctorWorker extends SwingWorker<String, Void> {
 
         private Doctor std;
 
@@ -418,17 +422,17 @@ private class DeleteDoctorWorker extends SwingWorker<String, Void> {
         public void done() {
             try {
                 if (get() == null) {
-                   
+
                 }
             } catch (InterruptedException | ExecutionException ex) {
                 Logger.getLogger(DoctorsPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-private class SaveWorker extends SwingWorker<String, Void> {
+
+    private class SaveWorker extends SwingWorker<String, Void> {
 
         private Doctor doctor;
-        
 
         public SaveWorker(Doctor doctor) {
             this.doctor = doctor;
@@ -437,7 +441,7 @@ private class SaveWorker extends SwingWorker<String, Void> {
         @Override
         protected String doInBackground() throws Exception {
             try {
-               // System.out.println(doctor);
+                // System.out.println(doctor);
                 DoctorController.instance.create(doctor);
             } catch (SQLException ex) {
                 printSQLException(ex);
@@ -468,49 +472,53 @@ private class SaveWorker extends SwingWorker<String, Void> {
             }
         }
     }
-public static void printSQLException(SQLException ex) {
 
-    for (Throwable e : ex) {
-        if (e instanceof SQLException) {
-            if (ignoreSQLException(
-                ((SQLException)e).
-                getSQLState()) == false) {
+    public static void printSQLException(SQLException ex) {
 
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " +
-                    ((SQLException)e).getSQLState());
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                if (ignoreSQLException(
+                        ((SQLException) e).
+                        getSQLState()) == false) {
 
-                System.err.println("Error Code: " +
-                    ((SQLException)e).getErrorCode());
+                    e.printStackTrace(System.err);
+                    System.err.println("SQLState: "
+                            + ((SQLException) e).getSQLState());
 
-                System.err.println("Message: " + e.getMessage());
+                    System.err.println("Error Code: "
+                            + ((SQLException) e).getErrorCode());
 
-                Throwable t = ex.getCause();
-                while(t != null) {
-                    System.out.println("Cause: " + t);
-                    t = t.getCause();
+                    System.err.println("Message: " + e.getMessage());
+
+                    Throwable t = ex.getCause();
+                    while (t != null) {
+                        System.out.println("Cause: " + t);
+                        t = t.getCause();
+                    }
                 }
             }
         }
     }
-}
-public static boolean ignoreSQLException(String sqlState) {
 
-    if (sqlState == null) {
-        System.out.println("The SQL state is not defined!");
+    public static boolean ignoreSQLException(String sqlState) {
+
+        if (sqlState == null) {
+            System.out.println("The SQL state is not defined!");
+            return false;
+        }
+
+        // X0Y32: Jar file already exists in schema
+        if (sqlState.equalsIgnoreCase("X0Y32")) {
+            return true;
+        }
+
+        // 42Y55: Table already exists in schema
+        if (sqlState.equalsIgnoreCase("42Y55")) {
+            return true;
+        }
+
         return false;
     }
-
-    // X0Y32: Jar file already exists in schema
-    if (sqlState.equalsIgnoreCase("X0Y32"))
-        return true;
-
-    // 42Y55: Table already exists in schema
-    if (sqlState.equalsIgnoreCase("42Y55"))
-        return true;
-
-    return false;
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField FirstNameField;

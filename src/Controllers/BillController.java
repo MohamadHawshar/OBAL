@@ -33,10 +33,10 @@ public class BillController {
     private String findClientString = "select * from Client where lower(first_name) like ?;";
     private String findOrdString = "select ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
             + "client.idclient, client.first_name, client.last_name from ordonnance join client on "
-            + "ordonnance.idclient=client.idclient where ordonnance.idclient=? and ordonnance.isPayed=false;";
+            + "ordonnance.idclient=client.idclient  where ordonnance.idclient=? and ordonnance.isPayed=false;";
 
    private String findAnalysisByOrdString = "select ordonnance.idordonnance, ordonnance.idclient, ordonnance.date, ordonnance.ispayed,"
-            + "results.idordonnance, results.idAnalyse, analyse.idAnalyse, analyse.name,analyse.price,results.particip "
+            + "results.idordonnance, results.idAnalyse, analyse.idAnalyse, analyse.name,analyse.unite,analyse.price,results.particip "
             + "from ordonnance join results on "
             + "ordonnance.idordonnance=results.idordonnance join analyse on results.idAnalyse=analyse.idAnalyse "
             + "where ordonnance.idordonnance=?;";
@@ -125,6 +125,7 @@ public class BillController {
     
     public void updatePaid(int id) throws SQLException{
     paidOrderStatement.setInt(1, id);
+    total=0.0;
     paidOrderStatement.executeUpdate();
         
     }
@@ -170,7 +171,7 @@ public class BillController {
         findAnalyseByOrdStmt.setInt(1, id);
         ResultSet set = findAnalyseByOrdStmt.executeQuery();
         while (set.next()) {
-            ls.add(new Analysis(set.getInt(7), set.getString(8)));
+            ls.add(new Analysis(set.getInt(7), set.getString(8),set.getString(9)));
         }
         set.close();
         return ls;
@@ -259,7 +260,6 @@ public class BillController {
         insertFactureStmt.setString(2, b.getDate().toString());
         insertFactureStmt.setInt(3, b.getOrder().getId());
         insertFactureStmt.executeUpdate();
-        total=0.0;
     }
     
     public double getTotal() {

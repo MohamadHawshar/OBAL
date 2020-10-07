@@ -38,6 +38,7 @@ import utilities.OrderTableModels;
 import java.lang.NullPointerException;
 import javax.swing.JButton;
 import utilities.ResultsPDF;
+import utilities.Tester;
 
 /**
  *
@@ -430,6 +431,7 @@ public class BillFrame extends javax.swing.JPanel {
             }
             try {
                 c = (Client) listModel.getElementAt(clientsList.getSelectedIndex());
+                analyselist.removeAll();
                 searchClientText.setText(c.getFirstName() + " " + c.getLastName());
                 String fn = c.getFirstName();
                 String ln = c.getLastName();
@@ -495,6 +497,7 @@ public class BillFrame extends javax.swing.JPanel {
        try{ 
         Analysis x=analyselist.getElementAt(analysisList.getSelectedIndex());
         new SaveWorker(x.getId(), p,o.getId()).execute();
+        new Tester();
        }catch(java.lang.ArrayIndexOutOfBoundsException ex){
             JOptionPane.showMessageDialog(BillFrame.this,
                             "Select Analysis",

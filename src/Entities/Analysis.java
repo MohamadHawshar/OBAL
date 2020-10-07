@@ -40,10 +40,11 @@ public class Analysis {
         this.result = result;
     }
 
-    public Analysis(int id,String name){
+    public Analysis(int id,String name,String unit){
      
         this.Id=id;
         this.name=name;
+        this.unit=unit;
         
     }
     
