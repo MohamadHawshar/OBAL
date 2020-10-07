@@ -497,6 +497,7 @@ public class BillFrame extends javax.swing.JPanel {
        try{ 
         Analysis x=analyselist.getElementAt(analysisList.getSelectedIndex());
         new SaveWorker(x.getId(), p,o.getId()).execute();
+        analysisList.setSelectedIndex(analysisList.getSelectedIndex()+1);
         new Tester();
        }catch(java.lang.ArrayIndexOutOfBoundsException ex){
             JOptionPane.showMessageDialog(BillFrame.this,
@@ -509,7 +510,7 @@ public class BillFrame extends javax.swing.JPanel {
         
        // try {
             
-            analysisList.setSelectedIndex(analysisList.getSelectedIndex()+1);
+            
      //   } catch (SQLException ex) {
      //       Logger.getLogger(BillFrame.class.getName()).log(Level.SEVERE, null, ex);
       //  }
