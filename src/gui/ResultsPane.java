@@ -295,9 +295,7 @@ public class ResultsPane extends javax.swing.JPanel {
         firstNameField.setEnabled(false);
         listOrder.removeAll();
         new SearchOrdersWorker(order.getClient()).execute();
-        System.out.println(order.getListOrders());
         analysisModel.removeAll();
-        analysisModel.set(order.getListOrders());
     }
 private class SearchClientPerformed extends SwingWorker<List<Client>, Void> {
 
