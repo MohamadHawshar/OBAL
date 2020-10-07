@@ -676,6 +676,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void addNewToList() {
         JButton save = orderFrame.getSave();
+        System.out.println("ADDING NEW TO LIST");
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

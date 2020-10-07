@@ -407,6 +407,7 @@ public class OrderFrame extends javax.swing.JPanel {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
+         new InitializeDoctorsComboBox().execute();
         String firstName = firstNameField.getText();
         clientModel.removeAll();
         new SearchClientPerformed(firstName).execute();
